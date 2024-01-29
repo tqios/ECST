@@ -13,10 +13,10 @@ git clone https://github.com/자기이름/ECST.git
 
 4. 서버 실행 방법
 
-# Run django server
+### Run django server
   a. cd to backend
   b. `python manage.py runserver` 이게 서버 돌리는 코드
-# Run react server
+### Run react server
   a. cd to frontend
   b.` npm run dev` 이게 클라이언트 돌리는 코드
 
@@ -28,6 +28,8 @@ git clone https://github.com/자기이름/ECST.git
    - 기존 레포지토리가 수락하면 코드가 적용됨
   
 6. 사실 이희원도 겁나 헷갈려서 맨날 날려먹으니까 찾아보기..
+
+---
 
 
 ## How to Setup React and Tailwind CSS with Vite in a Project

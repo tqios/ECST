@@ -2,7 +2,7 @@
 
 1. 본인 깃허브로 `fork`
 
-2. `fork`한 repository clone(복제하기)
+2. `fork`한 repository clone(복제하기) : 프로젝트가 운영될 폴더하나 생성하고 `git bash`나 터미널에서 해당 폴더 밑에서 명령어작업이든 머든 해야함
 
 명령어 :
 ```bash

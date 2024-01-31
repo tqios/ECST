@@ -20,31 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&f639di2ylbdxvt_@b0uxx*%%2lj=6l#@7y=-a8f38wgbx1*ce'
+SECRET_KEY = 'django-insecure-hag-0&@+7#g+ec+*sbrw&!bz5u%0sou@%m$aph37+8$wgye=l0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# CORS_ALLOWED_ORIGINS = [
-#       "http://127.0.0.1:5173",
-#       "http://localhost:5173",
-#   ]
-# ALLOWED_HOSTS = [
-#     "http://127.0.0.1:5173",
-#     "http://localhost:8000",
-#
-# ]
+ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
-    "http://localhost:8000",
-
+    "http://localhost:5173",
 ]
-# CORS_ALLOWED_ORIGINS = ["*"] 
-# CSRF_TRUSTED_ORIGINS  =  [ 
-#     "http://localhost:5173",
-# ]
-# CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5173' ,'http://localhost:3000']
 
 # Application definition
 
@@ -55,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # External
+    # External Apps
     'rest_framework',
     'corsheaders',
     # Internal Apps
@@ -63,45 +49,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-##CORS
-# CORS_ORIGIN_ALLOW_ALL=True # <- 모든 호스트 허용
-# CORS_ALLOW_CREDENTIALS = True # <-쿠키가 cross-site HTTP 요청에 포함될 수 있다
-
-CORS_ALLOW_METHODS = (  #<-실제 요청에 허용되는 HTTP 동사 리스트
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-)
-
-# <-실제 요청을 할 때 사용될 수 있는 non-standard HTTP 헤더 목록// 현재 기본값
-CORS_ALLOW_HEADERS = (
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-)
-
-APPEND_SLASH = False #<- / 관련 에러 제거
-
-
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
@@ -168,7 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

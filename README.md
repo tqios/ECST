@@ -28,6 +28,9 @@ git clone https://github.com/자기이름/ECST.git
    - 기존 레포지토리가 수락하면 코드가 적용됨
   
 6. 사실 이희원도 겁나 헷갈려서 맨날 날려먹으니까 찾아보기..
+[pr 정상적으로 처리하는 방법]
+https://uhgenie7.github.io/docs/dev/git/sync-repository
+
 
 ---
 

@@ -8,15 +8,15 @@ const TodoForm = ({ setTodos, fetchData }) => {
 
   const handleChange = (e) => {
     setNewTodo((prev) => ({
-      ...prev,
-      body: e.target.value,
+      ...prev,  //  ...prev는 이전 상태를 복사
+      body: e.target.value,  //  body 속성을 e.target.value로 설정하여 새로운 할 일의 내용을 업데이트
     }));
   };
 
   const postTodo = async () => {
     try {
       await axios.post(`http://127.0.0.1:8000/api/todo/`, newTodo);
-      setNewTodo({ body: '' });
+      setNewTodo({ body: '' });  // 폼 비우기
       setTodos((prevTodos) => [...prevTodos, newTodo]);
       fetchData();
     } catch (error) {

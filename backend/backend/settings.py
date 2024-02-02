@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+# from backend import my_settings
+# from backend.my_settings import
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,16 +23,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hag-0&@+7#g+ec+*sbrw&!bz5u%0sou@%m$aph37+8$wgye=l0'
+# SECRET_KEY = 'django-insecure-hag-0&@+7#g+ec+*sbrw&!bz5u%0sou@%m$aph37+8$wgye=l0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
+
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
-    "http://localhost:5173",
+    "http://localhost:5174",
 ]
 
 # Application definition
@@ -45,7 +50,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     # Internal Apps
+    'user',
     'todo',
+    'study',
 ]
 
 MIDDLEWARE = [
@@ -88,6 +95,23 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ecst',
+#         'USER': 'ecst',
+#         'PASSWORD': 'ecst',
+#         'HOST': 'localhost',
+#         'PORT': '3306'
+#     }
+# }
+
+SECRET_KEY = 'django-insecure-hag-0&@+7#g+ec+*sbrw&!bz5u%0sou@%m$aph37+8$wgye=l0'
+
+
+# DATABASES = my_settings.DATABASE
+# SECRET_KEY = my_settings.SECRET_KEY
 
 
 # Password validation
@@ -130,3 +154,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = "user.User"

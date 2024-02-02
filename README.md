@@ -9,6 +9,24 @@
 git clone https://github.com/자기이름/ECST.git
 ```
 
+
+frontend 필요한 모듈 설치
+
+```bash
+cd frontend
+
+npm install vite
+
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
+
+npm install react-icons --save
+
+npm install daisyui
+```
+
+
 3. react는 frontend들어가서 작업
 
 4. 서버 실행 방법

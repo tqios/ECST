@@ -9,6 +9,24 @@
 git clone https://github.com/자기이름/ECST.git
 ```
 
+
+frontend 필요한 모듈 설치
+
+```bash
+cd frontend
+
+npm install vite
+
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
+
+npm install react-icons --save
+
+npm install daisyui
+```
+
+
 3. react는 frontend들어가서 작업
 
 4. 서버 실행 방법
@@ -28,6 +46,13 @@ git clone https://github.com/자기이름/ECST.git
    - 기존 레포지토리가 수락하면 코드가 적용됨
   
 6. 사실 이희원도 겁나 헷갈려서 맨날 날려먹으니까 찾아보기..
+   
+[pr 정상적으로 처리하는 방법]
+https://uhgenie7.github.io/docs/dev/git/sync-repository
+
+[commit message 형식]
+https://velog.io/@palza4dev/TIL-28.-GitGithub-%EC%BB%A4%EB%B0%8B-%EB%A9%94%EC%8B%9C%EC%A7%80-%EC%9E%91%EC%84%B1%EB%B2%95
+
 
 ---
 

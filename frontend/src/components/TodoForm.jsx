@@ -15,7 +15,7 @@ const TodoForm = ({ setTodos, fetchData }) => {
 
   const postTodo = async () => {
     try {
-      await axios.post(`http://127.0.0.1:8000/api/todo/`, newTodo);
+      await axios.post(`http://127.0.0.1:8000/api/study/`, newTodo);
       setNewTodo({ body: '' });  // 폼 비우기
       setTodos((prevTodos) => [...prevTodos, newTodo]);
       fetchData();

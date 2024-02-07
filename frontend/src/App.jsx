@@ -10,7 +10,7 @@ import axios from 'axios';
 // const route = express.Router();
 
 function App() {
-  const [todos, setTodos] = useState('');
+  const [study, setStudy] = useState('');
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
@@ -38,10 +38,10 @@ function App() {
     //   });
     try {
       const response = await axios.get(
-        'http://127.0.0.1:8000/api/todo' // 수정된 요청 경로
+        'http://127.0.0.1:8000/api/study/' // 수정된 요청 경로
       );
       console.log(response);
-      setTodos(response.data);
+      setStudy(response.data);
       setisLoading(false);
     } catch (error) {
       console.log(error);
@@ -55,13 +55,13 @@ function App() {
       </nav>
       {/* Body */}
       <TodoForm
-        setTodos={setTodos}
+        setTodos={setStudy}
         fetchData={fetchData}
       />
       <Table
-        todos={todos}
+        study={study}
         isLoading={isLoading}
-        setTodos={setTodos}
+        setStudy={setStudy}
       />
     </div>
   );

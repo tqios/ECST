@@ -7,7 +7,7 @@ import {
   MdOutlineCheckBoxOutlineBlank,
 } from 'react-icons/md';
 
-const Table = ({ todos, isLoading, setTodos }) => {
+const Table = ({ study, isLoading, setStudy }) => {
   const [editText, setEditText] = useState({
     body: '',
   });
@@ -15,8 +15,8 @@ const Table = ({ todos, isLoading, setTodos }) => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/todo/${id}/`);
-      const newList = todos.filter((todo) => todo.id !== id);
-      setTodos(newList);
+      const newList = study.filter((todo) => todo.id !== id);
+      setStudy(newList);
     } catch (error) {
       console.log(error);
     }
@@ -25,14 +25,14 @@ const Table = ({ todos, isLoading, setTodos }) => {
   const handleEdit = async (id, value) => {
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:8000/api/todo/${id}/`,
+        `http://127.0.0.1:8000/api/study/${id}/`,
         value
       );
       console.log(response.data);
-      const newTodos = todos.map((todo) =>
+      const newStudy = study.map((todo) =>
         todo.id === id ? response.data : todo
       );
-      setTodos(newTodos);
+      setStudy(newStudy);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +89,7 @@ const Table = ({ todos, isLoading, setTodos }) => {
           ) : (
             <>
               {' '}
-              {todos.map((todoItem, index) => (
+              {study.map((todoItem, index) => (
                 <tr
                   key={todoItem.id}
                   className="border-b border-black"
@@ -97,11 +97,11 @@ const Table = ({ todos, isLoading, setTodos }) => {
                   <td className="p-3">
                     <span
                       onClick={() =>
-                        handleCheckbox(todoItem.id, todoItem.completed)
+                        handleCheckbox(todoItem.id, todoItem.study_completed)
                       }
                       className="inline-block cursor-pointer"
                     >
-                      {todoItem.completed === true ? (
+                      {todoItem.study_completed === true ? (
                         <MdOutlineCheckBox />
                       ) : (
                         <MdOutlineCheckBoxOutlineBlank />
@@ -112,15 +112,15 @@ const Table = ({ todos, isLoading, setTodos }) => {
                     className="p-3 text-sm "
                     title={todoItem.id}
                   >
-                    {todoItem.body}
+                    {todoItem.study_todo}
                   </td>
                   <td className="p-3 text-sm text-center">
                     <span
                       className={`p-1.5 text-xs font-medium tracking-wider rounded-md ${
-                        todoItem.completed ? 'bg-green-300' : 'bg-red-300'
+                        todoItem.study_completed ? 'bg-green-300' : 'bg-red-300'
                       }`}
                     >
-                      {todoItem.completed ? 'Done' : 'Incomplete'}
+                      {todoItem.study_completed ? 'Done' : 'Incomplete'}
                     </span>
                   </td>
                   <td className="p-3 text-sm font-medium">

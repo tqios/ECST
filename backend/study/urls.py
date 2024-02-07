@@ -4,6 +4,6 @@ from rest_framework import routers
 
 
 urlpatterns = [
-    path('study/', StudyList.as_view(), name='todo-list'),
+    path('study/', StudyList.as_view(), name='study-list'),
     # path('todo/<int:pk>/', TodoDetail.as_view(), name='todo-detail'),
 ]

@@ -24,7 +24,7 @@ class User(AbstractBaseUser):
     user_email = models.EmailField(unique=True)
     user_password = models.CharField(max_length=24, unique=False)
     user_login_id = models.CharField(max_length=24, unique=False)
-    # user_phone_number = models.IntegerField(unique=True)
+    user_phone_number = models.IntegerField(unique=True)
 
 
     USERNAME_FIELD = 'user_name'

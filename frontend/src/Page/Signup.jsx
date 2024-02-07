@@ -36,13 +36,12 @@ function Signup() {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            const result = await axios.post('http://127.0.0.1:8000/api/todo/', {
-                userid: id,
-                userpwd: signuppwd,
-                userpwdconf: pwdconf,
-                username: name,
-                usertel: tel,
-                useremail: signupemail
+            const result = await axios.post('http://127.0.0.1:8000/api/join/', {
+                user_login_id: id,
+                user_password: signuppwd,
+                user_name: name,
+                user_phone_number: tel,
+                user_email: signupemail
             });
 
             console.log("response", result);
@@ -159,7 +158,7 @@ function Signup() {
             </header>
             <div className="text-center">
                 <div className="mx-auto border-black border-2 w-80 p-16 mb-8 bg-white">
-                    <form action='http://localhost:8000' method='post' onSubmit={handleId}>
+                    <form action='http://localhost:8000/api/join/' method='post' onSubmit={onSubmit}>
                         <label htmlFor="signup_foam"></label>
                         <div className="text-left">
                             ID

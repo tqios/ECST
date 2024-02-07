@@ -16,26 +16,10 @@ function Home() {
     }, []);
 
     const fetchData = async () => {
-        axios({
-            method: 'post',
-            url: 'http://127.0.0.1:8000/api/study',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => {
-                console.log(`응답: `, response);
-                let data = response.data;
-                if (response.data) {
-                    console.log('data', data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error during POST request:', error);
-            });
+
         try {
             const response = await axios.get(
-                'http://127.0.0.1:8000/api/study' // 수정된 요청 경로
+                'http://127.0.0.1:8000/api/study/' // 수정된 요청 경로
             );
             console.log(response);
             setTodos(response.data);

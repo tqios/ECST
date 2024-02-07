@@ -24,11 +24,11 @@ const TodoForm = ({ setTodos, fetchData }) => {
     }
   };
 
-  // const handleKeyDown = (e) => {
-  //     if (e.key === 'Enter') {
-  //         postTodo();
-  //     }
-  // }
+  const handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+          postTodo();
+      }
+  }
 
   return (
     <>

@@ -7,6 +7,7 @@ import Table from '../components/Table.jsx';
 import TodoForm from '../components/TodoForm.jsx';
 import Cam from "../components/Cam.jsx";
 import Profile from "../components/Profile.jsx";
+import {FaHeartCirclePlus} from "react-icons/fa6";
 
 
 function Home() {
@@ -100,13 +101,21 @@ function Home() {
             {/*박스들*/}
             <div className="flex">
                 <div className="bg-indigo-100 min-h-screen p-2 rounded-lg mt-4 w-1/2">
-                    <nav className="pt-8"><h1 className=" text-5xl text-center pb-8">To Do List </h1>
+                    <nav className="pt-8"><h1 className="font-bold text-5xl text-center pb-8">To Do
+                        List </h1>
                     </nav>
                     {/* Body */}
                     <TodoForm
                         setTodos={setTodos}
                         fetchData={fetchData}
                     />
+                    <div className="flex items-center text-2xl">
+                        <FaHeartCirclePlus className="text-rose-400"/>
+                        <div className="ml-2 mt-5 mb-5 font-bold text-2xl">
+                            Total Study Time :
+                        </div>
+
+                    </div>
                     <Table
                         todos={todos}
                         isLoading={isLoading}

@@ -48,7 +48,7 @@ const TodoForm = ({ setTodos, fetchData }) => {
         onClick={postTodo}
         className="btn btn-primary ml-2"
       >
-        Add todo
+        Add Todo
       </button>
     </>
   );

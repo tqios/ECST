@@ -6,6 +6,9 @@ import {
     MdOutlineCheckBox,
     MdOutlineCheckBoxOutlineBlank,
 } from 'react-icons/md';
+import {FaCheck} from "react-icons/fa";
+import {RiCalendarTodoFill} from "react-icons/ri";
+import {RxLapTimer} from "react-icons/rx";
 
 const Table = ({study, isLoading, setStudy}) => {
     const [editText, setEditText] = useState({
@@ -66,39 +69,43 @@ const Table = ({study, isLoading, setStudy}) => {
             <table className="w-11/12 max-w-4xl">
                 <thead className="border-b-2 border-black">
                 <tr>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                        Check
-                    </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                        To Do
-                    </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                        Status
-                    </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                        Date Created
-                    </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                        Actions
-                    </th>
+                    <div className='flex'>
+                        <div className="flex items-center text-left flex-grow">
+
+                            <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                                Check
+                            </th>
+                            <FaCheck/>
+                        </div>
+                        <div className="flex items-center text-center flex-grow">
+                            <th className="p-3 text-sm font-semibold tracking-wide text-center">
+                                To Do
+                            </th>
+                            <RiCalendarTodoFill/>
+                        </div>
+                        <div className="flex items-center">
+                            <th className="p-3 text-sm font-semibold tracking-wide text-right">
+                                Time Attack
+                            </th>
+                            <RxLapTimer/>
+                        </div>
+                    </div>
                 </tr>
                 </thead>
                 <tbody>
                 {isLoading ? (
                     <div>Is Loading </div>
                 ) : !study || study.length === 0 ? (
-                    <div className="text-center mt-2">
-                        <input type="checkbox" checked="checked" className="checkbox"/>
-                    </div>
+                    null
                 ) : (
                     <>
-                    {' '}
-                        {study.map((todoItem, index) => (
-                            <tr
-                                key={todoItem.id}
-                                className="border-b border-black"
-                            >
-                                <td className="p-3">
+                {' '}
+                {study.map((todoItem, index) => (
+                    <tr
+                        key={todoItem.id}
+                        className="border-b border-black"
+                    >
+                        <td className="p-3">
 
                     <span
                         onClick={() =>
@@ -113,14 +120,14 @@ const Table = ({study, isLoading, setStudy}) => {
                       )}
                     </span>
 
-                                </td>
-                                <td
-                                    className="p-3 text-sm "
-                                    title={todoItem.id}
-                                >
-                                    {todoItem.study_todo}
-                                </td>
-                                <td className="p-3 text-sm text-center">
+                        </td>
+                        <td
+                            className="p-3 text-sm "
+                            title={todoItem.id}
+                        >
+                            {todoItem.study_todo}
+                        </td>
+                        <td className="p-3 text-sm text-center">
                     <span
                         className={`p-1.5 text-xs font-medium tracking-wider rounded-md ${
                             todoItem.study_completed ? 'bg-green-300' : 'bg-red-300'
@@ -128,11 +135,11 @@ const Table = ({study, isLoading, setStudy}) => {
                     >
                       {todoItem.study_completed ? 'Done' : 'Incomplete'}
                     </span>
-                                </td>
-                                <td className="p-3 text-sm font-medium">
-                                    {new Date(todoItem.created).toLocaleString()}
-                                </td>
-                                <td className="p-3 text-sm font-medium grid grid-flow-col items-center mt-5 ">
+                        </td>
+                        <td className="p-3 text-sm font-medium">
+                            {new Date(todoItem.created).toLocaleString()}
+                        </td>
+                        <td className="p-3 text-sm font-medium grid grid-flow-col items-center mt-5 ">
                     <span>
                       <label htmlFor="my-modal">
                         <MdEditNote
@@ -141,54 +148,56 @@ const Table = ({study, isLoading, setStudy}) => {
                         />
                       </label>
                     </span>
-                                    <span className=" text-xl cursor-pointer">
+                            <span className=" text-xl cursor-pointer">
                       <MdOutlineDeleteOutline
                           onClick={() => handleDelete(todoItem.id)}
                       />
                     </span>
-                                </td>
-                            </tr>
-                        ))}
-                    </>
+                        </td>
+                    </tr>
+                ))}
+                </>
                 )}
-                </tbody>
-            </table>
+            </tbody>
+        </table>
 
-            {/* Modal */}
+{/* Modal */
+}
+    <input
+        type="checkbox"
+        id="my-modal"
+        className="modal-toggle"
+    />
+    <div className="modal">
+        <div className="modal-box">
+            <h3 className="font-bold text-lg">Edit Todo</h3>
             <input
-                type="checkbox"
-                id="my-modal"
-                className="modal-toggle"
+                type="text"
+                value={editText.body}
+                onChange={handleChange}
+                placeholder="Type here"
+                className="input input-bordered w-full mt-8"
             />
-            <div className="modal">
-                <div className="modal-box">
-                    <h3 className="font-bold text-lg">Edit Todo</h3>
-                    <input
-                        type="text"
-                        value={editText.body}
-                        onChange={handleChange}
-                        placeholder="Type here"
-                        className="input input-bordered w-full mt-8"
-                    />
-                    <div className="modal-action">
-                        <label
-                            htmlFor="my-modal"
-                            onClick={handleClick}
-                            className="btn btn-primary"
-                        >
-                            Edit
-                        </label>
-                        <label
-                            htmlFor="my-modal"
-                            className="btn"
-                        >
-                            Close
-                        </label>
-                    </div>
-                </div>
+            <div className="modal-action">
+                <label
+                    htmlFor="my-modal"
+                    onClick={handleClick}
+                    className="btn btn-primary"
+                >
+                    Edit
+                </label>
+                <label
+                    htmlFor="my-modal"
+                    className="btn"
+                >
+                    Close
+                </label>
             </div>
         </div>
-    );
+    </div>
+</div>
+)
+    ;
 };
 
 export default Table;

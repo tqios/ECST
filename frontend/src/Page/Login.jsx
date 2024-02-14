@@ -1,29 +1,33 @@
 import React from 'react';
 import {IoLogoGoogleplus} from 'react-icons/io';
 import {IoLogoFacebook, IoLogoTwitter} from "react-icons/io5";
-import {useEffect, useState} from "react";
+import { useHistory } from 'react-router-dom';
 
-import Loginerror from "./Loginerror.jsx";
+import Loginerror from "../components/Loginerror.jsx";
 
 function Login() {
+    const history = useHistory();
 
+    const handlepage = () => {
+        history.push('/signup');
+    }
 
     const Myicon = () => {
         return (
             <div className="socialcontainer flex justify-center items-center">
 
                 <button type="button"
-                        class="w-10 h-10 flex justify-center items-center mx-2 rounded-full shadow-lg cursor-pointer">
+                        className="w-10 h-10 flex justify-center items-center mx-2 rounded-full shadow-lg cursor-pointer">
                     <IoLogoGoogleplus/>
                 </button>
 
                 <button type="button"
-                        class="w-10 h-10 flex justify-center items-center mx-2 rounded-full shadow-lg cursor-pointer">
+                        className="w-10 h-10 flex justify-center items-center mx-2 rounded-full shadow-lg cursor-pointer">
                     <IoLogoFacebook/>
                 </button>
 
                 <button type="button"
-                        class="w-10 h-10 flex justify-center items-center mx-2 rounded-full shadow-lg cursor-pointer">
+                        className="w-10 h-10 flex justify-center items-center mx-2 rounded-full shadow-lg cursor-pointer">
                     <IoLogoTwitter/>
                 </button>
 
@@ -70,7 +74,8 @@ function Login() {
                         </div>
                         <div className="p-5 text-center">
                             <button
-                                className="relative bg-gradient-to-r from-purple-200 via-pink-400 to-purple-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-transparent hover:text-purple-500 transition duration-300"
+                                className="relative bg-gray-300 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-transparent hover:text-purple-500 transition duration-300 w-21 h-10"
+                                onClick={handlepage}
                             >
                                 <span className="relative z-10">Sign up</span>
                                 <span

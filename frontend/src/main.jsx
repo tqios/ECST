@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import Login from "./Page/Login.jsx";
-import Loginerror from "./Page/Loginerror.jsx";
+import Loginerror from "./components/Loginerror.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <App/>
-  </React.StrictMode>,
+
+// </React.StrictMode>,
 )

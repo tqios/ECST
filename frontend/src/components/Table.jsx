@@ -1,19 +1,19 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-    MdOutlineDeleteOutline,
-    MdEditNote,
-    MdOutlineCheckBox,
-    MdOutlineCheckBoxOutlineBlank,
+  MdOutlineDeleteOutline,
+  MdEditNote,
+  MdOutlineCheckBox,
+  MdOutlineCheckBoxOutlineBlank,
 } from 'react-icons/md';
 import {FaCheck} from "react-icons/fa";
 import {RiCalendarTodoFill} from "react-icons/ri";
 import {RxLapTimer} from "react-icons/rx";
 
-const Table = ({study, isLoading, setStudy}) => {
-    const [editText, setEditText] = useState({
-        body: '',
-    });
+const Table = ({ todos, isLoading, setStudy }) => {
+  const [editText, setEditText] = useState({
+    body: '',
+  });
 
     const handleDelete = async (id) => {
         try {
@@ -100,7 +100,7 @@ const Table = ({study, isLoading, setStudy}) => {
                 ) : (
                     <>
                 {' '}
-                {study.map((todoItem, index) => (
+                {todos.map((todoItem, index) => (
                     <tr
                         key={todoItem.id}
                         className="border-b border-black"
@@ -108,38 +108,37 @@ const Table = ({study, isLoading, setStudy}) => {
                         <td className="p-3">
 
                     <span
-                        onClick={() =>
-                            handleCheckbox(todoItem.id, todoItem.completed)
-                        }
-                        className="inline-block cursor-pointer"
+                      onClick={() =>
+                        handleCheckbox(todoItem.id, todoItem.study_completed)
+                      }
+                      className="inline-block cursor-pointer"
                     >
                       {todoItem.study_completed === true ? (
-                          <MdOutlineCheckBox/>
+                        <MdOutlineCheckBox />
                       ) : (
-                          <MdOutlineCheckBoxOutlineBlank/>
+                        <MdOutlineCheckBoxOutlineBlank />
                       )}
                     </span>
-
-                        </td>
-                        <td
-                            className="p-3 text-sm "
-                            title={todoItem.id}
-                        >
-                            {todoItem.study_todo}
-                        </td>
-                        <td className="p-3 text-sm text-center">
+                  </td>
+                  <td
+                    className="p-3 text-sm "
+                    title={todoItem.id}
+                  >
+                    {todoItem.study_todo}
+                  </td>
+                  <td className="p-3 text-sm text-center">
                     <span
-                        className={`p-1.5 text-xs font-medium tracking-wider rounded-md ${
-                            todoItem.study_completed ? 'bg-green-300' : 'bg-red-300'
-                        }`}
+                      className={`p-1.5 text-xs font-medium tracking-wider rounded-md ${
+                        todoItem.study_completed ? 'bg-green-300' : 'bg-red-300'
+                      }`}
                     >
                       {todoItem.study_completed ? 'Done' : 'Incomplete'}
                     </span>
-                        </td>
-                        <td className="p-3 text-sm font-medium">
-                            {new Date(todoItem.created).toLocaleString()}
-                        </td>
-                        <td className="p-3 text-sm font-medium grid grid-flow-col items-center mt-5 ">
+                  </td>
+                  <td className="p-3 text-sm font-medium">
+                    {new Date(todoItem.created).toLocaleString()}
+                  </td>
+                  <td className="p-3 text-sm font-medium grid grid-flow-col items-center mt-5 ">
                     <span>
                       <label htmlFor="my-modal">
                         <MdEditNote
@@ -148,56 +147,54 @@ const Table = ({study, isLoading, setStudy}) => {
                         />
                       </label>
                     </span>
-                            <span className=" text-xl cursor-pointer">
+                    <span className=" text-xl cursor-pointer">
                       <MdOutlineDeleteOutline
                           onClick={() => handleDelete(todoItem.id)}
                       />
                     </span>
-                        </td>
-                    </tr>
-                ))}
-                </>
-                )}
-            </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+            </>
+          )}
+        </tbody>
+      </table>
 
-{/* Modal */
-}
-    <input
+      {/* Modal */}
+      <input
         type="checkbox"
         id="my-modal"
         className="modal-toggle"
-    />
-    <div className="modal">
+      />
+      <div className="modal">
         <div className="modal-box">
-            <h3 className="font-bold text-lg">Edit Todo</h3>
-            <input
-                type="text"
-                value={editText.body}
-                onChange={handleChange}
-                placeholder="Type here"
-                className="input input-bordered w-full mt-8"
-            />
-            <div className="modal-action">
-                <label
-                    htmlFor="my-modal"
-                    onClick={handleClick}
-                    className="btn btn-primary"
-                >
-                    Edit
-                </label>
-                <label
-                    htmlFor="my-modal"
-                    className="btn"
-                >
-                    Close
-                </label>
-            </div>
+          <h3 className="font-bold text-lg">Edit Todo</h3>
+          <input
+            type="text"
+            value={editText.body}
+            onChange={handleChange}
+            placeholder="Type here"
+            className="input input-bordered w-full mt-8"
+          />
+          <div className="modal-action">
+            <label
+              htmlFor="my-modal"
+              onClick={handleClick}
+              className="btn btn-primary"
+            >
+              Edit
+            </label>
+            <label
+              htmlFor="my-modal"
+              className="btn"
+            >
+              Close
+            </label>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-)
-    ;
+  );
 };
 
 export default Table;

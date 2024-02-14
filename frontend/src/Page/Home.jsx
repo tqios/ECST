@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {CgProfile} from 'react-icons/cg';
+import React, { useState, useEffect } from 'react';
+import { CgProfile } from 'react-icons/cg';
 import axios from 'axios';
 import {useHistory} from "react-router-dom";
 
@@ -8,12 +8,14 @@ import TodoForm from '../components/TodoForm.jsx';
 import Cam from "../components/Cam.jsx";
 import Profile from "../components/Profile.jsx";
 import {FaHeartCirclePlus} from "react-icons/fa6";
+import { useLocation } from 'react-router-dom';
 
 
 function Home() {
-
-    const [todos, setTodos] = useState('');
+    const [user, setUser] = useState('로그인 필요');
+    const [todos, setTodos] = useState([]);
     const [isLoading, setisLoading] = useState(true);
+    const location = useLocation();
 
     //로그인 버튼 시, 로그인 페이지로 전환
     const history = useHistory();
@@ -24,18 +26,29 @@ function Home() {
     }, []);
 
     const fetchData = async () => {
+    try {
+        // 서버에서 받은 응답 데이터에서 사용자 이메일을 가져옴
+        const email = location.state.email;
+        console.log(email)
 
-        try {
-            const response = await axios.get(
-                'http://127.0.0.1:8000/api/todo/' // 수정된 요청 경로
-            );
-            console.log(response);
-            setTodos(response.data);
-            setisLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        const formData = new FormData();
+                    formData.append('email', email);
+
+        const response = await axios.post('http://127.0.0.1:8000/api/study/', formData);
+        setUser(response.data.user);
+
+        console.log(response.data.feeds);
+        await setTodos(response.data.feeds)
+        setisLoading(false)
+        console.log(todos)
+
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+
     const MenuBtn = () => {
 
         return (
@@ -50,12 +63,6 @@ function Home() {
         );
     }
 
-    //로그인 하면 사용자의 이름과 이메일 업데이트
-
-    const handleprofile = (data) => {
-        history.push('/Login');
-    }
-
 
     return (
         <div>
@@ -65,36 +72,15 @@ function Home() {
                 <div className="text-6xl font-bold">
                     <h1>Learning Mate</h1>
                 </div>
-                {/*<div className="ml-auto">*/}
-                {/*    <CgProfile className="text-3xl"/>*/}
-                {/*    <div>*/}
-                {/*        000님*/}
-                {/*    </div>*/}
-                {/*    <div>*/}
-                {/*        이메일*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-
-
-                <div>
-                    <div className="text-right">
-                        <CgProfile className="text-3xl text-right"/>
-                    </div>
-                    <div className="text-center mt-2 mr-2">
-                        {name ? (
-                            <Profile name={name} email={email}/>
-                        ) : (
-
-                            <button onClick={handleprofile}>로그인</button>
-
-                        )}
-                    </div>
+                <div className="ml-auto">
+                    <CgProfile className="text-3xl"/>
                 </div>
             </div>
             <hr/>
             {/*메뉴바*/}
             <div className="p-2 bg-blue-950 text-white font-bold">
                 <MenuBtn/>
+                {user}
             </div>
             <hr/>
 
@@ -106,6 +92,7 @@ function Home() {
                     </nav>
                     {/* Body */}
                     <TodoForm
+                        user={user}
                         setTodos={setTodos}
                         fetchData={fetchData}
                     />
@@ -132,7 +119,6 @@ function Home() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 

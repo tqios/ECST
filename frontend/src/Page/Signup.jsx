@@ -54,7 +54,7 @@ function Signup() {
 
             console.log("response", result);
             if (result.status === 200) {
-                history.push('/Page/Login');
+                history.push('/login');
             }
 
         } catch (error) {

@@ -95,7 +95,7 @@ const Table = ({ todos, isLoading, setStudy }) => {
                 <tbody>
                 {isLoading ? (
                     <div>Is Loading </div>
-                ) : !study || study.length === 0 ? (
+                ) : !todos || todos.length === 0 ? (
                     null
                 ) : (
                     <>

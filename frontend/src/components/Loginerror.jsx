@@ -28,7 +28,7 @@ function Loginerror() {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            const result = await axios.post('http://127.0.0.1:8000/api/join/', {
+            const result = await axios.post('http://127.0.0.1:8000/api/login/', {
                 user_login_id: email,
                 user_password: pwd
 

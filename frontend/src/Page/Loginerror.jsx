@@ -12,6 +12,10 @@ function Loginerror() {
     const [errorMsg, setErrorMsg] = useState('');
     const history = useHistory();
 
+    const [modal, setModal] = useState(false);
+    const [errormodal, setErrormodal] = useState(false);
+
+
     const handlesignin = async () => {
         console.log("로그인 성공");
          try {
@@ -81,7 +85,6 @@ function Loginerror() {
                     class="bg-gray-200 border-none px-4 py-3 my-2 w-full"
                     type='password'
                     id="signin_pwd"
-
                     name='signin_pwd'
                     value={pwd}
                     placeholder="Password"
@@ -96,7 +99,7 @@ function Loginerror() {
                         className="relative bg-gradient-to-r from-purple-200 via-pink-400 to-purple-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-transparent hover:text-purple-500 transition duration-300"
                     >
 
-                        <span className="relative z-10">Sing in</span>
+                        <span className="relative z-10">Sign in</span>
                         <span
                             className="absolute top-0 left-0 w-full h-full bg-purple-500 opacity-0 transition duration-300"></span>
 

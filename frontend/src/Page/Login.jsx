@@ -3,13 +3,13 @@ import {IoLogoGoogleplus} from 'react-icons/io';
 import {IoLogoFacebook, IoLogoTwitter} from "react-icons/io5";
 import { useHistory } from 'react-router-dom';
 
-import Loginerror from "../components/Loginerror.jsx";
+import Loginerror from "../Page/Loginerror.jsx";
 
 function Login() {
     const history = useHistory();
 
     const handlepage = () => {
-        history.push('/signup');
+        history.push('/');
     }
 
     const Myicon = () => {

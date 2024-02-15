@@ -48,7 +48,7 @@ function Cam() {
 
     return (
         <div>
-            <video ref={videoRef} className="text-center mt-4 rounded-lg w-22 h-auto"></video>
+<video ref={videoRef} className="text-center mt-4 rounded-lg w-22 h-auto" style={{transform: 'scaleX(-1)'}}></video>
             <div className="text-center">
                 <button onClick={toggleBtn} className="p-2">
                     {isplaying ? <FaStopCircle/> : <FaCirclePlay/>}

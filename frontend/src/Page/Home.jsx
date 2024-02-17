@@ -29,19 +29,17 @@ function Home() {
       const email = location.state.email;
       console.log(email);
 
-      const formData = new FormData();
-      formData.append("email", email);
-
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/study/",
-        formData,
-      );
+      // study_todo 가져오기 위한 axios
+      const response = await axios.get("http://127.0.0.1:8000/api/study/", {
+        params: {
+          email: email,
+        },
+      });
       setUser(response.data.user);
 
       console.log(response.data.feeds);
       await setStudy(response.data.feeds);
       setisLoading(false);
-      console.log(study);
     } catch (error) {
       console.log(error);
     }

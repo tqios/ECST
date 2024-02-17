@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const TodoForm = ({ user, setTodos, fetchData }) => {
   const [newTodo, setNewTodo] = useState({
-    study_todo: '',
+    study_todo: "",
   });
 
   const handleChange = (e) => {
@@ -18,20 +18,21 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
       const todoData = {
         study_user_email: user,
         study_todo: newTodo.study_todo,
-        study_time: new Date().toISOString(), // 현재 시간을 ISO 형식으로 설정
+        study_time: new Date().toISOString(),
+        // study_time: new Date().toISOString(), // 현재 시간을 ISO 형식으로 설정
         study_completed: false, // 기본값은 false로 설정
         study_status: new Date().toISOString(), // 현재 시간을 ISO 형식으로 설정
-        study_description: 'This is a sample description', // 예시 설명
+        study_description: "This is a sample description", // 예시 설명
         // user: 1, // 사용자 ID
       };
-      console.log(todoData)
+      console.log(todoData);
 
       // 서버로 데이터 전송
-      await axios.post(`http://127.0.0.1:8000/api/study/detail/`, todoData);
+      await axios.post(`http://127.0.0.1:8000/api/study/`, todoData);
 
       // 폼 비우기
       setNewTodo({
-        study_todo: '',
+        study_todo: "",
       });
 
       // 데이터 다시 불러오기
@@ -42,10 +43,10 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
   };
 
   const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-          postTodo();
-      }
-  }
+    if (e.key === "Enter") {
+      postTodo();
+    }
+  };
 
   return (
     <>
@@ -57,10 +58,7 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <button
-        onClick={postTodo}
-        className="btn btn-primary ml-2"
-      >
+      <button onClick={postTodo} className="btn btn-primary ml-2">
         Add Todo
       </button>
     </>

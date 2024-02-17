@@ -14,10 +14,21 @@ from .serializers import StudySerializer
 
 class StudyList(APIView):
     def post(self, request):
-        # print("studylist안이긴 해")
-        study_user_email = request.POST.get('email', None)
+        print("데이터를 저장하는걸 시작해보자")
 
-        # print(study_user_email)
+        serializer = serializers.StudySerializer(data=request.data)
+        print(serializer.is_valid())
+        if serializer.is_valid():
+            serializer.save()
+            # study = serializer.save(user=request.user)  # 추가 속성 설정
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        print("studylist안이긴 해")
+        study_user_email = request.GET.get('email', None)
+
+        print(study_user_email)
 
         if not study_user_email:
             return Response(status=400, data={"message": "세션에 사용자 이메일이 없습니다."})
@@ -47,14 +58,6 @@ class StudyDetail(APIView):
         return Response(serializer.data)
 
 
-    def post(self, request):
-        serializer = serializers.StudySerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            # study = serializer.save(user=request.user)  # 추가 속성 설정
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def patch(self, request, pk):
         study = self.get_object(pk)
         serializer = serializers.StudySerializer(study, data=request.data, partial=True)

@@ -23,7 +23,7 @@ class Study(models.Model):
     '''
     study_user_email = models.CharField(max_length=300)
     study_todo = models.CharField(max_length=300)
-    study_time = models.TimeField(auto_now_add=True)
+    study_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)  # 여기에 timer관련 애들 넣어야 함
     study_completed = models.BooleanField(default=False)
     study_status = models.TimeField(auto_now_add=True)
     study_description = models.CharField(max_length=300)

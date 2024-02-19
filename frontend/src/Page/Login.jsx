@@ -9,7 +9,7 @@ function Login() {
     const history = useHistory();
 
     const handlepage = () => {
-        history.push('/');
+        history.push('/signup');
     }
 
     const Myicon = () => {

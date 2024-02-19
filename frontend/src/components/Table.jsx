@@ -11,6 +11,7 @@ import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
 import { TbProgressCheck } from "react-icons/tb";
+import TodoItem from "./TodoItem.jsx";
 
 const Table = ({ study, isLoading, setStudy }) => {
   const [editText, setEditText] = useState({

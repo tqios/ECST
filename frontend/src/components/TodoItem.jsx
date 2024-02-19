@@ -43,6 +43,8 @@ const TodoItem = ({ todoItem, handleCheckbox, handleDelete, setEditText }) => {
           <MdOutlineDeleteOutline onClick={() => handleDelete(todoItem.id)} />
         </span>
       </td>
+
+      {/*공부 시작 버튼*/}
       <td className="p-3 text-sm" title={todoItem.id}>
         <FaRegCheckCircle />
       </td>

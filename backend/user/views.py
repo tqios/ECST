@@ -41,7 +41,26 @@ class Join(APIView):
         return Response(status=200)
 class Login(APIView):
     def get(self, request):
-        return render(request, "user/login.html")
+        # TODO 로그인
+        print("로그인시도")
+        email = request.GET.get('signin_email', None)
+        password = request.GET.get('signin_pwd', None)
+
+        print(email)
+        print(password)
+        user = User.objects.filter(user_email=email).first()
+        if user is None:
+            return Response(status=400, data=dict(message="회원정보가 잘못되었습니다."))
+
+        if check_password(password, user.user_password):
+            print("비번 확인시도")
+            # TODO 로그인을 했다. 세션 or 쿠키
+            request.session['email'] = email
+
+            return Response(status=200, data=dict(email=email))
+        else:
+            print("비번 확이 ㄴ실패")
+            return Response(status=400, data=dict(message="회원정보가 잘못되었습니다."))
 
     def post(self, request):
         # serializer = serializers.UserSerializer(data=request.data)

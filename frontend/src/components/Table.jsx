@@ -12,15 +12,15 @@ import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
 import { TbProgressCheck } from "react-icons/tb";
 
-const Table = ({ todos, isLoading, setStudy }) => {
+const Table = ({ study, isLoading, setStudy }) => {
   const [editText, setEditText] = useState({
-    body: "",
+    study_todo: "",
   });
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/todo/${id}/`);
-      const newList = study.filter((todo) => todo.id !== id);
+      await axios.delete(`http://127.0.0.1:8000/api/study/${id}/`);
+      const newList = study.filter((ele) => ele.id !== id);
       setStudy(newList);
     } catch (error) {
       console.log(error);
@@ -34,8 +34,8 @@ const Table = ({ todos, isLoading, setStudy }) => {
         value,
       );
       console.log(response.data);
-      const newStudy = study.map((todo) =>
-        todo.id === id ? response.data : todo,
+      const newStudy = study.map((ele) =>
+        ele.id === id ? response.data : ele,
       );
       setStudy(newStudy);
     } catch (error) {
@@ -47,7 +47,7 @@ const Table = ({ todos, isLoading, setStudy }) => {
     console.log(e.target.value);
     setEditText((prev) => ({
       ...prev,
-      body: e.target.value,
+      study_todo: e.target.value,
     }));
     console.log(editText);
   };
@@ -55,108 +55,59 @@ const Table = ({ todos, isLoading, setStudy }) => {
   const handleClick = () => {
     handleEdit(editText.id, editText);
     setEditText({
-      body: "",
+      study_todo: "",
     });
   };
 
   const handleCheckbox = (id, value) => {
-    console.log(value.completed);
     handleEdit(id, {
-      completed: !value,
+      study_completed: !value,
     });
   };
 
   return (
     <div>
       <table className="w-11/12 max-w-4xl">
-        {/*    <table className="w-400 h-500">*/}
         <thead className="border-b-2 border-black">
-          <tr className="flex justify-between">
-            <th className="flex-grow p-3 text-sm font-semibold tracking-wide">
-              <div className="flex items-center">
-                <FaCheck />
-                <span className="ml-2">Number</span>
-              </div>
+          <tr>
+            <th className="p-3 text-sm font-semibold tracking-wide text-left items-center">
+              <FaCheck />
             </th>
-            <th className="flex-grow p-3 text-sm font-semibold tracking-wide">
-              <div className="flex items-center">
-                <RiCalendarTodoFill />
-                <span className="ml-2">ToDo</span>
-              </div>
+            <th className="p-3 text-sm font-semibold tracking-wide text-center items-center">
+              To Do <RiCalendarTodoFill />
             </th>
-            <th className="flex-grow p-3 text-sm font-semibold tracking-wide">
-              <div className="flex items-center">
-                <RxLapTimer />
-                <span className="ml-2">TimeAttack</span>
-              </div>
+            <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
+              누적시간 <RxLapTimer />
             </th>
-            <th className="flex-grow p-3 text-sm font-semibold tracking-wide">
-              <div className="flex items-center">
-                <TbProgressCheck />
-                <span className="ml-2">Progress</span>
-              </div>
+
+            <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
+              수정/삭제
             </th>
-            <th className="flex-grow p-3 text-sm font-semibold tracking-wide">
-              <div className="flex items-center">
-                <MdDelete />
-                <span className="ml-2">Delete</span>
-              </div>
+            <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
+              <RxLapTimer />
             </th>
           </tr>
         </thead>
         <tbody>
           {isLoading ? (
-            <div>Is Loading </div>
-          ) : !todos || todos.length === 0 ? null : (
+            <tr>
+              <td colSpan="3">Is Loading</td>
+            </tr>
+          ) : !study || study.length === 0 ? (
+            <tr>
+              <td colSpan="5"></td>
+            </tr>
+          ) : (
             <>
-              {" "}
-              {todos.map((todoItem, index) => (
-                <tr key={todoItem.id} className="border-b border-black">
-                  <td className="p-3 text-left">
-                    <span
-                      onClick={() =>
-                        handleCheckbox(todoItem.id, todoItem.study_completed)
-                      }
-                      className="inline-block cursor-pointer"
-                    >
-                      {todoItem.study_completed === true ? (
-                        <MdOutlineCheckBox />
-                      ) : (
-                        <MdOutlineCheckBoxOutlineBlank />
-                      )}
-                    </span>
-                  </td>
-                  <td className="p-3 text-sm " title={todoItem.id}>
-                    {todoItem.study_todo}
-                  </td>
-                  <td className="p-3 text-sm text-left">
-                    <span
-                      className={`p-1.5 text-xs font-medium tracking-wider rounded-md ${
-                        todoItem.study_completed ? "bg-green-300" : "bg-red-300"
-                      }`}
-                    >
-                      {todoItem.study_completed ? "Done" : "Incomplete"}
-                    </span>
-                  </td>
-                  <td className="p-3 text-sm font-medium">
-                    {new Date(todoItem.created).toLocaleString()}
-                  </td>
-                  <td className="p-3 text-sm font-medium grid grid-flow-col items-center mt-5 ">
-                    <span>
-                      <label htmlFor="my-modal">
-                        <MdEditNote
-                          onClick={() => setEditText(todoItem)}
-                          className=" text-xl cursor-pointer"
-                        />
-                      </label>
-                    </span>
-                    <span className=" text-xl cursor-pointer">
-                      <MdOutlineDeleteOutline
-                        onClick={() => handleDelete(todoItem.id)}
-                      />
-                    </span>
-                  </td>
-                </tr>
+              {/*Table 컴포넌트 내부에서 TodoItem 컴포넌트 사용*/}
+              {study.map((todoItem, index) => (
+                <TodoItem
+                  key={index}
+                  todoItem={todoItem}
+                  handleCheckbox={handleCheckbox}
+                  handleDelete={handleDelete}
+                  setEditText={setEditText}
+                />
               ))}
             </>
           )}
@@ -170,7 +121,7 @@ const Table = ({ todos, isLoading, setStudy }) => {
           <h3 className="font-bold text-lg">Edit Todo</h3>
           <input
             type="text"
-            value={editText.body}
+            value={editText.study_todo}
             onChange={handleChange}
             placeholder="Type here"
             className="input input-bordered w-full mt-8"

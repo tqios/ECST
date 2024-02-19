@@ -13,7 +13,7 @@ import PraciceCam from "../components/PraciceCam.jsx";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
-  const [todos, setTodos] = useState([]);
+  const [study, setStudy] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const location = useLocation();
 
@@ -30,19 +30,17 @@ function Home() {
       const email = location.state.email;
       console.log(email);
 
-      const formData = new FormData();
-      formData.append("email", email);
-
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/study/",
-        formData,
-      );
+      // study_todo 가져오기 위한 axios
+      const response = await axios.get("http://127.0.0.1:8000/api/study/", {
+        params: {
+          email: email,
+        },
+      });
       setUser(response.data.user);
 
       console.log(response.data.feeds);
-      await setTodos(response.data.feeds);
+      await setStudy(response.data.feeds);
       setisLoading(false);
-      console.log(todos);
     } catch (error) {
       console.log(error);
     }
@@ -95,18 +93,18 @@ function Home() {
             <h1 className="font-bold text-5xl text-center pb-8">To Do List </h1>
           </nav>
           {/* Body */}
-          <TodoForm user={user} setTodos={setTodos} fetchData={fetchData} />
+          <TodoForm user={user} setStudy={setStudy} fetchData={fetchData} />
           <div className="flex items-center text-2xl">
             <FaHeartCirclePlus className="text-rose-400" />
             <div className="ml-2 mt-5 mb-5 font-bold text-2xl">
               Total Study Time :
             </div>
           </div>
-          <Table todos={todos} isLoading={isLoading} setTodos={setTodos} />
+          <Table study={study} isLoading={isLoading} setStudy={setStudy} />
         </div>
         <div>
           <div>
-            <PraciceCam />
+            <Cam />
           </div>
           <div className="rounded-lg box-border text-center border-black border-1 w-full p-60 mb-10">
             Graph

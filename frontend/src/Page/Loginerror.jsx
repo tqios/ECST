@@ -15,39 +15,39 @@ function Loginerror() {
     //이메일 혹은 비밀번호 잘못 입력 시, 오류 모달창
     const [errormodal, setErrormodal] = useState(false);
 
-
-    const onSubmit = async () => {
-        console.log("로그인 성공");
-        try {
-            const formData = new FormData();
-            formData.append('signin_email', email);
-            formData.append('signin_pwd', pwd);
-
-            const response = await axios.post('http://127.0.0.1:8000/api/login/', formData);
-            console.log(response);
-
-            if (response.status === 200) {
-                console.log("로그인 성공");
-                // 메인 페이지로 이동
-                history.push({
-                    pathname: '/',
-                    state: {email: email}
-                });
-                // window.location.replace('/'); // 적절한 메인 페이지 경로로 수정
-            }
-            // else {
-            //     console.log("로그인 실패");
-            // }
-        } catch (error) {
-            console.log(error);
-
-            if (error.response && error.response.status === 500) {
-                setErrormodal(true);
-
-            }
-        }
+  const handlesignin = async () => {
+    console.log("로그인 성공");
+    try {
+      await axios
+        .get("http://127.0.0.1:8000/api/login/", {
+          params: {
+            signin_email: email,
+            signin_pwd: pwd,
+          },
+        })
+        .then((response) => {
+          // 로그인 성공 -> 메인 페이지로 이동
+          console.log(response.data);
+          history.push({
+            pathname: "/",
+            state: { email: email },
+          });
+        })
+        .catch((error) => {
+          // 로그인 실패 -> 다시 시도하도록 구성(todo)
+          console.error("Error:", error);
+          alert("이메일 혹은 비밀번호를 잘못입력하셨습니다.");
+          setErrorModal(true);
+        });
+    } catch (error) {
+      console.log(error);
     }
+  };
 
+  const modalClose = () => {
+    setErrorModal(false);
+    setErrorMsg("");
+  };
 
     return (
 
@@ -83,7 +83,7 @@ function Loginerror() {
                 <div className="text-center">
                     <button
                         type="button"
-                        onClick={onSubmit}
+                        onClick={handlesignin}
                         className="relative bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-transparent hover:text-purple-500 transition duration-300"
                     >
 

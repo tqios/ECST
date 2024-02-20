@@ -6,10 +6,11 @@ import {
   MdOutlineCheckBox,
   MdOutlineCheckBoxOutlineBlank,
 } from "react-icons/md";
-import { FaCheck, FaRegCheckCircle } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
-import TodoItem from "./TodoItem.jsx";
+import { MdDelete } from "react-icons/md";
+import { TbProgressCheck } from "react-icons/tb";
 
 const Table = ({ study, isLoading, setStudy }) => {
   const [editText, setEditText] = useState({

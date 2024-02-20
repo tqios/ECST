@@ -3,6 +3,9 @@
   <component name="PrettierConfiguration">
     <option name="myConfigurationMode" value="MANUAL" />
     <option name="myRunOnSave" value="true" />
+<<<<<<< HEAD
     <option name="myFilesPattern" value="**/*.{js,ts,jsx,tsx,vue,astro,css,scss,sass}" />
+=======
+>>>>>>> f4479df59919738bd4f79c7017c3c118c40b0146
   </component>
 </project>

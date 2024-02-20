@@ -5,10 +5,11 @@ import { useHistory } from "react-router-dom";
 
 import Table from "../components/Table.jsx";
 import TodoForm from "../components/TodoForm.jsx";
-import Cam from "../components/Cam.jsx";
+// import Cam from "../components/Cam.jsx";
 import Profile from "../components/Profile.jsx";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import PraciceCam from "../components/PraciceCam.jsx";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -67,18 +68,21 @@ function Home() {
     <div>
       {/*머리*/}
       <div className="flex justify-between items-center">
-        <div className="text-6xl font-bold">
+        <div className="text-7xl font-bold">
           <h1>Learning Mate</h1>
         </div>
-        <div className="ml-auto">
-          <CgProfile className="text-3xl" />
+        <div>
+          <div className="items-center">
+            <CgProfile className="text-3xl text-right" />
+          </div>
+          <div>{user}</div>
         </div>
       </div>
       <hr />
       {/*메뉴바*/}
       <div className="p-2 bg-blue-950 text-white font-bold">
         <MenuBtn />
-        {user}
+        {/*{user}*/}
       </div>
       <hr />
 

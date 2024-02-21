@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import {
   MdOutlineDeleteOutline,
@@ -9,7 +10,14 @@ import { FaRegCheckCircle, FaCheck } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 
-const TodoItem = ({ todoItem, handleCheckbox, handleDelete, setEditText }) => {
+const TodoItem = ({
+  todoItem,
+  handleCheckbox,
+  handleDelete,
+  setEditText,
+  selectedItemId,
+  onRadioChange,
+}) => {
   return (
     <tr key={todoItem.id} className="border-b border-black">
       {/*투두 완료 유무 + 완료 체크 기능*/}
@@ -28,7 +36,7 @@ const TodoItem = ({ todoItem, handleCheckbox, handleDelete, setEditText }) => {
         {todoItem.study_todo}
       </td>
       {/*공부한 시간*/}
-      <td className="p-3 text-sm font-medium">{todoItem.study_time}</td>
+      <td className="p-3 text-sm font-medium">{todoItem.study_duration}</td>
       {/*수정 및 삭제*/}
       <td className="p-3 text-sm font-medium grid grid-flow-col items-center mt-5">
         <span>
@@ -46,7 +54,13 @@ const TodoItem = ({ todoItem, handleCheckbox, handleDelete, setEditText }) => {
 
       {/*공부 시작 버튼*/}
       <td className="p-3 text-sm" title={todoItem.id}>
-        <FaRegCheckCircle />
+        <input
+          type="radio"
+          id={todoItem.id}
+          value={todoItem.id}
+          checked={selectedItemId === todoItem.id}
+          onChange={() => onRadioChange(todoItem.id)}
+        />
       </td>
     </tr>
   );

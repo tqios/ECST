@@ -11,6 +11,7 @@ import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
 import { TbProgressCheck } from "react-icons/tb";
+import TodoItem from "./TodoItem.jsx";
 
 const Table = ({ study, isLoading, setStudy }) => {
   const [editText, setEditText] = useState({
@@ -59,14 +60,44 @@ const Table = ({ study, isLoading, setStudy }) => {
     });
   };
 
+  // 투루 완료시 완료상태로 변경하는 함수
   const handleCheckbox = (id, value) => {
     handleEdit(id, {
       study_completed: !value,
     });
   };
 
+  const [selectedItemId, setSelectedItemId] = useState(null);
+
+  // 공부 시작을 위한 라디오버튼 활성화 함수
+  const handleRadioChange = (itemId) => {
+    setSelectedItemId(itemId);
+  };
+
+  // 선택된 항목 초기화
+  const handleReset = () => {
+    setSelectedItemId(null);
+  };
+
+  // 선택된 항목의 데이터를 가져오는 함수
+  const getSelectedItemData = () => {
+    if (!selectedItemId) return null;
+
+    return study.find((item) => item.id === selectedItemId);
+  };
+
+  const selectedItemData = getSelectedItemData(); // 선택된 항목의 데이터
+
   return (
     <div>
+      {selectedItemData && (
+        <div>
+          <h2>선택된 항목 데이터:</h2>
+          <p>ID: {selectedItemData.id}</p>
+          <p>Name: {selectedItemData.study_todo}</p>
+          {/* 다른 데이터 필드들을 여기에 추가 */}
+        </div>
+      )}
       <table className="w-11/12 max-w-4xl">
         <thead className="border-b-2 border-black">
           <tr>
@@ -85,6 +116,7 @@ const Table = ({ study, isLoading, setStudy }) => {
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
               <RxLapTimer />
+              <button onClick={handleReset}>리셋</button>
             </th>
           </tr>
         </thead>
@@ -107,6 +139,8 @@ const Table = ({ study, isLoading, setStudy }) => {
                   handleCheckbox={handleCheckbox}
                   handleDelete={handleDelete}
                   setEditText={setEditText}
+                  selectedItemId={selectedItemId}
+                  onRadioChange={handleRadioChange}
                 />
               ))}
             </>

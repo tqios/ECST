@@ -9,7 +9,7 @@ from django.conf import settings
         - id                : 고유번호 (자동 생성)
         - user_id           : 공부 사용자 아이디
         - study_todo        : 공부 항목
-        - study_time        : 공부 시간
+        - study_duration        : 공부 시간
         - study_completed   : 공부 완료
         - study_status      : 공부 중인가
         - study_description : 공부 상세 기록 (필요없으면 지우셈)
@@ -23,7 +23,7 @@ class Study(models.Model):
     '''
     study_user_email = models.CharField(max_length=300)
     study_todo = models.CharField(max_length=300)
-    study_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)  # 여기에 timer관련 애들 넣어야 함
+    study_duration = models.DurationField(default='00:00:00')  # Duration of study session
     study_completed = models.BooleanField(default=False)
     study_status = models.TimeField(auto_now_add=True)
     study_description = models.CharField(max_length=300)

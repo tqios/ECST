@@ -10,10 +10,12 @@ import { FaCheck } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
-import { TbProgressCheck } from "react-icons/tb";
+import { FaCamera } from "react-icons/fa6";
+import { FaRegEdit } from "react-icons/fa";
+
 import TodoItem from "./TodoItem.jsx";
 
-const Table = ({ study, isLoading, setStudy }) => {
+const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
   const [editText, setEditText] = useState({
     study_todo: "",
   });
@@ -72,20 +74,37 @@ const Table = ({ study, isLoading, setStudy }) => {
         <thead className="border-b-2 border-black">
           <tr>
             <th className="p-3 text-sm font-semibold tracking-wide text-left items-center">
-              <FaCheck />
+              <div className="flex items-center font-sm">
+                <FaCheck />
+                Progress
+              </div>
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-center items-center">
-              To Do <RiCalendarTodoFill />
+              <div className="flex items-center">
+                <RiCalendarTodoFill />
+                ToDo
+              </div>
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
-              누적시간 <RxLapTimer />
+              <div className="flex items-center">
+                <RxLapTimer />
+                Cumulative Study Time
+              </div>
             </th>
 
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
-              수정/삭제
+              <span className="flex items-center">
+                <FaRegEdit />
+                Edit
+                <MdDelete className="ml-2" />
+                Delete
+              </span>
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
-              <RxLapTimer />
+              <div className="flex items-center">
+                <FaCamera />
+                Cam
+              </div>
             </th>
           </tr>
         </thead>
@@ -108,6 +127,8 @@ const Table = ({ study, isLoading, setStudy }) => {
                   handleCheckbox={handleCheckbox}
                   handleDelete={handleDelete}
                   setEditText={setEditText}
+                  setStream={setStream}
+                  stream={stream}
                 />
               ))}
             </>

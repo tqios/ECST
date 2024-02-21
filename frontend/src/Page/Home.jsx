@@ -100,15 +100,19 @@ function Home() {
               Total Study Time :
             </div>
           </div>
-          <Table study={study} isLoading={isLoading} setStudy={setStudy} />
+          <Table
+            study={study}
+            isLoading={isLoading}
+            setStudy={setStudy}
+            setStream={setStream}
+            stream={stream}
+          />
         </div>
         <div>
           <div>
-            <PraciceCam />
+            <Video stream={stream} />
           </div>
-          <div className="rounded-lg box-border text-center border-black border-1 w-full p-60 mb-10">
-            Graph
-          </div>
+          <div>Graph</div>
         </div>
       </div>
     </div>

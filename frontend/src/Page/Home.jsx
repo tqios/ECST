@@ -14,6 +14,7 @@ import PraciceCam from "../components/PraciceCam.jsx";
 function Home() {
   const [user, setUser] = useState("로그인 필요");
   const [study, setStudy] = useState([]);
+  const [durationTime, setDurationTime] = useState();
   const [isLoading, setisLoading] = useState(true);
   const location = useLocation();
 
@@ -37,9 +38,10 @@ function Home() {
         },
       });
       setUser(response.data.user);
-
+      setDurationTime(response.data.total_duration_time);
+      setStudy(response.data.feeds);
       console.log(response.data.feeds);
-      await setStudy(response.data.feeds);
+
       setisLoading(false);
     } catch (error) {
       console.log(error);
@@ -97,7 +99,7 @@ function Home() {
           <div className="flex items-center text-2xl">
             <FaHeartCirclePlus className="text-rose-400" />
             <div className="ml-2 mt-5 mb-5 font-bold text-2xl">
-              Total Study Time :
+              Total Study Time :{durationTime}
             </div>
           </div>
           <Table study={study} isLoading={isLoading} setStudy={setStudy} />

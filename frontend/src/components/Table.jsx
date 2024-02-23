@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MdOutlineDeleteOutline,
   MdEditNote,
@@ -69,14 +69,55 @@ const Table = ({ study, isLoading, setStudy }) => {
 
   const [selectedItemId, setSelectedItemId] = useState(null);
 
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [radioChecked, setRadioChecked] = useState(false);
+  useEffect(() => {
+    let intervalId;
+
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [isRunning]);
+
   // 공부 시작을 위한 라디오버튼 활성화 함수
   const handleRadioChange = (itemId) => {
     setSelectedItemId(itemId);
+    setIsRunning((prevIsRunning) => !prevIsRunning);
+    setRadioChecked(true);
   };
 
   // 선택된 항목 초기화
-  const handleReset = () => {
+  const handleReset = async (id) => {
     setSelectedItemId(null);
+    console.log("time : ", time);
+    // 서버로 데이터 전송
+    await axios
+      .post(`http://localhost:8000/api/study/${id}/`, {
+        time: time,
+      })
+      .then((response) => {
+        console.log("누적된 시간 서버로 전송됨:", response.data);
+        // console.log("total time : ", response.addedData);
+        const newStudy = study.map((ele) =>
+          ele.id === id ? response.data : ele,
+        );
+        setStudy(newStudy);
+      })
+      .catch((error) => {
+        console.error("데이터 전송 중 에러:", error);
+      });
+
+    // 스톱워치 초기화
+    setTime(0);
+    setIsRunning(false);
+    setRadioChecked(false);
   };
 
   // 선택된 항목의 데이터를 가져오는 함수
@@ -98,6 +139,7 @@ const Table = ({ study, isLoading, setStudy }) => {
           {/* 다른 데이터 필드들을 여기에 추가 */}
         </div>
       )}
+      <div> {time}만큼 공부중!</div>
       <table className="w-11/12 max-w-4xl">
         <thead className="border-b-2 border-black">
           <tr>
@@ -116,7 +158,9 @@ const Table = ({ study, isLoading, setStudy }) => {
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
               <RxLapTimer />
-              <button onClick={handleReset}>리셋</button>
+              <button onClick={() => handleReset(getSelectedItemData().id)}>
+                리셋
+              </button>
             </th>
           </tr>
         </thead>

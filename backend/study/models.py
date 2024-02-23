@@ -23,7 +23,7 @@ class Study(models.Model):
     '''
     study_user_email = models.CharField(max_length=300)
     study_todo = models.CharField(max_length=300)
-    study_duration = models.DurationField(default='00:00:00')  # Duration of study session
+    study_duration = models.DurationField(default=0)  # Duration of study session
     study_completed = models.BooleanField(default=False)
     study_status = models.TimeField(auto_now_add=True)
     study_description = models.CharField(max_length=300)

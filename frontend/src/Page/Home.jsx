@@ -9,7 +9,8 @@ import TodoForm from "../components/TodoForm.jsx";
 import Profile from "../components/Profile.jsx";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
-import PraciceCam from "../components/PraciceCam.jsx";
+import Video from "../components/Video.jsx";
+import PracticeCam from "../components/PracticeCam.jsx";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -20,7 +21,7 @@ function Home() {
 
   //로그인 버튼 시, 로그인 페이지로 전환
   const history = useHistory();
-
+const [stream, setStream] = useState(false);
   useEffect(() => {
     fetchData();
   }, []);
@@ -112,7 +113,7 @@ function Home() {
         </div>
         <div>
           <div>
-            <Video stream={stream} />
+            <PracticeCam />
           </div>
           <div>Graph</div>
         </div>

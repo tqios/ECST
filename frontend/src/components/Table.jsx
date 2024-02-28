@@ -15,7 +15,6 @@ import { FaRegEdit } from "react-icons/fa";
 import { TbProgressCheck } from "react-icons/tb";
 import TodoItem from "./TodoItem.jsx";
 
-import TodoItem from "./TodoItem.jsx";
 
 const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
   const [editText, setEditText] = useState({

@@ -8,20 +8,30 @@ import TodoForm from "../components/TodoForm.jsx";
 import Store from "../TodoRedux/Store.jsx";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+<<<<<<< HEAD
 
 import PracticeCam from "../components/PracticeCam.jsx";
 import Todo from "../components/Todo.jsx";
+=======
+import Video from "../components/Video.jsx";
+import PracticeCam from "../components/PracticeCam.jsx";
+>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
   const [study, setStudy] = useState([]);
+  const [durationTime, setDurationTime] = useState();
   const [isLoading, setisLoading] = useState(true);
   const location = useLocation();
 
   //로그인 버튼 시, 로그인 페이지로 전환
   const history = useHistory();
+<<<<<<< HEAD
 
   const [stream, setStream] = useState(false);
+=======
+const [stream, setStream] = useState(false);
+>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
   useEffect(() => {
     fetchData();
   }, []);
@@ -33,6 +43,7 @@ function Home() {
         const email = location.state.email;
         console.log(email);
 
+<<<<<<< HEAD
         // study_todo 가져오기 위한 axios
         const response = await axios.get("http://127.0.0.1:8000/api/study/", {
           params: {
@@ -53,6 +64,20 @@ function Home() {
           history.push("/login");
         }
       }
+=======
+      // study_todo 가져오기 위한 axios
+      const response = await axios.get("http://127.0.0.1:8000/api/study/", {
+        params: {
+          email: email,
+        },
+      });
+      setUser(response.data.user);
+      setDurationTime(response.data.total_duration_time);
+      setStudy(response.data.feeds);
+      console.log(response.data.feeds);
+
+      setisLoading(false);
+>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +138,7 @@ function Home() {
           <div className="flex items-center text-2xl">
             <FaHeartCirclePlus className="text-rose-400" />
             <div className="ml-2 mt-5 mb-5 font-bold text-2xl">
-              Total Study Time :
+              Total Study Time :{durationTime}
             </div>
           </div>
           <Todo study={study} isLoading={isLoading} setStudy={setStudy} />

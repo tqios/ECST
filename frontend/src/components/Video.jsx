@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from "react";
-import Camerabtn from "./Camerabtn.jsx";
 
 const Video = ({ stream }) => {
   const videoRef = useRef(null);
@@ -18,12 +17,12 @@ const Video = ({ stream }) => {
 
   return (
     <div
-      className="mt-4 w-full"
+      className="mt-4 rounded-lg"
       style={{
         backgroundImage: 'url("https://ifh.cc/g/ZaA3SL.jpg")', // 이미지 URL 설정
         backgroundSize: "cover",
         backgroundPosition: "center",
-        maxWidth: "100%",
+        maxWidth: "150%",
         height: "50vh", // 화면 전체 높이로 설정하려면 사용
         display: "flex",
         justifyContent: "center",

@@ -1,83 +1,95 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
+import { actionCreators } from "../TodoRedux/Actions.jsx";
 import axios from "axios";
-import React, { useState } from "react";
+import TodoItem from "./TodoItem.jsx";
+
 import {
-  MdOutlineDeleteOutline,
-  MdEditNote,
-  MdOutlineCheckBox,
-  MdOutlineCheckBoxOutlineBlank,
-} from "react-icons/md";
+  editTodo,
+  deleteTodo,
+  studyCompleted,
+  resetState,
+  todoText,
+  camStart,
+} from "../TodoRedux/Actions.jsx";
+
+//아이콘
 import { FaCheck } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
-import { FaCamera } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
-import { TbProgressCheck } from "react-icons/tb";
-import TodoItem from "./TodoItem.jsx";
 import { GrPowerReset } from "react-icons/gr";
+import todoItem from "./TodoItem.jsx";
 
-const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
+const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   const [editText, setEditText] = useState({
     study_todo: "",
   });
+  //dispatch:action으로 reducer가 새로운 상태(modify)로 된 걸 렌더링하게 도와주는 역할
+  const dispatch = useDispatch();
   const [selectedItemId, setSelectedItemId] = useState(null);
+  //리덕스 상태 가져오기
+  const todoItem = useSelector((state) => state.todoItem);
+  //삭제
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/study/${id}/`);
-      const newList = study.filter((ele) => ele.id !== id);
-      setStudy(newList);
+      dispatch(deleteTodo(id));
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handleEdit = async (id, value) => {
+  //편집
+  const handleEdit = async (id) => {
     try {
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/study/${id}/`,
-        value,
+        { study_todo: editText.study_todo },
       );
       console.log(response.data);
-      const newStudy = study.map((ele) =>
-        ele.id === id ? response.data : ele,
-      );
-      setStudy(newStudy);
+      // const newStudy = study.map((ele) =>
+      //   ele.id === id ? response.data : ele,
+      // );
+      // setStudy(newStudy);
+      dispatch(editTodo(id, { study_todo: editText.study_todo }));
     } catch (error) {
       console.log(error);
     }
   };
 
+  //todo편집 함수
   const handleChange = (e) => {
-    console.log(e.target.value);
-    setEditText((prev) => ({
-      ...prev,
-      study_todo: e.target.value,
-    }));
-    console.log(editText);
+    const updatedValue = e.target.value;
+    setEditText({ ...editText, study_todo: updatedValue });
   };
 
+  //edit버튼 클릭 버튼
   const handleClick = () => {
-    handleEdit(editText.id, editText);
-    setEditText({
-      study_todo: "",
-    });
+    handleEdit(editText.id);
+    todoText(editText.id, editText.study_todo);
+    setEditText({ study_todo: "" });
   };
 
-  // 투루 완료시 완료상태로 변경하는 함수
-  const handleCheckbox = (id, value) => {
-    handleEdit(id, {
-      study_completed: !value,
-    });
+  //공부 진도 상태
+  const handleCheckbox = (id, study_completed) => {
+    dispatch(studyCompleted(todoItem.id, todoItem.study_completed));
+    console.log(study_completed);
+    console.log(id);
   };
 
   // 공부 시작을 위한 라디오버튼 활성화 함수
   const handleRadioChange = (itemId) => {
     setSelectedItemId(itemId);
+    resetState(itemId);
+    dispatch(camStart(itemId));
   };
 
   // 선택된 항목 초기화
   const handleReset = () => {
     setSelectedItemId(null);
+    resetState(false);
   };
 
   // 선택된 항목의 데이터를 가져오는 함수
@@ -197,4 +209,16 @@ const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
   );
 };
 
-export default Table;
+// mapStateToProps 함수 정의
+const mapStateToProps = (state) => ({
+  todoItems: state.todoItem,
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    studyCompleted: (id, study_completed) =>
+      dispatch(actionCreators.studyCompleted(id, study_completed)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

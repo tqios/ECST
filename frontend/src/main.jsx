@@ -1,10 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import Login from "./Page/Login.jsx";
-import Loginerror from "./Page/Loginerror.jsx";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <App/>
-)
+import { Provider } from "react-redux";
+import Store from "./TodoRedux/Store.jsx";
+
+//ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <Provider store={Store}>
+    <App />
+  </Provider>,
+);

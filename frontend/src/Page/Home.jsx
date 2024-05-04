@@ -2,15 +2,20 @@ import React, { useState, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
+import { Provider } from "react-redux";
 import Table from "../components/Table.jsx";
 import TodoForm from "../components/TodoForm.jsx";
-// import Cam from "../components/Cam.jsx";
-import Profile from "../components/Profile.jsx";
+import Store from "../TodoRedux/Store.jsx";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+<<<<<<< HEAD
+
+import PracticeCam from "../components/PracticeCam.jsx";
+import Todo from "../components/Todo.jsx";
+=======
 import Video from "../components/Video.jsx";
 import PracticeCam from "../components/PracticeCam.jsx";
+>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -21,17 +26,45 @@ function Home() {
 
   //로그인 버튼 시, 로그인 페이지로 전환
   const history = useHistory();
+<<<<<<< HEAD
+
+  const [stream, setStream] = useState(false);
+=======
 const [stream, setStream] = useState(false);
+>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      // 서버에서 받은 응답 데이터에서 사용자 이메일을 가져옴
-      const email = location.state.email;
-      console.log(email);
+      if (location.state && location.state.email) {
+        // 서버에서 받은 응답 데이터에서 사용자 이메일을 가져옴
+        const email = location.state.email;
+        console.log(email);
 
+<<<<<<< HEAD
+        // study_todo 가져오기 위한 axios
+        const response = await axios.get("http://127.0.0.1:8000/api/study/", {
+          params: {
+            email: email,
+          },
+        });
+        setUser(response.data.user);
+
+        console.log(response.data.feeds);
+        await setStudy(response.data.feeds);
+        setisLoading(false);
+      } else {
+        // 로그인 필요한 경우
+        setUser("로그인 필요");
+        //setStudy([]);
+        setisLoading(true);
+        if (!location.state || !location.state.email) {
+          history.push("/login");
+        }
+      }
+=======
       // study_todo 가져오기 위한 axios
       const response = await axios.get("http://127.0.0.1:8000/api/study/", {
         params: {
@@ -44,9 +77,14 @@ const [stream, setStream] = useState(false);
       console.log(response.data.feeds);
 
       setisLoading(false);
+>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handletologin = () => {
+    history.push("/login");
   };
 
   const MenuBtn = () => {
@@ -78,7 +116,7 @@ const [stream, setStream] = useState(false);
           <div className="items-center">
             <CgProfile className="text-3xl text-right" />
           </div>
-          <div>{user}</div>
+          <div onClick={handletologin}>{user}</div>
         </div>
       </div>
       <hr />
@@ -103,13 +141,7 @@ const [stream, setStream] = useState(false);
               Total Study Time :{durationTime}
             </div>
           </div>
-          <Table
-            study={study}
-            isLoading={isLoading}
-            setStudy={setStudy}
-            setStream={setStream}
-            stream={stream}
-          />
+          <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
         </div>
         <div>
           <div>

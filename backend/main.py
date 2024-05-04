@@ -14,7 +14,7 @@ from fastapi.responses import StreamingResponse
 
 # cv2 모듈 import
 
-from PIL import Image
+# from PIL import Image
 import io
 
 

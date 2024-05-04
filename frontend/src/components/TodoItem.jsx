@@ -12,6 +12,8 @@ const TodoItem = ({
   setEditText,
   setStream,
   stream,
+    selectedItemId,
+    onRadioChange
 }) => {
   const videoRef = useRef(null);
   const [startActive, setStartActive] = useState(false);
@@ -78,18 +80,8 @@ const TodoItem = ({
           checked={selectedItemId === todoItem.id}
           onChange={() => onRadioChange(todoItem.id)}
         />
-        <div className="flex">
-          <Camerabtn
-            onClick={start}
-            label="Start"
-            isActive={!!stream}
-          />
-          <Camerabtn
-            onClick={stop}
-            label="Stop"
-            isActive={!stream}
-          />
-        </div>
+
+
       </td>
     </tr>
   );

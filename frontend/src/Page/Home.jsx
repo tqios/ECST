@@ -90,7 +90,7 @@ const [stream, setStream] = useState(false);
       <hr />
 
       {/*박스들*/}
-      <div className="flex">
+      <div className="flex" style={{ color: 'black' }}>
         <div className="bg-indigo-100 min-h-screen p-2 rounded-lg mt-4 w-1/2">
           <nav className="pt-8">
             <h1 className="font-bold text-5xl text-center pb-8">To Do List </h1>

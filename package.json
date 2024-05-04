@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "buffer": "^6.0.3"
+    "@teachablemachine/image": "^0.8.5",
+    "buffer": "^6.0.3",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "prettier": "3.2.5"

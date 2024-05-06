@@ -14,11 +14,8 @@ import { FaCamera } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { TbProgressCheck } from "react-icons/tb";
 import TodoItem from "./TodoItem.jsx";
-<<<<<<< HEAD
 import { GrPowerReset } from "react-icons/gr";
-=======
 
->>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
 
 const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
   const [editText, setEditText] = useState({
@@ -74,28 +71,26 @@ const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
     });
   };
 
-<<<<<<< HEAD
-=======
-  const [selectedItemId, setSelectedItemId] = useState(null);
 
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [radioChecked, setRadioChecked] = useState(false);
-  useEffect(() => {
-    let intervalId;
+  // const [selectedItemId, setSelectedItemId] = useState(null);
+  //
+  // const [time, setTime] = useState(0);
+  // const [isRunning, setIsRunning] = useState(false);
+  // const [radioChecked, setRadioChecked] = useState(false);
+  // useEffect(() => {
+  //   let intervalId;
+  //
+  //   if (isRunning) {
+  //     intervalId = setInterval(() => {
+  //       setTime((prevTime) => prevTime + 1);
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(intervalId);
+  //   }
+  //
+  //   return () => clearInterval(intervalId);
+  // }, [isRunning]);
 
-    if (isRunning) {
-      intervalId = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
-    } else {
-      clearInterval(intervalId);
-    }
-
-    return () => clearInterval(intervalId);
-  }, [isRunning]);
-
->>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
   // 공부 시작을 위한 라디오버튼 활성화 함수
   const handleRadioChange = (itemId) => {
     setSelectedItemId(itemId);
@@ -181,17 +176,17 @@ const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
               </span>
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
-<<<<<<< HEAD
-              <div className="flex items-center">
-                <GrPowerReset />
-                <button onClick={handleReset}>Reset</button>
-              </div>
-=======
-              <RxLapTimer />
-              <button onClick={() => handleReset(getSelectedItemData().id)}>
-                리셋
-              </button>
->>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0
+{/*<<<<<<< HEAD*/}
+{/*              <div className="flex items-center">*/}
+{/*                <GrPowerReset />*/}
+{/*                <button onClick={handleReset}>Reset</button>*/}
+{/*              </div>*/}
+{/*=======*/}
+{/*              <RxLapTimer />*/}
+{/*              <button onClick={() => handleReset(getSelectedItemData().id)}>*/}
+{/*                리셋*/}
+{/*              </button>*/}
+{/*>>>>>>> dadaffef1d673510062569035cc5e4d9818ae8b0*/}
             </th>
           </tr>
         </thead>

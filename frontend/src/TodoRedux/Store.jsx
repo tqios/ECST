@@ -6,7 +6,7 @@ import {
   STUDY_STATE,
   TODO_TEXT,
   RESET_STATE,
-  CAM_START,
+  CAM_START
 } from "../TodoRedux/Actions.jsx";
 import todoItem from "../components/TodoItem.jsx";
 import { useSelector } from "react-redux";

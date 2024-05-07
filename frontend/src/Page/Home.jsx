@@ -70,7 +70,7 @@ function Home() {
 
   const MenuBtn = () => {
     return (
-      <nav className="menu" style={{ textAlign: "center" }}>
+      <nav className="menu" style={{ padding: '0px', textAlign: "center" }}>
         <div>
           <button className="m-5 outline-none custom-btn btn-1 text-base">
             내 수업
@@ -91,18 +91,18 @@ function Home() {
       {/*머리*/}
       <div className="flex justify-between items-center">
         <div className="text-7xl font-bold">
-          <h1>Learning Mate</h1>
+          <h1 style={{ margin: '20px' }}>Learning Mate</h1>
         </div>
-        <div>
-          <div className="items-center">
-            <CgProfile className="text-3xl text-right" />
+        <div style={{ textAlign: 'center', margin: '10px', marginTop: '30px' }}>
+          <div className="items-center" style={{ marginLeft: 'auto', marginRight: 'auto', width: '50%' }}>
+            <CgProfile className="text-3xl text-left" />
           </div>
           <div onClick={handletologin}>{user}</div>
         </div>
       </div>
       <hr />
       {/*메뉴바*/}
-      <div className="p-2 bg-blue-950 text-white font-bold">
+      <div className="bg-blue-950 text-white font-bold">
         <MenuBtn />
         {/*{user}*/}
       </div>
@@ -110,7 +110,7 @@ function Home() {
 
       {/*박스들*/}
       <div className="flex" style={{ color: 'black' }}>
-        <div className="bg-indigo-100 min-h-screen p-2 rounded-lg mt-4 w-1/2">
+        <div className="bg-indigo-100 min-h-screen p-2 mt-0 w-1/2">
           <nav className="pt-8">
             <h1 className="font-bold text-5xl text-center pb-8">To Do List </h1>
           </nav>
@@ -134,7 +134,7 @@ function Home() {
         onPredict={(prediction)=>{
           console.log(prediction[0].probability);
         }}
-        model_url="https://teachablemachine.withgoogle.com/models/C4AwVVXHM/"></ImageModel>
+        model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"></ImageModel>
           </div>
           <div>Graph</div>
         </div>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import * as tmImage from '@teachablemachine/image';
 
 import {
-    camState, STUDY_STATE
+    //camState, STUDY_STATE
 } from "../TodoRedux/Actions.jsx";
 const Image = ({model_url, onPredict, preview=true, size=200, info=true, interval=null}) => {
     const [prediction, setPrediction] = useState(null);

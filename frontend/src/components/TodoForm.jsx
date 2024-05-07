@@ -49,7 +49,7 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
   };
 
   return (
-    <>
+    <div className="flex items-center">
       <input
         type="text"
         placeholder="Add Todo"
@@ -58,10 +58,10 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={postTodo} className="btn btn-primary ml-2">
+      <button onClick={postTodo} className="btn btn-primary ml-2 border-gray-700 bg-white text-black hover:bg-gray-400 focus:outline-none focus:shadow-outline hover:text-black transition duration-300">
         Add Todo
       </button>
-    </>
+    </div>
   );
 };
 

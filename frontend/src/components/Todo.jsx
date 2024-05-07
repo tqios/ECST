@@ -106,8 +106,8 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
       {selectedItemData && (
         <div>
           <h2>선택된 항목 데이터:</h2>
-          <p>ID: {selectedItemData.id}</p>
-          <p>Name: {selectedItemData.study_todo}</p>
+          <p>NUM.: {selectedItemData.id}</p>
+          <p>Content: {selectedItemData.study_todo}</p>
           {/* 다른 데이터 필드들을 여기에 추가 */}
         </div>
       )}

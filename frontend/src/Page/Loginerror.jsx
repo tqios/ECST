@@ -84,7 +84,7 @@ function Loginerror() {
                     <button
                         type="button"
                         onClick={handlesignin}
-                        className="relative bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-transparent hover:text-purple-500 transition duration-300"
+                        className="relative bg-sky-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-transparent hover:text-black transition duration-300"
                     >
 
                         <span className="relative z-10">Sign in</span>

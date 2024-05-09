@@ -90,7 +90,7 @@ function Home() {
         <div>
             {/*머리*/}
             <div className="flex justify-between items-center">
-                <div className="text-xl font-bold ml-6">
+                <div className="text-5xl font-bold ml-6">
                     <h1>Learning Mate</h1>
                 </div>
                 <div style={{ textAlign: 'center', margin: '10px', marginTop: '30px' }}>
@@ -114,8 +114,8 @@ function Home() {
                 <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
 
 
-                    <div className="ml-2 mt-5 mb-5 font-bold text-4xl">
-                        총 누적 공부시간 :{durationTime}
+                    <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
+                        누적 공부시간 :{durationTime}
                     </div>
 
 
@@ -123,7 +123,7 @@ function Home() {
                         <div className="bg-sky-100 min-h-screen p-2 rounded-lg mt-4 w-full">
 
                             <nav className="pt-8">
-                                <h1 className="font-bold text-5xl text-left pb-8 ml-4 text-gray-800">To Do List </h1>
+                                <h1 className="font-bold text-3xl text-left pb-8 ml-4">To Do List </h1>
                             </nav>
                             {/* Body */}
                             <TodoForm user={user} setStudy={setStudy} fetchData={fetchData}/>
@@ -143,7 +143,7 @@ function Home() {
                                     onPredict={(prediction) => {
                                         console.log(prediction[0].probability);
                                     }}
-                                    model_url="https://teachablemachine.withgoogle.com/models/C4AwVVXHM/"></ImageModel>
+                                    model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"></ImageModel>
 
                             </div>
                             <div>Graph</div>

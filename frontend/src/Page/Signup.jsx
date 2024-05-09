@@ -166,12 +166,12 @@ function Signup() {
 
     return (
 
-        <div className="bg-blue-950">
-            <div className="bg-blue-950">
-                <header className="text-white text-center text-7xl signup-title py-6 font-bold  sans-serif mt-4">
+        <div>
+            <div className="bg-white">
+                <header className="text-black text-center text-3xl signup-title py-6 font-bold  sans-serif mt-8">
                     <h1>Let's be friends!</h1>
                 </header>
-                <div className="text-center bg-blue-950">
+                <div className="text-center bg-white">
                     <div className="mx-auto shadow-md  w-80 p-16 mb-10 bg-white">
                         <form action='http://localhost:8000/api/join/' method='post' onSubmit={onSubmit}>
                             <label htmlFor="id"></label>

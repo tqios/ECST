@@ -14,6 +14,7 @@ import Todo from "../components/Todo.jsx";
 import { ImageModel } from "../components/index";
 import Graph from "../components/Graph.jsx";
 // import ImageModel from "../components/Image.jsx";
+import StopWatch from "../components/StopWatch.jsx";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -158,10 +159,18 @@ function Home() {
       {/*박스들*/}
 
       <div className="flex">
-        <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
-          <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
-            누적 공부시간 :{durationTime}
-          </div>
+          <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
+
+
+                    <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
+                        <StopWatch />
+                        누적 공부시간 :{durationTime}
+                    </div>
+      {/*<div className="flex">*/}
+      {/*  <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">*/}
+      {/*    <div className="ml-2 mt-5 mb-5 font-bold text-3xl">*/}
+      {/*      누적 공부시간 :{durationTime}*/}
+      {/*    </div>*/}
 
           <div className="flex" style={{ color: "black" }}>
             <div className="bg-sky-100 min-h-screen p-2 rounded-lg mt-4 w-full">
@@ -197,7 +206,6 @@ function Home() {
         </div>
       </div>
     </div>
-  );
-}
+  );}
 
 export default Home;

@@ -9,6 +9,10 @@
 git clone https://github.com/자기이름/ECST.git
 ```
 
+graph 그리기 위한 설치
+'''
+npm install react-chartjs-2 chart.js
+'''
 
 frontend 필요한 모듈 설치
 

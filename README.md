@@ -1,6 +1,7 @@
 # 프로젝트 가져오는 절차
 
 보이니?
+
 1. 본인 깃허브로 `fork`
 
 2. `fork`한 repository clone(복제하기) : 프로젝트가 운영될 폴더하나 생성하고 `git bash`나 터미널에서 해당 폴더 밑에서 명령어작업이든 머든 해야함
@@ -12,14 +13,17 @@ git clone https://github.com/자기이름/ECST.git
 ```
 
 graph 그리기 위한 설치
-'''
+
+```
 npm install react-chartjs-2 chart.js
-'''
+```
+
 달력 그리기
-'''
+
+```
 npm install react-datepicker date-fns
 npm install —save-dev @types/react-datepicker
-'''
+```
 
 frontend 필요한 모듈 설치
 

@@ -36,7 +36,7 @@ function Home() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [graphActive]);
 
   const fetchData = async () => {
     try {
@@ -191,7 +191,7 @@ function Home() {
                   preview={true}
                   size={300}
                   info={true}
-                  interval={500}
+                  interval={50}
                   onPredict={handlePredict}
                   model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"
                   setGraphActive={setGraphActive}

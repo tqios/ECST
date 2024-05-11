@@ -13,7 +13,8 @@ const Image = ({
   size,
   info = true,
   interval = null,
-    setGraphActive
+    setGraphActive,
+    onStart
 }) => {
   const [prediction, setPrediction] = useState(null);
   let [webcam, setWebcam] = useState(null);
@@ -35,6 +36,8 @@ const Image = ({
     await webcam.play();
 
     setWebcam(webcam);
+    setGraphActive(true);
+
     dispatch(studyStart())
 
     if (interval === null) {
@@ -78,34 +81,15 @@ const Image = ({
       if (webcam) {
         webcam.stop(); // 웹캠 정지
         setWebcam(null); // 웹캠 상태 초기화
+                setGraphActive(false); // 그래프 업데이트 비활성화
+        dispatch(studyStop())
       } else {
-        setGraphActive(false); // 그래프 업데이트 비활성화
         setWebcam(webcam);
         setGraphActive(false); // 그래프 업데이트 중단
       }
     }
     async function start() {
-      // const modelURL = model_url + "model.json";
-      // const metadataURL = model_url + "metadata.json";
-      // const model = await tmImage.load(modelURL, metadataURL);
-      //
-      // const flip = true; // whether to flip the webcam
-      // webcam = new tmImage.Webcam(size, size, flip); // width, height, flip
-      // await webcam.setup(); // request access to the webcam
-      // await webcam.play();
-      // setWebcam(webcam);
-      //
-      // setGraphActive(true); // 그래프 활성화
-      //
-      // if (interval === null) {
-      //   requestRef.current = window.requestAnimationFrame(loop);
-      // } else {
-      //   intervalRef.current = setTimeout(loop, interval);
-      // }
-      //
-      // if (preview) {
-      //   previewRef.current.replaceChildren(webcam.canvas);
-      // }
+
       init();
     }
   useEffect(() => {

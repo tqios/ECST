@@ -2,11 +2,15 @@ import React, { useState } from "react";
 // import "./StopWatch.css";
 import Timer from "./Timer";
 import ControlButtons from "./ControlButtons";
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from '../TodoRedux/counterSlice'
 
 function StopWatch() {
     const [isActive, setIsActive] = useState(false);
     const [isPaused, setIsPaused] = useState(true);
     const [time, setTime] = useState(0);
+    const count = useSelector((state) => state.counter.value)
+  const dispatch = useDispatch()
 
     React.useEffect(() => {
         let interval = null;
@@ -39,6 +43,7 @@ function StopWatch() {
 
     return (
         <div className="stop-watch">
+
             <Timer time={time} />
             <ControlButtons
                 active={isActive}

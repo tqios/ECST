@@ -7,7 +7,7 @@ const initialState = {
 export const currTodo = createSlice({
   name: 'todoMutator',
   initialState: {
-    value: "공부항목을 선택하세요",
+    value: "없습니다!",
     isStudy: false,
   },
   reducers: {

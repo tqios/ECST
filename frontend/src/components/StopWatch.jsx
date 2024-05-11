@@ -4,6 +4,7 @@ import Timer from "./Timer";
 import ControlButtons from "./ControlButtons";
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment } from '../TodoRedux/counterSlice'
+import {studyStop} from "../TodoRedux/currTodo.jsx";
 
 function StopWatch() {
     const [isActive, setIsActive] = useState(false);
@@ -11,6 +12,7 @@ function StopWatch() {
     const [time, setTime] = useState(0);
     const count = useSelector((state) => state.counter.value)
   const dispatch = useDispatch()
+  const isStudy = useSelector((state) => state.todoModifier.isStudy);
 
     React.useEffect(() => {
         let interval = null;
@@ -22,10 +24,17 @@ function StopWatch() {
         } else {
             clearInterval(interval);
         }
+        if(isStudy) {
+            handleStart()
+        } else {
+            handleReset()
+        }
         return () => {
             clearInterval(interval);
         };
-    }, [isActive, isPaused]);
+
+
+    }, [isActive, isPaused, isStudy]);
 
     const handleStart = () => {
         setIsActive(true);
@@ -38,6 +47,8 @@ function StopWatch() {
 
     const handleReset = () => {
         setIsActive(false);
+        dispatch(studyStop())
+
         setTime(0);
     };
 

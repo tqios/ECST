@@ -35,6 +35,7 @@ const Image = ({
     await webcam.play();
 
     setWebcam(webcam);
+    dispatch(studyStart())
 
     if (interval === null) {
       requestRef.current = window.requestAnimationFrame(loop);

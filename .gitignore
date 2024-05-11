@@ -1,6 +1,19 @@
 .# Created by https://www.toptal.com/developers/gitignore/api/node,opencv,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,opencv,venv
 
+# Python byte-compiled files
+backend/*.pyc
+backend/__pycache__/
+backend/backend/__pycache__/
+
+
+backend/study/migrations/
+backend/todo/__pycache__/
+backend/todo/migrations/
+backend/user/__pycache__/
+backend/user/migrations/
+backend/db.sqlite3
+
 ### Node ###
 # Logs
 logs

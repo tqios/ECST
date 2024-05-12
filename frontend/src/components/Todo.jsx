@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { connect } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { actionCreators } from "../TodoRedux/Actions.jsx";
 import axios from "axios";
 import TodoItem from "./TodoItem.jsx";
-
-import {
-  editTodo,
-  deleteTodo,
-  studyCompleted,
-  resetState,
-  todoText,
-  camStart,
-} from "../TodoRedux/Actions.jsx";
+import { todoElementMutator, studyStop, studyStart} from "../TodoRedux/currTodo.jsx";
 
 //아이콘
-import { FaCheck } from "react-icons/fa";
+import { FaCheck,FaRegEdit } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
-import todoItem from "./TodoItem.jsx";
 
 const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   const [editText, setEditText] = useState({
@@ -31,29 +20,31 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   const dispatch = useDispatch();
   const [selectedItemId, setSelectedItemId] = useState(null);
   //리덕스 상태 가져오기
-  const todoItem = useSelector((state) => state.todoItem);
+  const curr = useSelector((state) => state.todoModifier.value);
+  const isStudy = useSelector((state) => state.todoModifier.isStudy);
   //삭제
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/study/${id}/`);
-      dispatch(deleteTodo(id));
+      const newList = study.filter(todo => todo.id !== id)
+      setStudy(newList)
+      // dispatch(deleteTodo(id));
     } catch (error) {
       console.log(error);
     }
   };
   //편집
-  const handleEdit = async (id) => {
-    try {
+  const handleEdit = async (id, value) => {
+     try {
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/study/${id}/`,
-        { study_todo: editText.study_todo },
+        value,
       );
       console.log(response.data);
-      // const newStudy = study.map((ele) =>
-      //   ele.id === id ? response.data : ele,
-      // );
-      // setStudy(newStudy);
-      dispatch(editTodo(id, { study_todo: editText.study_todo }));
+      const newStudy = study.map((ele) =>
+        ele.id === id ? response.data : ele,
+      );
+      setStudy(newStudy);
     } catch (error) {
       console.log(error);
     }
@@ -62,34 +53,52 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   //todo편집 함수
   const handleChange = (e) => {
     const updatedValue = e.target.value;
+    console.log(updatedValue);
+    // dispatch(todoElementMutator(updatedValue))
     setEditText({ ...editText, study_todo: updatedValue });
   };
 
   //edit버튼 클릭 버튼
   const handleClick = () => {
-    handleEdit(editText.id);
-    todoText(editText.id, editText.study_todo);
+    // handleEdit(editText.id);
+    // console.log(editText.study_todo)
+    setEditText(editText.id, editText.study_todo);
+    handleEdit(editText.id, editText);
+    setEditText({
+      study_todo: "",
+    });
+        // dispatch(todoElementMutator(updatedValue))
+
     setEditText({ study_todo: "" });
   };
 
+
   //공부 진도 상태
   const handleCheckbox = (id, study_completed) => {
-    dispatch(studyCompleted(todoItem.id, todoItem.study_completed));
+    // dispatch(studyCompleted(todoItem.id, todoItem.study_completed));
+    handleEdit(id, {
+      'study_completed': !study_completed
+    })
     console.log(study_completed);
     console.log(id);
   };
 
   // 공부 시작을 위한 라디오버튼 활성화 함수
-  const handleRadioChange = (itemId) => {
-    setSelectedItemId(itemId);
-    resetState(itemId);
-    dispatch(camStart(itemId));
+  const handleRadioChange = (id, item) => {
+    setSelectedItemId(id)
+    console.log("clilcked");
+
+
+    dispatch(studyStart())
+    dispatch(todoElementMutator(item))
+
+    console.log(isStudy)
   };
 
   // 선택된 항목 초기화
   const handleReset = () => {
-    setSelectedItemId(null);
-    resetState(false);
+    dispatch(studyStop())
+    dispatch(todoElementMutator("공부항목을 선택해주세요"))
   };
 
   // 선택된 항목의 데이터를 가져오는 함수
@@ -103,14 +112,10 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
 
   return (
     <div>
-      {selectedItemData && (
-        <div>
-          <h2>선택된 항목 데이터:</h2>
-          <p>NUM.: {selectedItemData.id}</p>
-          <p>Content: {selectedItemData.study_todo}</p>
-          {/* 다른 데이터 필드들을 여기에 추가 */}
-        </div>
-      )}
+
+      <div>
+        <span>현재 : {curr}</span>
+      </div>
       <table className="w-11/12 max-w-4xl">
         <thead className="border-b-2 border-black">
           <tr>

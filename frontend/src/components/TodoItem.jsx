@@ -78,7 +78,7 @@ const TodoItem = ({
           id={todoItem.id}
           value={todoItem.id}
           checked={selectedItemId === todoItem.id}
-          onChange={() => onRadioChange(todoItem.id)}
+          onChange={() => onRadioChange(todoItem.id, todoItem.study_todo)}
         />
 
 

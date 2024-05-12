@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Provider } from "react-redux";
 import Table from "../components/Table.jsx";
 import TodoForm from "../components/TodoForm.jsx";
-import Store from "../TodoRedux/Store.jsx";
+// import store from "../TodoRedux/Store.jsx";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
 import PracticeCam from "../components/PracticeCam.jsx";
@@ -186,10 +186,10 @@ function Home() {
             </div>
             <div>
               <div>
-                <PracticeCam />
+                {/*<PracticeCam />*/}
                 <ImageModel
                   preview={true}
-                  size={200}
+                  size={300}
                   info={true}
                   interval={500}
                   onPredict={handlePredict}

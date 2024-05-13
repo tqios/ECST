@@ -112,7 +112,7 @@ const Image = ({
       <div id="webcam-container" ref={previewRef} />
       {
         result && <div>
-            현재 상태 : {result[0].className} {result[0].probability}
+            현재 상태 : {result[0].className} {(result[0].probability * 100).toFixed(1) + '%'}
           </div>
       }
 

@@ -133,7 +133,7 @@ const Image = ({
   return (
       <div>
         <div id="webcam-container" ref={previewRef}/>
-        <div> status: {label}</div>
+        {/*<div> status: {label}</div>*/}
 
       </div>
   );

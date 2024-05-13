@@ -1,20 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  MdOutlineDeleteOutline,
-  MdEditNote,
-  MdOutlineCheckBox,
-  MdOutlineCheckBoxOutlineBlank,
-} from "react-icons/md";
+
 import { FaCheck } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
-import { FaCamera } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
-import { TbProgressCheck } from "react-icons/tb";
 import TodoItem from "./TodoItem.jsx";
-import { GrPowerReset } from "react-icons/gr";
 
 
 const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
@@ -71,25 +63,6 @@ const Table = ({ study, isLoading, setStudy, setStream, stream }) => {
     });
   };
 
-
-  // const [selectedItemId, setSelectedItemId] = useState(null);
-  //
-  // const [time, setTime] = useState(0);
-  // const [isRunning, setIsRunning] = useState(false);
-  // const [radioChecked, setRadioChecked] = useState(false);
-  // useEffect(() => {
-  //   let intervalId;
-  //
-  //   if (isRunning) {
-  //     intervalId = setInterval(() => {
-  //       setTime((prevTime) => prevTime + 1);
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(intervalId);
-  //   }
-  //
-  //   return () => clearInterval(intervalId);
-  // }, [isRunning]);
 
   // 공부 시작을 위한 라디오버튼 활성화 함수
   const handleRadioChange = (itemId) => {

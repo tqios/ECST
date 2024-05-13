@@ -58,7 +58,6 @@ const TodoItem = ({
       <td className="p-3 text-sm" title={todoItem.id}>
         {todoItem.study_todo}
       </td>
-      <td className="p-3 text-sm font-medium">{todoItem.study_duration}</td>
       <td className="p-3 font-medium grid grid-flow-col items-center mt-3">
         <span className="text-3xl cursor-pointer">
           <label htmlFor="my-modal">

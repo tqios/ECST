@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import * as tmImage from "@teachablemachine/image";
 import { useDispatch, useSelector, connect } from "react-redux";
 
-import { todoElementMutator, studyStop, studyStart} from "../TodoRedux/currTodo.jsx";
+import {
+  todoElementMutator,
+  studyStop,
+  studyStart,
+} from "../TodoRedux/currTodo.jsx";
 
 import {} from //camState, STUDY_STATE
 "../TodoRedux/Actions.jsx";
@@ -13,8 +17,7 @@ const Image = ({
   size,
   info = true,
   interval = null,
-    setGraphActive,
-    onStart
+  setGraphActive,
 }) => {
   const [prediction, setPrediction] = useState(null);
   let [webcam, setWebcam] = useState(null);
@@ -23,7 +26,6 @@ const Image = ({
   const intervalRef = React.useRef();
   const dispatch = useDispatch();
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
-
 
   async function init() {
     const modelURL = model_url + "model.json";
@@ -36,9 +38,8 @@ const Image = ({
     await webcam.play();
 
     setWebcam(webcam);
-    setGraphActive(true);
 
-    dispatch(studyStart())
+    setGraphActive(true); // 그래프 활성화
 
     if (interval === null) {
       requestRef.current = window.requestAnimationFrame(loop);
@@ -50,11 +51,8 @@ const Image = ({
       previewRef.current.replaceChildren(webcam.canvas);
     }
 
-
-
     async function loop() {
-      if (webcam === null) {
-      } else {
+      if (webcam !== null) {
         webcam.update(); // update the webcam frame
         await predict();
       }
@@ -63,6 +61,22 @@ const Image = ({
       } else {
         intervalRef.current = setTimeout(loop, interval);
       }
+      // if (webcam !== null && setGraphActive) {
+      //   webcam.update(); // update the webcam frame
+      //   await predict();
+      //   if (interval === null) {
+      //     requestRef.current = window.requestAnimationFrame(loop);
+      //   } else {
+      //     intervalRef.current = setTimeout(loop, interval);
+      //   }
+      // } else {
+      //   // 그래프 비활성화 상태거나 웹캠이 없으면 루프 중지
+      //   if (interval === null) {
+      //     cancelAnimationFrame(requestRef.current);
+      //   } else {
+      //     clearTimeout(intervalRef.current);
+      //   }
+      // }
     }
     async function predict() {
       // predict can take in an image, video or canvas html element
@@ -72,35 +86,31 @@ const Image = ({
         onPredict(prediction);
       }
     }
-
-
   }
 
-
-   async function stop() {
-      if (webcam) {
-        webcam.stop(); // 웹캠 정지
-        setWebcam(null); // 웹캠 상태 초기화
-                setGraphActive(false); // 그래프 업데이트 비활성화
-        dispatch(studyStop())
-      } else {
-        setWebcam(webcam);
-        setGraphActive(false); // 그래프 업데이트 중단
-      }
+  async function stop() {
+    if (webcam) {
+      webcam.stop(); // 웹캠 정지
+      setWebcam(null); // 웹캠 상태 초기화
+      setGraphActive(false);
     }
-    async function start() {
-
-      init();
-    }
+    // else {
+    //   setGraphActive(false); // 그래프 업데이트 비활성화
+    //   setWebcam(webcam);
+    //   setGraphActive(false); // 그래프 업데이트 비활성화
+    //   //props.setGraphActive(false); // 그래프 업데이트 중단
+    // }
+  }
+  async function start() {
+    init();
+  }
   useEffect(() => {
-    // init();
     if (!isStudy) {
-      console.log("공분ㄴㄴㄴ")
-      stop()
+      console.log("Stop state detected");
+      stop();
     } else {
-      console.log("시작햇지!")
-      start()
-      // webcam.stop()
+      console.log("Start state detected");
+      start();
     }
 
     return () => {
@@ -109,9 +119,8 @@ const Image = ({
       } else {
         clearTimeout(intervalRef.current);
       }
-      // document.querySelector('#webcam-container').firstChild?.remove();
     };
-  }, [model_url, isStudy]);
+  }, [model_url, isStudy, setGraphActive]);
 
   let label = [];
   if (info && prediction) {
@@ -136,8 +145,6 @@ const Image = ({
   }
   return (
     <div>
-      <button onClick={init}>START</button>
-      <button onClick={stop}>STOP</button>
       <div id="webcam-container" ref={previewRef} />
       <div> status: {label}</div>
     </div>

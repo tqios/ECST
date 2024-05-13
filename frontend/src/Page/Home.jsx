@@ -11,9 +11,9 @@ import { useLocation } from "react-router-dom";
 import PracticeCam from "../components/PracticeCam.jsx";
 import TeachableMachineModel from "../components/Image.jsx";
 import Todo from "../components/Todo.jsx";
-import { ImageModel } from "../components/index";
+//import { ImageModel } from "../components/index";
 import Graph from "../components/Graph.jsx";
-// import ImageModel from "../components/Image.jsx";
+import ImageModel from "../components/Image.jsx";
 import StopWatch from "../components/StopWatch.jsx";
 
 function Home() {
@@ -93,13 +93,31 @@ function Home() {
         (p) => p.className === "Concentration"
       );
       if (concentration) {
-        setDataPoints((prevPoints) => {
-          const newPoints = [...prevPoints, concentration.probability * 100];
-          return newPoints.slice(-10); // 최근 10분간의 데이터만 유지
-        });
+        setDataPoints((prevPoints) => [
+          ...prevPoints,
+          concentration.probability * 100,
+        ]);
       }
     }
   };
+
+  // const handlePredict = (prediction) => {
+  //   if (graphActive) {
+  //     const concentration = prediction.find(
+  //       (p) => p.className === "Concentration"
+  //     );
+  //     if (concentration) {
+  //       setDataPoints((prevPoints) => {
+  //         setDataPoints((prevPoints) => [
+  //           ...prevPoints,
+  //           concentration.probability * 100,
+  //         ]);
+  //         // const newPoints = [...prevPoints, concentration.probability * 100];
+  //         // return newPoints.slice(-10); // 최근 10분간의 데이터만 유지
+  //       });
+  //     }
+  //   }
+  // };
 
   const handleStart = () => {
     setDataPoints([]); // 그래프 데이터 리셋
@@ -159,18 +177,16 @@ function Home() {
       {/*박스들*/}
 
       <div className="flex">
-          <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
-
-
-                    <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
-                        <StopWatch />
-                        누적 공부시간 :{durationTime}
-                    </div>
-      {/*<div className="flex">*/}
-      {/*  <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">*/}
-      {/*    <div className="ml-2 mt-5 mb-5 font-bold text-3xl">*/}
-      {/*      누적 공부시간 :{durationTime}*/}
-      {/*    </div>*/}
+        <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
+          <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
+            <StopWatch />
+            누적 공부시간 :{durationTime}
+          </div>
+          {/*<div className="flex">*/}
+          {/*  <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">*/}
+          {/*    <div className="ml-2 mt-5 mb-5 font-bold text-3xl">*/}
+          {/*      누적 공부시간 :{durationTime}*/}
+          {/*    </div>*/}
 
           <div className="flex" style={{ color: "black" }}>
             <div className="bg-sky-100 min-h-screen p-2 rounded-lg mt-4 w-full">
@@ -195,17 +211,18 @@ function Home() {
                   onPredict={handlePredict}
                   model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"
                   setGraphActive={setGraphActive}
-                  onStart={handleStart} // 추가: 시작 핸들러
+                  //onStart={handleStart} // 추가: 시작 핸들러
                 />
               </div>
               <div>
-                <Graph dataPoints={dataPoints} active={graphActive}></Graph>
+                <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );}
+  );
+}
 
 export default Home;

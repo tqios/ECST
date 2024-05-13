@@ -86,8 +86,7 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   // 공부 시작을 위한 라디오버튼 활성화 함수
   const handleRadioChange = (id, item) => {
     setSelectedItemId(id)
-    console.log("clilcked");
-
+    console.log("change Todo element");
 
     dispatch(studyStart())
     dispatch(todoElementMutator(item))
@@ -129,12 +128,6 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
               <div className="flex items-center">
                 <RiCalendarTodoFill />
                 ToDo
-              </div>
-            </th>
-            <th className="p-3 text-sm font-semibold tracking-wide  items-center">
-              <div className="flex items-center">
-                <RxLapTimer className="text-sm" />
-                Study Time
               </div>
             </th>
 

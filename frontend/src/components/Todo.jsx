@@ -3,10 +3,14 @@ import { useDispatch, useSelector, connect } from "react-redux";
 import { actionCreators } from "../TodoRedux/Actions.jsx";
 import axios from "axios";
 import TodoItem from "./TodoItem.jsx";
-import { todoElementMutator, studyStop, studyStart} from "../TodoRedux/currTodo.jsx";
+import {
+  todoElementMutator,
+  studyStop,
+  studyStart,
+} from "../TodoRedux/currTodo.jsx";
 
 //아이콘
-import { FaCheck,FaRegEdit } from "react-icons/fa";
+import { FaCheck, FaRegEdit } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
@@ -26,8 +30,8 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/study/${id}/`);
-      const newList = study.filter(todo => todo.id !== id)
-      setStudy(newList)
+      const newList = study.filter((todo) => todo.id !== id);
+      setStudy(newList);
       // dispatch(deleteTodo(id));
     } catch (error) {
       console.log(error);
@@ -35,14 +39,14 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   };
   //편집
   const handleEdit = async (id, value) => {
-     try {
+    try {
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/study/${id}/`,
-        value,
+        value
       );
       console.log(response.data);
       const newStudy = study.map((ele) =>
-        ele.id === id ? response.data : ele,
+        ele.id === id ? response.data : ele
       );
       setStudy(newStudy);
     } catch (error) {
@@ -67,37 +71,36 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
     setEditText({
       study_todo: "",
     });
-        // dispatch(todoElementMutator(updatedValue))
+    // dispatch(todoElementMutator(updatedValue))
 
     setEditText({ study_todo: "" });
   };
-
 
   //공부 진도 상태
   const handleCheckbox = (id, study_completed) => {
     // dispatch(studyCompleted(todoItem.id, todoItem.study_completed));
     handleEdit(id, {
-      'study_completed': !study_completed
-    })
+      study_completed: !study_completed,
+    });
     console.log(study_completed);
     console.log(id);
   };
 
   // 공부 시작을 위한 라디오버튼 활성화 함수
   const handleRadioChange = (id, item) => {
-    setSelectedItemId(id)
+    setSelectedItemId(id);
     console.log("change Todo element");
 
-    dispatch(studyStart())
-    dispatch(todoElementMutator(item))
+    dispatch(studyStart());
+    dispatch(todoElementMutator(item));
 
-    console.log(isStudy)
+    console.log(isStudy);
   };
 
   // 선택된 항목 초기화
   const handleReset = () => {
-    dispatch(studyStop())
-    dispatch(todoElementMutator("공부항목을 선택해주세요"))
+    dispatch(studyStop());
+    dispatch(todoElementMutator("공부항목을 선택해주세요"));
   };
 
   // 선택된 항목의 데이터를 가져오는 함수
@@ -111,7 +114,6 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
 
   return (
     <div>
-
       <div>
         <span>현재의 TODO : {curr}</span>
       </div>
@@ -193,8 +195,7 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
             <label
               htmlFor="my-modal"
               onClick={handleClick}
-              className="btn btn-primary"
-            >
+              className="btn btn-primary">
               Edit
             </label>
             <label htmlFor="my-modal" className="btn">

@@ -84,15 +84,19 @@ function Home() {
 
   const handlePredict = (prediction) => {
     if (graphActive) {
+      console.log("graphActive trueOOOOOOOOO");
       const concentration = prediction.find(
         (p) => p.className === "Concentration"
       );
       if (concentration) {
+        console.log("concentration trueOOOOOOOO");
         setDataPoints((prevPoints) => [
           ...prevPoints,
           concentration.probability * 100,
         ]);
       }
+    } else {
+      console.log("graphactive false------");
     }
   };
 
@@ -219,13 +223,14 @@ function Home() {
                   />
                 )}
               </div>
+
               <div>
                 <CategoryImageModel
                   preview={false}
                   size={300}
                   info={true}
                   interval={50}
-                  // onPredict={handlePredict}
+                  onPredict={handlePredict}
                   model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
                 />
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>

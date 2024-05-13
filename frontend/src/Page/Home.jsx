@@ -6,9 +6,9 @@ import TodoForm from "../components/TodoForm.jsx";
 import { useLocation } from "react-router-dom";
 import Todo from "../components/Todo.jsx";
 import Graph from "../components/Graph.jsx";
-import {ImageModel, CategoryImageModel} from "../components/index.ts"
+import { ImageModel, CategoryImageModel } from "../components/index.ts";
 import StopWatch from "../components/StopWatch.jsx";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -28,7 +28,6 @@ function Home() {
   const [stream, setStream] = useState(false);
   const [isNear, setIsNear] = React.useState(false);
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
-
 
   useEffect(() => {
     fetchData();
@@ -175,8 +174,9 @@ function Home() {
       <div className="flex">
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
           <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
-            <StopWatch />
-            누적 공부시간 :{durationTime}
+            누적 공부시간 :<StopWatch />
+            {/* <StopWatch />
+            누적 공부시간 :{durationTime} */}
           </div>
           {/*<div className="flex">*/}
           {/*  <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">*/}
@@ -197,30 +197,36 @@ function Home() {
               <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
             </div>
             <div>
-              <div style={{width:'400px', height:'300px', background : 'black'}}>
+              <div
+                style={{
+                  width: "400px",
+                  height: "300px",
+                  background: "black",
+                }}>
                 {/*<PracticeCam />*/}
-                { isStudy &&
-
-                    <ImageModel
-                      preview={true}
-                      size={300}
-                      info={true}
-                      interval={50}
-                      onPredict={handlePredict}
-                      model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"
-                      setGraphActive={setGraphActive}
-                      //onStart={handleStart} // 추가: 시작 핸들러
-                    />
-                }
+                {isStudy && (
+                  <ImageModel
+                    preview={true}
+                    size={300}
+                    info={true}
+                    interval={50}
+                    handleStart={handleStart}
+                    handleStop={handleStop}
+                    onPredict={handlePredict}
+                    model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
+                    setGraphActive={setGraphActive}
+                    //onStart={handleStart} // 추가: 시작 핸들러
+                  />
+                )}
               </div>
               <div>
                 <CategoryImageModel
-                      preview={false}
-                      size={300}
-                      info={true}
-                      interval={50}
-                      onPredict={handlePredict}
-                      model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
+                  preview={false}
+                  size={300}
+                  info={true}
+                  interval={50}
+                  // onPredict={handlePredict}
+                  model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
                 />
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>

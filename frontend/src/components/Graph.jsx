@@ -30,10 +30,9 @@ ChartJS.register(
 
 const Graph = ({ dataPoints, active }) => {
   // Added the 'active' prop here
-  const maxPoints = 600; // Adjust as needed, 600 for 10 minutes at 1-second intervals
+  const maxPoints = 60; // Adjust as needed, 600 for 10 minutes at 1-second intervals
   const labels =
     dataPoints.length > 0 ? dataPoints.map((_, index) => `${index + 1}s`) : [];
-
 
   const data = {
     labels: labels.slice(-maxPoints),
@@ -54,9 +53,9 @@ const Graph = ({ dataPoints, active }) => {
       y: {
         beginAtZero: true,
         ticks: {
-          stepSize: 50, // Only show 0, 50, 100
-          max: 100,
-          min: 0,
+          min: 0, // Y축의 최소값
+          max: 100, // Y축의 최대값
+          stepSize: 50, // 각 눈금 사이의 간격
         },
         title: {
           display: true,
@@ -66,7 +65,7 @@ const Graph = ({ dataPoints, active }) => {
       x: {
         title: {
           display: true,
-          text: "Time",
+          text: "Time (s)",
         },
       },
     },
@@ -79,11 +78,10 @@ const Graph = ({ dataPoints, active }) => {
   };
 
   // Conditionally render the graph based on the 'active' prop
-  return active ? (
-    <Line data={data} options={options} />
-  ) : (
-    <div>No data available</div>
-  );
+  return <Line data={data} options={options} />;
+  // ) : (
+  //   <div>No data available</div>
+  // );
 };
 
 export default Graph;

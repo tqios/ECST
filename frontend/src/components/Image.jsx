@@ -18,6 +18,8 @@ const Image = ({
   info = true,
   interval = null,
   setGraphActive,
+  handleStart,
+  handleStop,
 }) => {
   const [prediction, setPrediction] = useState(null);
   let [webcam, setWebcam] = useState(null);
@@ -25,7 +27,6 @@ const Image = ({
   const requestRef = React.useRef();
   const intervalRef = React.useRef();
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
-
 
   async function init() {
     const modelURL = model_url + "model.json";
@@ -37,34 +38,38 @@ const Image = ({
     await webcam.setup(); // request access to the webcam
     await webcam.play();
 
-
     setWebcam(webcam);
-
-    setGraphActive(true); // 그래프 활성화
 
     if (interval === null) {
       requestRef.current = window.requestAnimationFrame(loop);
+      console.log("1");
     } else {
       intervalRef.current = setTimeout(loop, interval);
+      console.log("2");
     }
 
     if (preview) {
       previewRef.current.replaceChildren(webcam.canvas);
+      console.log("3");
     }
 
     async function loop() {
+      console.log("loop");
       if (webcam !== null) {
         webcam.update(); // update the webcam frame
         await predict();
+        console.log("await predict");
       }
       if (interval === null) {
         requestRef.current = window.requestAnimationFrame(loop);
+        console.log("4");
       } else {
         intervalRef.current = setTimeout(loop, interval);
+        console.log("5");
       }
-
     }
     async function predict() {
+      console.log("predict");
       // predict can take in an image, video or canvas html element
       const prediction = await model.predict(webcam.canvas);
       setPrediction(prediction);
@@ -78,10 +83,9 @@ const Image = ({
     if (webcam) {
       webcam.stop(); // 웹캠 정지
       setWebcam(null); // 웹캠 상태 초기화
-      setGraphActive(false);
+      //handleStop();
       console.log("그래프 멈추라");
     }
-
   }
   async function start() {
     init();
@@ -108,7 +112,6 @@ const Image = ({
     };
   }, [model_url, isStudy, setGraphActive]);
 
-
   let label = [];
   if (info && prediction) {
     label = (
@@ -131,11 +134,10 @@ const Image = ({
     );
   }
   return (
-      <div>
-        <div id="webcam-container" ref={previewRef}/>
-        {/*<div> status: {label}</div>*/}
-
-      </div>
+    <div>
+      <div id="webcam-container" ref={previewRef} />
+      {/*<div> status: {label}</div>*/}
+    </div>
   );
 };
 export default Image;

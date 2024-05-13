@@ -1,10 +1,16 @@
 {
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.4",
     "@teachablemachine/image": "^0.8.5",
     "buffer": "^6.0.3",
+    "chart.js": "^4.4.2",
+    "date-fns": "^3.6.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^6.9.0",
     "redux": "^5.0.1"
   },
   "devDependencies": {
+    "@types/react-datepicker": "^6.2.0",
     "prettier": "3.2.5"
   }
 }

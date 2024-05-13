@@ -1,6 +1,9 @@
 .# Created by https://www.toptal.com/developers/gitignore/api/node,opencv,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,opencv,venv
 
+package.jscon
+package-lock.json
+
 # Python byte-compiled files
 backend/*.pyc
 backend/__pycache__/

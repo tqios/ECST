@@ -23,6 +23,7 @@ const Image = ({
 }) => {
   const [prediction, setPrediction] = useState(null);
   let [webcam, setWebcam] = useState(null);
+  let [result, setResult] = useState("");
   const previewRef = React.useRef();
   const requestRef = React.useRef();
   const intervalRef = React.useRef();
@@ -42,30 +43,25 @@ const Image = ({
 
     if (interval === null) {
       requestRef.current = window.requestAnimationFrame(loop);
-      console.log("1");
+      setGraphActive(true);
     } else {
       intervalRef.current = setTimeout(loop, interval);
-      console.log("2");
     }
 
     if (preview) {
       previewRef.current.replaceChildren(webcam.canvas);
-      console.log("3");
     }
 
     async function loop() {
-      console.log("loop");
       if (webcam !== null) {
         webcam.update(); // update the webcam frame
+
         await predict();
-        console.log("await predict");
       }
       if (interval === null) {
         requestRef.current = window.requestAnimationFrame(loop);
-        console.log("4");
       } else {
         intervalRef.current = setTimeout(loop, interval);
-        console.log("5");
       }
     }
     async function predict() {
@@ -73,6 +69,8 @@ const Image = ({
       // predict can take in an image, video or canvas html element
       const prediction = await model.predict(webcam.canvas);
       setPrediction(prediction);
+      setResult(prediction);
+      console.log("category", prediction);
       if (onPredict) {
         onPredict(prediction);
       }
@@ -92,18 +90,19 @@ const Image = ({
   }
   useEffect(() => {
     if (!isStudy) {
+      setGraphActive(false);
       console.log("Stop state detected");
       stop();
       setGraphActive(false); // 웹캠이 정지될 때 그래프도 비활성화
     } else {
-      console.log("Start state detected");
+      console.log("Start state detected=========");
       start();
-      setGraphActive(true); // 웹캠이 시작될 때 그래프도 활성화
+      //setGraphActive(true); // 웹캠이 시작될 때 그래프도 활성화
     }
 
     return () => {
       stop(); // 컴포넌트가 언마운트될 때 웹캠 정지
-      setGraphActive(false); // 그래프 비활성화
+      //setGraphActive(false); // 그래프 비활성화
       if (interval === null) {
         cancelAnimationFrame(requestRef.current);
       } else {
@@ -112,31 +111,30 @@ const Image = ({
     };
   }, [model_url, isStudy, setGraphActive]);
 
-  let label = [];
-  if (info && prediction) {
-    label = (
-      <table id="label-container">
-        <thead>
-          <tr>
-            <td>class name</td>
-            <td>probability</td>
-          </tr>
-        </thead>
-        <tbody>
-          {prediction.map((p, i) => (
-            <tr key={i}>
-              <td>{p.className}</td>
-              <td>{p.probability.toFixed(2)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  }
+  // let label = [];
+  // if (info && prediction) {
+  //   label = (
+  //     <table id="label-container">
+  //       <thead>
+  //         <tr>
+  //           <td>class name</td>
+  //           <td>probability</td>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         {prediction.map((p, i) => (
+  //           <tr key={i}>
+  //             <td>{p.className}</td>
+  //             <td>{p.probability.toFixed(2)}</td>
+  //           </tr>
+  //         ))}
+  //       </tbody>
+  //     </table>
+  //   );
+  // }
   return (
     <div>
       <div id="webcam-container" ref={previewRef} />
-      {/*<div> status: {label}</div>*/}
     </div>
   );
 };

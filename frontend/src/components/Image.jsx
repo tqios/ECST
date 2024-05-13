@@ -145,8 +145,6 @@ const Image = ({
   }
   return (
     <div>
-      <button onClick={init}>START</button>
-      <button onClick={stop}>STOP</button>
       <div id="webcam-container" ref={previewRef} />
       <div> status: {label}</div>
     </div>

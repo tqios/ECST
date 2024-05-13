@@ -34,6 +34,7 @@ const Graph = ({ dataPoints, active }) => {
   const labels =
     dataPoints.length > 0 ? dataPoints.map((_, index) => `${index + 1}s`) : [];
 
+
   const data = {
     labels: labels.slice(-maxPoints),
     datasets: [

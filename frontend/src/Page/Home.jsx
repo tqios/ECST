@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { Provider } from "react-redux";
-import Table from "../components/Table.jsx";
 import TodoForm from "../components/TodoForm.jsx";
-// import store from "../TodoRedux/Store.jsx";
-import { FaHeartCirclePlus } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
-import PracticeCam from "../components/PracticeCam.jsx";
-import TeachableMachineModel from "../components/Image.jsx";
 import Todo from "../components/Todo.jsx";
-//import { ImageModel } from "../components/index";
 import Graph from "../components/Graph.jsx";
-import ImageModel from "../components/Image.jsx";
+import {ImageModel, CategoryImageModel} from "../components/index.ts"
 import StopWatch from "../components/StopWatch.jsx";
+import {useSelector} from "react-redux";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -33,6 +27,8 @@ function Home() {
   const history = useHistory();
   const [stream, setStream] = useState(false);
   const [isNear, setIsNear] = React.useState(false);
+  const isStudy = useSelector((state) => state.todoModifier.isStudy);
+
 
   useEffect(() => {
     fetchData();
@@ -201,20 +197,31 @@ function Home() {
               <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
             </div>
             <div>
-              <div>
+              <div style={{width:'400px', height:'300px', background : 'black'}}>
                 {/*<PracticeCam />*/}
-                <ImageModel
-                  preview={true}
-                  size={300}
-                  info={true}
-                  interval={50}
-                  onPredict={handlePredict}
-                  model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"
-                  setGraphActive={setGraphActive}
-                  //onStart={handleStart} // 추가: 시작 핸들러
-                />
+                { isStudy &&
+
+                    <ImageModel
+                      preview={true}
+                      size={300}
+                      info={true}
+                      interval={50}
+                      onPredict={handlePredict}
+                      model_url="https://teachablemachine.withgoogle.com/models/IiLG2OMFg/"
+                      setGraphActive={setGraphActive}
+                      //onStart={handleStart} // 추가: 시작 핸들러
+                    />
+                }
               </div>
               <div>
+                <CategoryImageModel
+                      preview={false}
+                      size={300}
+                      info={true}
+                      interval={50}
+                      onPredict={handlePredict}
+                      model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
+                />
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>
             </div>

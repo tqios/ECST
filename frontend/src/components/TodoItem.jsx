@@ -2,9 +2,11 @@ import React, { useRef, useState } from "react";
 import { MdOutlineDeleteOutline, MdEditNote } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
 import { TiMediaStopOutline } from "react-icons/ti";
-import PracticeCam from "./PracticeCam.jsx";
 import Camerabtn from "./Camerabtn.jsx";
-
+import { ImCheckboxUnchecked } from "react-icons/im";import { IoCheckbox } from "react-icons/io5";
+import { FaCheck } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
+import { FaStop } from "react-icons/fa";
 const TodoItem = ({
   todoItem,
   handleCheckbox,
@@ -13,7 +15,8 @@ const TodoItem = ({
   setStream,
   stream,
     selectedItemId,
-    onRadioChange
+    onRadioChange,
+    handleReset,
 }) => {
   const videoRef = useRef(null);
   const [startActive, setStartActive] = useState(false);
@@ -46,14 +49,15 @@ const TodoItem = ({
   return (
     <tr key={todoItem.id} className="border-b border-black">
       <td className="p-3 text-sm text-center">
-        <span
+        <div
           onClick={() => handleCheckbox(todoItem.id, todoItem.study_completed)}
+          style={{width:"fit-content", margin:"0 auto"}}
           className={`p-1.5 text-xs font-medium tracking-wider rounded-md ${
             todoItem.study_completed ? "bg-green-300" : "bg-red-300"
           }`}
         >
-          {todoItem.study_completed ? "Done" : "Incomplete"}
-        </span>
+          {todoItem.study_completed ? <FaCheck /> : <ImCheckboxUnchecked />}
+        </div>
       </td>
       <td className="p-3 text-sm" title={todoItem.id}>
         {todoItem.study_todo}
@@ -72,13 +76,18 @@ const TodoItem = ({
         </span>
       </td>
       <td className="p-3 text-sm" title={todoItem.id}>
-        <input
-          type="radio"
-          id={todoItem.id}
-          value={todoItem.id}
-          checked={selectedItemId === todoItem.id}
-          onChange={() => onRadioChange(todoItem.id, todoItem.study_todo)}
-        />
+        {/*<input*/}
+        {/*  type="radio"*/}
+        {/*  id={todoItem.id}*/}
+        {/*  value={todoItem.id}*/}
+        {/*  checked={selectedItemId === todoItem.id}*/}
+        {/*  onChange={() => onRadioChange(todoItem.id, todoItem.study_todo)}*/}
+        {/*/>*/}
+        {selectedItemId === todoItem.id ?
+            <button onClick={() => handleReset()}><FaStop/></button>
+            : <button onClick={() => onRadioChange(todoItem.id, todoItem.study_todo)}><FaPlay/></button>
+
+        }
 
 
       </td>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
 import { CgProfile } from "react-icons/cg";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
@@ -17,6 +18,7 @@ function Home() {
   const [isLoading, setisLoading] = useState(true);
   const location = useLocation();
   const [isDay, setIsDay] = React.useState(true);
+  const date = new Date();
 
   //집중도 데이터
   const [dataPoints, setDataPoints] = useState([]);
@@ -96,23 +98,7 @@ function Home() {
     }
   };
 
-  // const handlePredict = (prediction) => {
-  //   if (graphActive) {
-  //     const concentration = prediction.find(
-  //       (p) => p.className === "Concentration"
-  //     );
-  //     if (concentration) {
-  //       setDataPoints((prevPoints) => {
-  //         setDataPoints((prevPoints) => [
-  //           ...prevPoints,
-  //           concentration.probability * 100,
-  //         ]);
-  //         // const newPoints = [...prevPoints, concentration.probability * 100];
-  //         // return newPoints.slice(-10); // 최근 10분간의 데이터만 유지
-  //       });
-  //     }
-  //   }
-  // };
+
 
   const handleStart = () => {
     setDataPoints([]); // 그래프 데이터 리셋
@@ -171,9 +157,11 @@ function Home() {
 
       {/*박스들*/}
 
-      <div className="flex">
-        <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-1/2">
+      <div className="flex w-100">
+        <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
           <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
+
+            [ {date.getMonth()} / {date.getDate()} ]
             누적 공부시간 :<StopWatch />
             {/* <StopWatch />
             누적 공부시간 :{durationTime} */}
@@ -184,8 +172,8 @@ function Home() {
           {/*      누적 공부시간 :{durationTime}*/}
           {/*    </div>*/}
 
-          <div className="flex" style={{ color: "black" }}>
-            <div className="bg-sky-100 min-h-screen p-2 rounded-lg mt-4 w-full">
+          <div className="flex w-100 gap-5" style={{ color: "black" }}>
+            <div className="bg-sky-100 min-h-screen rounded-lg w-full px-5">
               <nav className="pt-8">
                 <h1 className="font-bold text-3xl text-left pb-8 ml-4">
                   To Do List{" "}
@@ -198,6 +186,7 @@ function Home() {
             </div>
             <div>
               <div
+                  className="rounded-lg mb-3"
                 style={{
                   width: "400px",
                   height: "300px",
@@ -220,6 +209,7 @@ function Home() {
                 )}
               </div>
               <div>
+
                 <CategoryImageModel
                   preview={false}
                   size={300}

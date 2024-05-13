@@ -27,7 +27,7 @@ function StopWatch() {
     if (isStudy) {
       handleStart();
     } else {
-      handleReset();
+      handlePauseResume();
     }
     return () => {
       clearInterval(interval);
@@ -40,7 +40,8 @@ function StopWatch() {
   };
 
   const handlePauseResume = () => {
-    setIsPaused(!isPaused);
+    // setIsPaused(!isPaused);
+    setIsActive(false);
   };
 
   const handleReset = () => {

@@ -6,7 +6,7 @@ import TodoItem from "./TodoItem.jsx";
 import { todoElementMutator, studyStop, studyStart} from "../TodoRedux/currTodo.jsx";
 
 //아이콘
-import { FaCheck,FaRegEdit } from "react-icons/fa";
+import { FaCheck,FaRegEdit, FaPause } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
 import { RxLapTimer } from "react-icons/rx";
 import { MdDelete } from "react-icons/md";
@@ -96,6 +96,7 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
 
   // 선택된 항목 초기화
   const handleReset = () => {
+    setSelectedItemId("")
     dispatch(studyStop())
     dispatch(todoElementMutator("공부항목을 선택해주세요"))
   };
@@ -141,8 +142,8 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
             </th>
             <th className="p-3 text-sm font-semibold tracking-wide text-right items-center">
               <div className="flex items-center">
-                <GrPowerReset />
-                <button onClick={handleReset}>Reset</button>
+                <FaPause />
+                <button onClick={handleReset}>Pause</button>
               </div>
             </th>
           </tr>
@@ -170,6 +171,7 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
                   stream={stream}
                   selectedItemId={selectedItemId}
                   onRadioChange={handleRadioChange}
+                  handleReset = {handleReset}
                 />
               ))}
             </>

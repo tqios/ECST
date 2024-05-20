@@ -1,37 +1,39 @@
-import React, { useState } from "react";
-// import "./StopWatch.css";
+import React, { useState, useEffect } from "react";
 import Timer from "./Timer";
-import ControlButtons from "./ControlButtons";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../TodoRedux/counterSlice";
 import { studyStop } from "../TodoRedux/currTodo.jsx";
 
 function StopWatch() {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
-  const [time, setTime] = useState(0);
-  const count = useSelector((state) => state.counter.value);
+  const [time, setTime] = useState(
+    parseInt(localStorage.getItem("timerTime")) || 0
+  );
   const dispatch = useDispatch();
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let interval = null;
 
-    if (isActive && isPaused === false) {
+    if (isActive && !isPaused) {
       interval = setInterval(() => {
-        setTime((time) => time + 10);
+        setTime((prevTime) => {
+          const newTime = prevTime + 10;
+          localStorage.setItem("timerTime", newTime); // Update local storage
+          return newTime;
+        });
       }, 10);
     } else {
       clearInterval(interval);
     }
+
     if (isStudy) {
       handleStart();
     } else {
       handlePauseResume();
     }
-    return () => {
-      clearInterval(interval);
-    };
+
+    return () => clearInterval(interval);
   }, [isActive, isPaused, isStudy]);
 
   const handleStart = () => {
@@ -40,27 +42,19 @@ function StopWatch() {
   };
 
   const handlePauseResume = () => {
-    // setIsPaused(!isPaused);
     setIsActive(false);
   };
 
   const handleReset = () => {
     setIsActive(false);
     dispatch(studyStop());
-
     setTime(0);
+    localStorage.setItem("timerTime", 0); // Reset local storage
   };
 
   return (
     <div className="stop-watch">
       <Timer time={time} />
-      {/* <ControlButtons
-                active={isActive}
-                isPaused={isPaused}
-                handleStart={handleStart}
-                handlePauseResume={handlePauseResume}
-                handleReset={handleReset}
-            /> */}
     </div>
   );
 }

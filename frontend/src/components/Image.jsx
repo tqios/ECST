@@ -2,6 +2,17 @@ import React, { useEffect, useState, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
 import { useSelector } from "react-redux";
 
+// 로컬 스토리지에서 데이터 불러오기
+const loadFromLocalStorage = (key) => {
+  const savedData = localStorage.getItem(key);
+  return savedData ? JSON.parse(savedData) : null;
+};
+
+// 로컬 스토리지에 데이터 저장
+const saveToLocalStorage = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data));
+};
+
 const loadModel = async (model_url) => {
   const modelURL = model_url + "model.json";
   const metadataURL = model_url + "metadata.json";
@@ -65,19 +76,38 @@ const Image = ({
   const requestRef = useRef();
   const intervalRef = useRef();
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
+  const LOCAL_STORAGE_KEY = "average_concentration_data";
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 로컬 스토리지에서 데이터 불러오기
+    const savedData = loadFromLocalStorage(LOCAL_STORAGE_KEY);
+    if (savedData) {
+      setConcentrationSum(savedData.sum);
+      setConcentrationCount(savedData.count);
+      setAverageConcentration(savedData.average);
+    }
+  }, []);
 
   const calculateAverage = (newConcentration) => {
     setConcentrationSum((prevSum) => {
       const newSum = prevSum + newConcentration;
       setConcentrationCount((prevCount) => {
         const newCount = prevCount + 1;
-        setAverageConcentration(newSum / newCount);
+        const newAverage = newSum / newCount;
+        setAverageConcentration(newAverage);
+
+        // 로컬 스토리지에 데이터 저장
+        saveToLocalStorage(LOCAL_STORAGE_KEY, {
+          sum: newSum,
+          count: newCount,
+          average: newAverage,
+        });
+
         return newCount;
       });
       return newSum;
     });
   };
-
 
   const start = async () => {
     const loadedModel = await loadModel(model_url);

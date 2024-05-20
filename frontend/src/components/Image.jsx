@@ -2,57 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
 import { useSelector } from "react-redux";
 
-// 로컬 스토리지에서 데이터 불러오기
-const loadFromLocalStorage = (key) => {
-  const savedData = localStorage.getItem(key);
-  return savedData ? JSON.parse(savedData) : null;
-};
+import {
+  loadFromLocalStorage, // 로컬 스토리지에서 데이터 불러오기
+  saveToLocalStorage, // 로컬 스토리지에 데이터 저장
+  setupWebcam,
+  loadModel,
+  predict,
+  loop
+} from "./ImageUtil/route.ts";
 
-// 로컬 스토리지에 데이터 저장
-const saveToLocalStorage = (key, data) => {
-  localStorage.setItem(key, JSON.stringify(data));
-};
 
-const loadModel = async (model_url) => {
-  const modelURL = model_url + "model.json";
-  const metadataURL = model_url + "metadata.json";
-  return await tmImage.load(modelURL, metadataURL);
-};
-
-const setupWebcam = async (size) => {
-  const flip = true; // whether to flip the webcam
-  const webcam = new tmImage.Webcam(size, size, flip); // width, height, flip
-  await webcam.setup(); // request access to the webcam
-  await webcam.play();
-  return webcam;
-};
-
-const predict = async (model, webcam, setPrediction, setResult, onPredict, calculateAverage) => {
-  console.log("predict");
-  const prediction = await model.predict(webcam.canvas);
-  setPrediction(prediction);
-  setResult(prediction);
-  console.log("category", prediction);
-  if (onPredict) {
-    onPredict(prediction);
-  }
-  const concentration = prediction.find((p) => p.className === "Concentration");
-  if (concentration) {
-    calculateAverage(concentration.probability * 100);
-  }
-};
-
-const loop = (webcam, predictFunc, interval, requestRef, intervalRef) => {
-  if (webcam !== null) {
-    webcam.update(); // update the webcam frame
-    predictFunc();
-  }
-  if (interval === null) {
-    requestRef.current = window.requestAnimationFrame(() => loop(webcam, predictFunc, interval, requestRef, intervalRef));
-  } else {
-    intervalRef.current = setTimeout(() => loop(webcam, predictFunc, interval, requestRef, intervalRef), interval);
-  }
-};
 
 const Image = ({
   model_url,

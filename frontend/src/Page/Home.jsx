@@ -225,14 +225,15 @@ function Home() {
                 className="rounded-lg mb-3"
                 style={{
                   width: "400px",
-                  height: "300px",
-                  background: "blue",
+                  height: "400px",
+                  background: "black",
                 }}>
                 {isStudy && (
                   <ImageModel
+                      className="rounded-full"
                     ref={imageModelRef}
                     preview={true}
-                    size={300}
+                    size={400}
                     info={true}
                     interval={50}
                     handleStart={handleStart}
@@ -243,7 +244,7 @@ function Home() {
                   />
                 )}
               </div>
-              <div>
+              <div className="mt-20">
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>
             </div>

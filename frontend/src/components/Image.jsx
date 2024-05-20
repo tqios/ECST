@@ -122,7 +122,7 @@ const Image = ({
   return (
       <div>
 
-        <div id="webcam-container" ref={previewRef}/>
+        <div id="webcam-container" ref={previewRef} className="rounded-lg"/>
         {result && (
             <div>
               현재 상태 : {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
@@ -130,7 +130,7 @@ const Image = ({
         )}
         {info && (
             <div>
-              <p>Average Concentration: {averageConcentration.toFixed(2)}%</p>
+              {/*<p>Average Concentration: {averageConcentration.toFixed(2)}%</p>*/}
               {/* 로컬 스토리지에 저장된 오늘 하루 평균 집중도 표시 */}
             </div>
         )}

@@ -161,20 +161,23 @@ const Image = ({
   }, [model_url, isStudy, setGraphActive]);
 
   return (
-    <div>
-      <div id="webcam-container" ref={previewRef} />
-      {result && (
-        <div>
-          현재 상태 : {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
-        </div>
-      )}
-      {info && (
-        <div>
-          <p>Average Concentration: {averageConcentration.toFixed(2)}%</p>
-        </div>
-      )}
-    </div>
+      <div>
+
+        <div id="webcam-container" ref={previewRef}/>
+        {result && (
+            <div>
+              현재 상태 : {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
+            </div>
+        )}
+        {info && (
+            <div>
+              <p>Average Concentration: {averageConcentration.toFixed(2)}%</p>
+              {/* 로컬 스토리지에 저장된 오늘 하루 평균 집중도 표시 */}
+            </div>
+        )}
+      </div>
   );
+
 };
 
 export default Image;

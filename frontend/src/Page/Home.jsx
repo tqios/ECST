@@ -218,6 +218,7 @@ function Home() {
                 <h1 className="font-bold text-3xl text-left pb-8 ml-4">
                   To Do List{" "}
                 </h1>
+
               </nav>
               {/* Body */}
               <TodoForm user={user} setStudy={setStudy} fetchData={fetchData} />

@@ -197,8 +197,13 @@ function Home() {
       <div className="flex w-100">
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
           <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
-            [ {date.getMonth() + 1} / {date.getDate()} ]
-            누적 공부시간 :<StopWatch />
+
+             {date.getMonth()+1} 월 {date.getDate()} 일
+            <div className="flex">누적 공부시간 :<StopWatch /></div>
+              {/*누적 공부시간 :<StopWatch />*/}
+            {/* <StopWatch />
+            누적 공부시간 :{durationTime} */}
+
             <p>
               Today's Average Concentration:
               {typeof averageConcentration === 'number'

@@ -113,9 +113,7 @@ const Todo = ({ study, isLoading, setStudy, setStream, stream }) => {
   return (
     <div>
 
-      <div>
-        <span>현재의 TODO : {curr}</span>
-      </div>
+
       <table className="w-11/12 max-w-4xl">
         <thead className="border-b-2 border-black">
           <tr>

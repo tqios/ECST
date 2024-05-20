@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import { CgProfile } from "react-icons/cg";
 import axios from "axios";
@@ -30,6 +30,8 @@ function Home() {
   const [stream, setStream] = useState(false);
   const [isNear, setIsNear] = React.useState(false);
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
+
+  const imageModelRef = useRef(null);
 
   useEffect(() => {
     fetchData();
@@ -71,19 +73,6 @@ function Home() {
     history.push("/login");
   };
 
-  //   const handlePredict = (prediction) => {
-  //     // 'Concentration' 클래스의 확률을 찾아서 dataPoints에 추가
-  //     const concentration = prediction.find(
-  //       (p) => p.className === "Concentration"
-  //     );
-  //     if (concentration) {
-  //       setDataPoints((prevPoints) => [
-  //         ...prevPoints,
-  //         concentration.probability * 100,
-  //       ]);
-  //     }
-  //   };
-
   const handlePredict = (prediction) => {
     if (graphActive) {
       const concentration = prediction.find(
@@ -98,15 +87,20 @@ function Home() {
     }
   };
 
-
-
   const handleStart = () => {
     setDataPoints([]); // 그래프 데이터 리셋
     setGraphActive(true); // 그래프 활성화
+    if (imageModelRef.current) {
+      imageModelRef.current.start(); // Start the model
+    }
   };
+
   const handleStop = () => {
     setGraphActive(false); // 그래프 업데이트 비활성화
     setDataPoints([]); // 그래프 데이터 초기화
+    if (imageModelRef.current) {
+      imageModelRef.current.stop(); // Stop the model
+    }
   };
 
   const MenuBtn = () => {
@@ -161,7 +155,7 @@ function Home() {
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
           <div className="ml-2 mt-5 mb-5 font-bold text-3xl">
 
-            [ {date.getMonth()} / {date.getDate()} ]
+            [ {date.getMonth()+1} / {date.getDate()} ]
             누적 공부시간 :<StopWatch />
             {/* <StopWatch />
             누적 공부시간 :{durationTime} */}
@@ -195,6 +189,7 @@ function Home() {
                 {/*<PracticeCam />*/}
                 {isStudy && (
                   <ImageModel
+                    ref={imageModelRef}
                     preview={true}
                     size={300}
                     info={true}
@@ -210,14 +205,14 @@ function Home() {
               </div>
               <div>
 
-                <CategoryImageModel
-                  preview={false}
-                  size={300}
-                  info={true}
-                  interval={50}
-                  // onPredict={handlePredict}
-                  model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
-                />
+                {/*<CategoryImageModel*/}
+                {/*  preview={false}*/}
+                {/*  size={300}*/}
+                {/*  info={true}*/}
+                {/*  interval={50}*/}
+                {/*  // onPredict={handlePredict}*/}
+                {/*  model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"*/}
+                {/*/>*/}
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>
             </div>

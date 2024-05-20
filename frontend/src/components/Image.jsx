@@ -1,15 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-import {
-  todoElementMutator,
-  studyStop,
-  studyStart,
-} from "../TodoRedux/currTodo.jsx";
+const loadModel = async (model_url) => {
+  const modelURL = model_url + "model.json";
+  const metadataURL = model_url + "metadata.json";
+  return await tmImage.load(modelURL, metadataURL);
+};
 
-import {} from //camState, STUDY_STATE
-"../TodoRedux/Actions.jsx";
+const setupWebcam = async (size) => {
+  const flip = true; // whether to flip the webcam
+  const webcam = new tmImage.Webcam(size, size, flip); // width, height, flip
+  await webcam.setup(); // request access to the webcam
+  await webcam.play();
+  return webcam;
+};
+
+const predict = async (model, webcam, setPrediction, setResult, onPredict, calculateAverage) => {
+  console.log("predict");
+  const prediction = await model.predict(webcam.canvas);
+  setPrediction(prediction);
+  setResult(prediction);
+  console.log("category", prediction);
+  if (onPredict) {
+    onPredict(prediction);
+  }
+  const concentration = prediction.find((p) => p.className === "Concentration");
+  if (concentration) {
+    calculateAverage(concentration.probability * 100);
+  }
+};
+
+const loop = (webcam, predictFunc, interval, requestRef, intervalRef) => {
+  if (webcam !== null) {
+    webcam.update(); // update the webcam frame
+    predictFunc();
+  }
+  if (interval === null) {
+    requestRef.current = window.requestAnimationFrame(() => loop(webcam, predictFunc, interval, requestRef, intervalRef));
+  } else {
+    intervalRef.current = setTimeout(() => loop(webcam, predictFunc, interval, requestRef, intervalRef), interval);
+  }
+};
+
 const Image = ({
   model_url,
   onPredict,
@@ -21,73 +54,61 @@ const Image = ({
   handleStart,
   handleStop,
 }) => {
+  const [model, setModel] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const [concentrationSum, setConcentrationSum] = useState(0);
+  const [concentrationCount, setConcentrationCount] = useState(0);
+  const [averageConcentration, setAverageConcentration] = useState(0);
+  const [result, setResult] = useState("");
   let [webcam, setWebcam] = useState(null);
-  let [result, setResult] = useState("");
-  const previewRef = React.useRef();
-  const requestRef = React.useRef();
-  const intervalRef = React.useRef();
+  const previewRef = useRef();
+  const requestRef = useRef();
+  const intervalRef = useRef();
   const isStudy = useSelector((state) => state.todoModifier.isStudy);
 
-  async function init() {
-    const modelURL = model_url + "model.json";
-    const metadataURL = model_url + "metadata.json";
-    const model = await tmImage.load(modelURL, metadataURL);
+  const calculateAverage = (newConcentration) => {
+    setConcentrationSum((prevSum) => {
+      const newSum = prevSum + newConcentration;
+      setConcentrationCount((prevCount) => {
+        const newCount = prevCount + 1;
+        setAverageConcentration(newSum / newCount);
+        return newCount;
+      });
+      return newSum;
+    });
+  };
 
-    const flip = true; // whether to flip the webcam
-    webcam = new tmImage.Webcam(size, size, flip); // width, height, flip
-    await webcam.setup(); // request access to the webcam
-    await webcam.play();
 
-    setWebcam(webcam);
+  const start = async () => {
+    const loadedModel = await loadModel(model_url);
+    const setupWebcamInstance = await setupWebcam(size);
+
+    setModel(loadedModel);
+    setWebcam(setupWebcamInstance);
 
     if (interval === null) {
-      requestRef.current = window.requestAnimationFrame(loop);
+      requestRef.current = window.requestAnimationFrame(() =>
+        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage), interval, requestRef, intervalRef)
+      );
       setGraphActive(true);
     } else {
-      intervalRef.current = setTimeout(loop, interval);
+      intervalRef.current = setTimeout(() =>
+        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage), interval, requestRef, intervalRef), interval);
     }
 
     if (preview) {
-      previewRef.current.replaceChildren(webcam.canvas);
+      previewRef.current.replaceChildren(setupWebcamInstance.canvas);
     }
+  };
 
-    async function loop() {
-      if (webcam !== null) {
-        webcam.update(); // update the webcam frame
-
-        await predict();
-      }
-      if (interval === null) {
-        requestRef.current = window.requestAnimationFrame(loop);
-      } else {
-        intervalRef.current = setTimeout(loop, interval);
-      }
-    }
-    async function predict() {
-      console.log("predict");
-      // predict can take in an image, video or canvas html element
-      const prediction = await model.predict(webcam.canvas);
-      setPrediction(prediction);
-      setResult(prediction);
-      console.log("category", prediction);
-      if (onPredict) {
-        onPredict(prediction);
-      }
-    }
-  }
-
-  async function stop() {
+  const stop = async () => {
     if (webcam) {
       webcam.stop(); // 웹캠 정지
       setWebcam(null); // 웹캠 상태 초기화
-      //handleStop();
       console.log("그래프 멈추라");
     }
-  }
-  async function start() {
-    init();
-  }
+  };
+
   useEffect(() => {
     if (!isStudy) {
       setGraphActive(false);
@@ -97,12 +118,10 @@ const Image = ({
     } else {
       console.log("Start state detected=========");
       start();
-      //setGraphActive(true); // 웹캠이 시작될 때 그래프도 활성화
     }
 
     return () => {
       stop(); // 컴포넌트가 언마운트될 때 웹캠 정지
-      //setGraphActive(false); // 그래프 비활성화
       if (interval === null) {
         cancelAnimationFrame(requestRef.current);
       } else {
@@ -111,31 +130,21 @@ const Image = ({
     };
   }, [model_url, isStudy, setGraphActive]);
 
-  // let label = [];
-  // if (info && prediction) {
-  //   label = (
-  //     <table id="label-container">
-  //       <thead>
-  //         <tr>
-  //           <td>class name</td>
-  //           <td>probability</td>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {prediction.map((p, i) => (
-  //           <tr key={i}>
-  //             <td>{p.className}</td>
-  //             <td>{p.probability.toFixed(2)}</td>
-  //           </tr>
-  //         ))}
-  //       </tbody>
-  //     </table>
-  //   );
-  // }
   return (
     <div>
       <div id="webcam-container" ref={previewRef} />
+      {result && (
+        <div>
+          현재 상태 : {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
+        </div>
+      )}
+      {info && (
+        <div>
+          <p>Average Concentration: {averageConcentration.toFixed(2)}%</p>
+        </div>
+      )}
     </div>
   );
 };
+
 export default Image;

@@ -14,6 +14,7 @@ function StopWatch({ concentrationLevel }) { // concentrationLevel prop 추가
 
   useEffect(() => {
     let interval = null;
+    console.log("시간 집계여부", concentrationLevel);
 
     if (isActive) {
       console.log(concentrationLevel);
@@ -39,10 +40,6 @@ function StopWatch({ concentrationLevel }) { // concentrationLevel prop 추가
 
     return () => clearInterval(interval);
   }, [isStudy, concentrationLevel, isActive]);
-
-  useEffect(() => {
-    console.log("stopwatch status", concentrationLevel)
-  }, [concentrationLevel]);
 
   const handleStart = () => {
     setIsActive(true);

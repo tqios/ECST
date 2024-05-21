@@ -105,12 +105,46 @@ function Focus() {
       </div>
       <hr />
 
-      <div className="ml-10 mt-6">
-        날짜 선택 :
-        <Calendar />
-      </div>
-    </div>
-  );
+            <div className="flex">
+
+                <div className="ml-10 mt-6">
+                    날짜 선택 :
+                    <Calendar/>
+                </div>
+                <div className="ml-12 mt-5  text-ml">
+                    <table className="table-auto w-full border-collapse border border-gray-300 shadow-md rounded-lg">
+                        <thead>
+                        <tr className="bg-white">
+                            <th className="border border-gray-300 px-4 py-2">날짜</th>
+                            <th className="border border-gray-300 px-4 py-2">공부시간</th>
+                            <th className="border border-gray-300 px-4 py-2">집중도</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr className="bg-white hover:bg-gray-100">
+                            <td className="border border-gray-300 px-4 py-2">5월 20일
+                            </td>
+                            <td className="border border-gray-300 px-4 py-2">Malcolm Lockyer</td>
+                            <td className="border border-gray-300 px-4 py-2">1961</td>
+                        </tr>
+                        <tr className="bg-gray-50 hover:bg-gray-100">
+                            <td className="border border-gray-300 px-4 py-2">Witchy Woman</td>
+                            <td className="border border-gray-300 px-4 py-2">The Eagles</td>
+                            <td className="border border-gray-300 px-4 py-2">1972</td>
+                        </tr>
+                        <tr className="bg-white hover:bg-gray-100">
+                            <td className="border border-gray-300 px-4 py-2">Shining Star</td>
+                            <td className="border border-gray-300 px-4 py-2">Earth, Wind, and Fire</td>
+                            <td className="border border-gray-300 px-4 py-2">1975</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    );
 }
 
 export default Focus;

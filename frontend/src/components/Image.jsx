@@ -158,7 +158,7 @@ const Image = ({
       <div id="webcam-container" ref={previewRef} className="rounded-lg" />
       {result && (
         <div
-          className="items-center mt-2 text-ml"
+          className="items-center mt-2 text-xl font-bold"
           style={{ textAlign: "center" }}>
           {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
         </div>

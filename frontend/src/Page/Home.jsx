@@ -36,6 +36,7 @@ function Home() {
   const [averageConcentration, setAverageConcentration] = useState(0);
   const [totalConcentration, setTotalConcentration] = useState(0);
   const [concentrationCount, setConcentrationCount] = useState(0);
+  const [concentrationLevel, setConcentrationLevel] = useState(100); // 집중도 상태 추가
 
   // 로그인 버튼 시, 로그인 페이지로 전환
   const history = useHistory();
@@ -61,6 +62,11 @@ function Home() {
     fetchData();
     updateAverageConcentrationFromLocalStorage();
   }, [graphActive]);
+
+  useEffect(() => {
+    console.log("감지됨");
+
+  }, [concentrationLevel]);
 
   // 주기적으로 로컬 스토리지 값을 확인하여 상태 업데이트
   useEffect(() => {
@@ -196,20 +202,7 @@ function Home() {
 
       <div className="flex w-100">
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
-          {/*<div className="ml-2 mb-5">*/}
-          {/*  <div className="flex">*/}
-          {/*  <div className="font-bold text-xl"> {date.getMonth()+1} 월 {date.getDate()} 일</div>*/}
-          {/*  <div className="ml-3">*/}
-          {/*  <div className="flex gap-2 text-xl">누적 공부시간 :<StopWatch /></div>*/}
-          {/*  <div className="flex gap-2 text-xl">*/}
-          {/*    평균 집중도 :*/}
-          {/*    {typeof averageConcentration === 'number'*/}
-          {/*        ? ` ${averageConcentration.toFixed(2)}%`*/}
-          {/*        : averageConcentration}*/}
-          {/*  </div>*/}
-          {/*    </div>*/}
-          {/*    </div>*/}
-          {/*</div>*/}
+
 
           <div className="flex w-100 gap-5" style={{ color: "black" }}>
             <div className="bg-sky-100 min-h-screen rounded-lg w-full px-5">
@@ -223,7 +216,7 @@ function Home() {
 
                     <div className="font-bold text-xl ml-3"> {date.getMonth() + 1} 월 {date.getDate()} 일</div>
                     <div className="ml-3">
-                      <div className="flex gap-2 text-xl">누적 공부시간 :<StopWatch/></div>
+                      <div className="flex gap-2 text-xl">누적 공부시간 :<StopWatch concentrationLevel={concentrationLevel} /></div>
                       <div className="flex gap-2 text-xl">
                         평균 집중도 :
                         {typeof averageConcentration === 'number'
@@ -262,6 +255,7 @@ function Home() {
                     onPredict={handlePredict}
                     model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
                     setGraphActive={setGraphActive}
+                    setConcentrationLevel={setConcentrationLevel}
                   />
                 )}
               </div>

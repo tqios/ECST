@@ -22,10 +22,12 @@ const Image = ({
   interval = null,
   setGraphActive,
   handleStart,
-  handleStop,
+  handleStop, setConcentrationLevel,
 }) => {
   const [model, setModel] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const [isConcentrating, setIsConcentrating] = useState(true);
+
   const [concentrationSum, setConcentrationSum] = useState(0);
   const [concentrationCount, setConcentrationCount] = useState(0);
   const [averageConcentration, setAverageConcentration] = useState(0);
@@ -77,12 +79,12 @@ const Image = ({
 
     if (interval === null) {
       requestRef.current = window.requestAnimationFrame(() =>
-        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage), interval, requestRef, intervalRef)
+        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage, setConcentrationLevel), interval, requestRef, intervalRef)
       );
       setGraphActive(true);
     } else {
       intervalRef.current = setTimeout(() =>
-        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage), interval, requestRef, intervalRef), interval);
+        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage, setConcentrationLevel), interval, requestRef, intervalRef), interval);
     }
 
     if (preview) {

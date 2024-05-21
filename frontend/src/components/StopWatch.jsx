@@ -3,7 +3,7 @@ import Timer from "./Timer";
 import { useSelector, useDispatch } from "react-redux";
 import { studyStop } from "../TodoRedux/currTodo.jsx";
 
-function StopWatch() {
+function StopWatch({ concentrationLevel }) { // concentrationLevel prop 추가
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(
@@ -15,7 +15,8 @@ function StopWatch() {
   useEffect(() => {
     let interval = null;
 
-    if (isActive && !isPaused) {
+    if (isActive) {
+      console.log(concentrationLevel);
       interval = setInterval(() => {
         setTime((prevTime) => {
           const newTime = prevTime + 10;
@@ -27,21 +28,27 @@ function StopWatch() {
       clearInterval(interval);
     }
 
-    if (isStudy) {
+    if (isStudy && concentrationLevel) {
+      console.log("타이머 시작해야지");
       handleStart();
     } else {
-      handlePauseResume();
+      console.log("타이머 멈춰야지")
+      handlePause();
+
     }
 
     return () => clearInterval(interval);
-  }, [isActive, isPaused, isStudy]);
+  }, [isStudy, concentrationLevel, isActive]);
+
+  useEffect(() => {
+    console.log("stopwatch status", concentrationLevel)
+  }, [concentrationLevel]);
 
   const handleStart = () => {
     setIsActive(true);
-    setIsPaused(false);
   };
 
-  const handlePauseResume = () => {
+  const handlePause = () => {
     setIsActive(false);
   };
 

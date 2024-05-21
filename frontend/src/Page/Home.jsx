@@ -14,7 +14,7 @@ import { fetchData } from "./Utils/api";
 import {
   updateAverageConcentrationFromLocalStorage,
   handlePredict,
-} from "./Utils/averageConcentration";
+} from "./Utils/averageConcentration.js";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,

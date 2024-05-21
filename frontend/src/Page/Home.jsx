@@ -174,7 +174,14 @@ function Home() {
                 </div>
               </nav>
               {/* Body */}
-              <TodoForm user={user} setStudy={setStudy} fetchData={fetchData} />
+              <TodoForm user={user} setTodos={setStudy} fetchData={() => fetchData(
+                location.state.email,
+                setUser,
+                setStudy,
+                setisLoading,
+                history,
+                location
+              )} />
               <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
             </div>
             <div>

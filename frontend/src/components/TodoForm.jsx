@@ -28,7 +28,9 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
       console.log(todoData);
 
       // 서버로 데이터 전송
-      await axios.post(`http://127.0.0.1:8000/api/study/`, todoData);
+      const response = await axios.post(`http://127.0.0.1:8000/api/study/`, todoData);
+
+      setTodos(prevTodos => [...prevTodos, response.data]);
 
       // 폼 비우기
       setNewTodo({
@@ -36,7 +38,7 @@ const TodoForm = ({ user, setTodos, fetchData }) => {
       });
 
       // 데이터 다시 불러오기
-      fetchData();
+      await  fetchData();
     } catch (error) {
       console.log(error);
     }

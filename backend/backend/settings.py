@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'user',
     'todo',
     'study',
+    'concentrate',
 ]
 
 MIDDLEWARE = [

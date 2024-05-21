@@ -180,7 +180,7 @@ function Home() {
           <div
             className="items-center"
             style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}>
-            <CgProfile className="text-3xl text-left" />
+            <CgProfile className="text-xl text-left" />
           </div>
           <div onClick={handletologin}>{user}</div>
         </div>
@@ -196,42 +196,63 @@ function Home() {
 
       <div className="flex w-100">
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
-          <div className="ml-2 mt-5 mb-5">
-
-            <div className="font-bold text-3xl"> {date.getMonth()+1} 월 {date.getDate()} 일</div>
-            <div className="flex gap-2 text-2xl">누적 공부시간 :<StopWatch /></div>
-            <div className="flex gap-2 text-2xl">
-              평균 집중도 :
-              {typeof averageConcentration === 'number'
-                  ? ` ${averageConcentration.toFixed(2)}%`
-                  : averageConcentration}
-            </div>
-          </div>
+          {/*<div className="ml-2 mb-5">*/}
+          {/*  <div className="flex">*/}
+          {/*  <div className="font-bold text-xl"> {date.getMonth()+1} 월 {date.getDate()} 일</div>*/}
+          {/*  <div className="ml-3">*/}
+          {/*  <div className="flex gap-2 text-xl">누적 공부시간 :<StopWatch /></div>*/}
+          {/*  <div className="flex gap-2 text-xl">*/}
+          {/*    평균 집중도 :*/}
+          {/*    {typeof averageConcentration === 'number'*/}
+          {/*        ? ` ${averageConcentration.toFixed(2)}%`*/}
+          {/*        : averageConcentration}*/}
+          {/*  </div>*/}
+          {/*    </div>*/}
+          {/*    </div>*/}
+          {/*</div>*/}
 
           <div className="flex w-100 gap-5" style={{ color: "black" }}>
             <div className="bg-sky-100 min-h-screen rounded-lg w-full px-5">
               <nav className="pt-8">
-                <h1 className="font-bold text-3xl text-left pb-8 ml-4">
-                  To Do List{" "}
-                </h1>
+                <div className="flex">
+                  <h1 className="font-bold text-3xl text-left pb-8 ml-4">
+                    To Do List{" "}
+                  </h1>
+                  <div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>
+                  <div className="ml-2 mb-5">
+
+                    <div className="font-bold text-xl ml-3"> {date.getMonth() + 1} 월 {date.getDate()} 일</div>
+                    <div className="ml-3">
+                      <div className="flex gap-2 text-xl">누적 공부시간 :<StopWatch/></div>
+                      <div className="flex gap-2 text-xl">
+                        평균 집중도 :
+                        {typeof averageConcentration === 'number'
+                            ? ` ${averageConcentration.toFixed(2)}%`
+                            : averageConcentration}
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
 
               </nav>
               {/* Body */}
-              <TodoForm user={user} setStudy={setStudy} fetchData={fetchData} />
-              <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
+              <TodoForm user={user} setStudy={setStudy} fetchData={fetchData}/>
+              <Todo study={study} isLoading={isLoading} setStudy={setStudy}/>
             </div>
             <div>
               <div
-                className="rounded-lg mb-3"
-                style={{
-                  width: "400px",
-                  height: "400px",
-                  background: "black",
-                }}>
+                  className="rounded-lg mb-3"
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    background: "black",
+                  }}>
                 {isStudy && (
-                  <ImageModel
-                      className="rounded-full"
-                    ref={imageModelRef}
+                    <ImageModel
+                        className="rounded-full"
+                        ref={imageModelRef}
                     preview={true}
                     size={400}
                     info={true}
@@ -244,7 +265,7 @@ function Home() {
                   />
                 )}
               </div>
-              <div className="mt-20">
+              <div>
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>
             </div>

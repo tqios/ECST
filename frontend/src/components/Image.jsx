@@ -109,6 +109,8 @@ const Image = ({
       start();
     }
 
+
+
     return () => {
       stop(); // 컴포넌트가 언마운트될 때 웹캠 정지
       if (interval === null) {

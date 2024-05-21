@@ -14,7 +14,7 @@ function Loginerror() {
 
     //이메일 혹은 비밀번호 잘못 입력 시, 오류 모달창
     const [errormodal, setErrormodal] = useState(false);
-
+    const USER_EMAIL = "user_email";
   const handlesignin = async () => {
     console.log("로그인 성공");
     try {
@@ -28,6 +28,7 @@ function Loginerror() {
         .then((response) => {
           // 로그인 성공 -> 메인 페이지로 이동
           console.log(response.data);
+          localStorage.setItem(USER_EMAIL, email);
           history.push({
             pathname: "/",
             state: { email: email },

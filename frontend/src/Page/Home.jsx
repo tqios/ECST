@@ -14,7 +14,6 @@ import { fetchData, saveRecordConcentrate } from "./Utils/api";
 import { updateAverageConcentrationFromLocalStorage, handlePredict } from "./Utils/averageConcentration";
 import { loadFromLocalStorage, saveToLocalStorage, clearLocalStorage } from "./Utils/storage";
 
-
 function Home() {
   const [user, setUser] = useState("로그인 필요");
   const [study, setStudy] = useState([]);
@@ -36,6 +35,7 @@ function Home() {
   const imageModelRef = useRef(null);
   const LOCAL_STORAGE_KEY = "average_concentration_data";
   const LAST_SAVE_DATE_KEY = "last_save_date";
+  const TIMER_TIME = "timerTime";
 
   useEffect(() => {
     fetchData(
@@ -50,13 +50,28 @@ function Home() {
       setAverageConcentration,
       LOCAL_STORAGE_KEY
     );
+    checkAndSaveDataOnLoad();
   }, [graphActive]);
 
+  const checkAndSaveDataOnLoad = () => {
+    const lastSaveDate = loadFromLocalStorage(LAST_SAVE_DATE_KEY);
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
 
-
-   useEffect(() => {
-     checkAndSaveDataOnLoad();
-   }, []);
+    if (lastSaveDate !== today) {
+      const data = loadFromLocalStorage(LOCAL_STORAGE_KEY);
+      const timeInSeconds = parseInt(localStorage.getItem(TIMER_TIME)) || 0;
+      const timeFormatted = new Date(timeInSeconds * 1000).toISOString().substr(11, 8); // seconds to HH:MM:SS 형식으로 변환
+      if (data) {
+        saveRecordConcentrate(user, lastSaveDate, { ...data, count: timeFormatted }).then(() => {
+          clearLocalStorage(LOCAL_STORAGE_KEY);
+          clearLocalStorage(TIMER_TIME);
+          saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
+        });
+      } else {
+        saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
+      }
+    }
+  };
 
   const handletologin = () => {
     history.push("/login");
@@ -78,25 +93,7 @@ function Home() {
     }
   };
 
-
-  const checkAndSaveDataOnLoad = () => {
-    const lastSaveDate = loadFromLocalStorage(LAST_SAVE_DATE_KEY);
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
-
-    if (lastSaveDate !== today) {
-      const data = loadFromLocalStorage(LOCAL_STORAGE_KEY);
-      if (data) {
-        const concentrateTime = new Date(data.count * 1000).toISOString().substr(11, 8); // seconds to HH:MM:SS 형식으로 변환
-        saveRecordConcentrate(user, lastSaveDate, { ...data, count: concentrateTime }).then(() => {
-          clearLocalStorage(LOCAL_STORAGE_KEY);
-          saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
-        });
-      } else {
-        saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
-      }
-    }
-  };
- const ConcentrationMessage = ({ averageConcentration }) => {
+  const ConcentrationMessage = ({ averageConcentration }) => {
     if (averageConcentration >= 90) {
       return <div className="text-2xl ml-2">👍</div>;
     } else if (averageConcentration >= 50) {
@@ -130,7 +127,6 @@ function Home() {
       <hr />
 
       {/* 박스들 */}
-
       <div className="flex w-100">
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
           <div className="flex w-100 gap-5" style={{ color: "black" }}>
@@ -235,6 +231,5 @@ function Home() {
     </div>
   );
 }
-
 
 export default Home;

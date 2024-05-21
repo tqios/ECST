@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { studyStop } from "../TodoRedux/currTodo.jsx";
 
 function StopWatch({ concentrationLevel }) {
-  // concentrationLevel prop 추가
   const [isActive, setIsActive] = useState(false);
-  const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(
     parseInt(localStorage.getItem("timerTime")) || 0
   );
@@ -18,14 +16,13 @@ function StopWatch({ concentrationLevel }) {
     console.log("시간 집계여부", concentrationLevel);
 
     if (isActive) {
-      console.log(concentrationLevel);
       interval = setInterval(() => {
         setTime((prevTime) => {
-          const newTime = prevTime + 10;
+          const newTime = prevTime + 1; // 초 단위 증가
           localStorage.setItem("timerTime", newTime); // Update local storage
           return newTime;
         });
-      }, 20);
+      }, 1000); // 1초마다 갱신
     } else {
       clearInterval(interval);
     }

@@ -27,6 +27,7 @@ export const fetchData = async (email, setUser, setStudy, setisLoading, history,
 };
 
 
+
 // 이거 수정해야됨
 export const saveRecordConcentrate = async (email, date, data) => {
   try {
@@ -43,3 +44,5 @@ export const saveRecordConcentrate = async (email, date, data) => {
     console.error("Error saving data to database", error);
   }
 };
+
+

@@ -67,11 +67,11 @@ const TodoItem = ({
           <label htmlFor="my-modal">
             <MdEditNote
               onClick={() => setEditText(todoItem)}
-              className="text-xl cursor-pointer"
+              className="text-xl cursor-pointer mb-3"
             />
           </label>
         </span>
-        <span className="text-2xl  cursor-pointer">
+        <span className="text-xl  cursor-pointer mb-3">
           <MdOutlineDeleteOutline onClick={() => handleDelete(todoItem.id)} />
         </span>
       </td>

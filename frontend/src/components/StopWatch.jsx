@@ -3,7 +3,8 @@ import Timer from "./Timer";
 import { useSelector, useDispatch } from "react-redux";
 import { studyStop } from "../TodoRedux/currTodo.jsx";
 
-function StopWatch({ concentrationLevel }) { // concentrationLevel prop 추가
+function StopWatch({ concentrationLevel }) {
+  // concentrationLevel prop 추가
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(
@@ -24,7 +25,7 @@ function StopWatch({ concentrationLevel }) { // concentrationLevel prop 추가
           localStorage.setItem("timerTime", newTime); // Update local storage
           return newTime;
         });
-      }, 10);
+      }, 20);
     } else {
       clearInterval(interval);
     }
@@ -33,9 +34,8 @@ function StopWatch({ concentrationLevel }) { // concentrationLevel prop 추가
       console.log("타이머 시작해야지");
       handleStart();
     } else {
-      console.log("타이머 멈춰야지")
+      console.log("타이머 멈춰야지");
       handlePause();
-
     }
 
     return () => clearInterval(interval);

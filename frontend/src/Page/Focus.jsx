@@ -1,15 +1,13 @@
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import React, {useEffect, useState} from 'react';
-import {CgProfile} from "react-icons/cg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import React, { useEffect, useState } from "react";
+import { CgProfile } from "react-icons/cg";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Focus() {
-    const [user, setUser] = useState("로그인 필요");
-    const [graphActive, setGraphActive] = useState(true);
-
-
+  const [user, setUser] = useState("로그인 필요");
+  const [graphActive, setGraphActive] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -44,80 +42,75 @@ function Focus() {
   };
 
   const MenuBtn = () => {
-      return (
-          <nav className="menu" style={{textAlign: "center"}}>
-              <div>
-                  <Link to="/" className="m-5 outline-none custom-btn btn-1 text-xl">
-                      홈
-                  </Link>
-                  <Link
-                      to="/focus-analysis"
-                      className="m-5 outline-none custom-btn btn-1 text-xl">
-                      집중도 분석
-                  </Link>
-                  <Link
-                      to="/my-page"
-                      className="m-5 outline-none custom-btn btn-1 text-xl">
-                      마이페이지
-                  </Link>
-              </div>
-          </nav>
-      );
-  }
+    return (
+      <nav className="menu" style={{ textAlign: "center" }}>
+        <div>
+          <Link to="/" className="m-5 outline-none custom-btn btn-1 text-xl">
+            홈
+          </Link>
+          <Link
+            to="/focus-analysis"
+            className="m-5 outline-none custom-btn btn-1 text-xl">
+            집중도 분석
+          </Link>
+          <Link
+            to="/my-page"
+            className="m-5 outline-none custom-btn btn-1 text-xl">
+            마이페이지
+          </Link>
+        </div>
+      </nav>
+    );
+  };
 
   const handletologin = () => {
     history.push("/login");
   };
 
-
-
-
-    const Calendar = () => {
-        const [selectedDate, setSelectedDate] = useState(new Date());
-
-        return (
-            <DatePicker
-                dateFormat="yyyy.MM.dd" // 날짜 형태
-                shouldCloseOnSelect={true} // 날짜를 선택하면 datepicker가 자동으로 닫힘
-                minDate={new Date('2000-01-01')} // minDate 이전 날짜 선택 불가
-                maxDate={new Date()} // maxDate 이후 날짜 선택 불가
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-            />
-        );
-    };
+  const Calendar = () => {
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     return (
-        <div>
-            <div className="flex justify-between items-center">
-                <div className="text-5xl font-bold ml-6">
-                    <h1>Learning Mate</h1>
-                </div>
-                <div style={{textAlign: "center", margin: "10px", marginTop: "30px"}}>
-                    <div
-                        className="items-center"
-                        style={{marginLeft: "auto", marginRight: "auto", width: "50%"}}>
-                        <CgProfile className="text-3xl text-left"/>
-                    </div>
-                    <div onClick={handletologin}>{user}</div>
-                </div>
-            </div>
-            <hr/>
-            {/*메뉴바*/}
-            <div className="p-2 bg-sky-300 text-white font-bold">
-                <MenuBtn/>
-                {/*{user}*/}
-            </div>
-            <hr/>
-
-
-
-            <div className="ml-10 mt-6">
-                날짜 선택 :
-                <Calendar/>
-            </div>
-        </div>
+      <DatePicker
+        dateFormat="yyyy.MM.dd" // 날짜 형태
+        shouldCloseOnSelect={true} // 날짜를 선택하면 datepicker가 자동으로 닫힘
+        minDate={new Date("2000-01-01")} // minDate 이전 날짜 선택 불가
+        maxDate={new Date()} // maxDate 이후 날짜 선택 불가
+        selected={selectedDate}
+        onChange={(date) => setSelectedDate(date)}
+      />
     );
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center">
+        <div className="text-5xl font-bold ml-6">
+          <h1>Learning Mate</h1>
+        </div>
+        <div style={{ textAlign: "center", margin: "10px", marginTop: "30px" }}>
+          <div
+            className="items-center"
+            style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}>
+            <CgProfile className="text-3xl text-left" />
+          </div>
+          <div onClick={handletologin}>{user}</div>
+        </div>
+      </div>
+      <hr />
+      {/*메뉴바*/}
+      <div className="p-2 bg-sky-300 text-white font-bold">
+        <MenuBtn />
+        {/*{user}*/}
+      </div>
+      <hr />
+
+      <div className="ml-10 mt-6">
+        날짜 선택 :
+        <Calendar />
+      </div>
+    </div>
+  );
 }
 
 export default Focus;

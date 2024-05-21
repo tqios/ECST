@@ -160,38 +160,6 @@ function Home() {
     }
   };
 
-  const MenuBtn = () => {
-    return (
-      <nav className="menu" style={{ textAlign: "center" }}>
-        <div>
-          <Link to="/" className="m-5 outline-none custom-btn btn-1 text-xl">
-            홈
-          </Link>
-          <Link
-            to="/focus-analysis"
-            className="m-5 outline-none custom-btn btn-1 text-xl">
-            집중도 분석
-          </Link>
-          <Link
-            to="/my-page"
-            className="m-5 outline-none custom-btn btn-1 text-xl">
-            마이페이지
-          </Link>
-        </div>
-      </nav>
-    );
-  };
-
-  const ConcentrationMessage = ({ averageConcentration }) => {
-    if (averageConcentration >= 90) {
-      return <div className="text-2xl ml-2">👍</div>;
-    } else if (averageConcentration >= 50) {
-      return <div className="text-2xl ml-2">👌</div>;
-    } else {
-      return <div className="text-2xl ml-2">👎</div>;
-    }
-  };
-
   return (
     <div>
       {/* 머리 */}
@@ -211,55 +179,38 @@ function Home() {
       <hr />
       {/* 메뉴바 */}
       <div className="p-2 bg-sky-300 text-white font-bold">
-        <MenuBtn />
+        <MenuNav />
       </div>
       <hr />
 
       {/* 박스들 */}
-
       <div className="flex w-100">
         <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
           <div className="flex w-100 gap-5" style={{ color: "black" }}>
-            <div className="bg-sky-100 min-h-screen rounded-lg w-full px-5">
+            <div
+              className="bg-sky-100 min-h-screen rounded-lg px-5"
+              style={{ minWidth: "600px" }}>
               <nav className="pt-8">
-                <div>
-                  <div className="flex text-center ml-10">
-                    <div className="font-bold text-3xl ml-4">
+                <div className="flex ">
+                  <h1 className="font-bold text-3xl text-left pb-8 ml-4">
+                    To Do List{" "}
+                  </h1>
+                  <div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>
+                  <div className="ml-2 mb-5  flex-fill">
+                    <div className="font-bold text-xl ml-3">
                       {" "}
                       {date.getMonth() + 1} 월 {date.getDate()} 일
                     </div>
-                    <h1 className="font-bold text-3xl text-counter pb-8 ml-4">
-                      To Do List{" "}
-                    </h1>
-                  </div>
-                  {/*<div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>*/}
-
-                  <div className="text-center flex mb-6 ml-6">
-                    <div className="text-center">
-                      <div className="flex gap-2 text-2xl ml-8 font-bold text-blue-950">
-                        누적 공부시간
-                      </div>
-                      <div className="ml-8 text-2xl font-bold">
+                    <div className="ml-3">
+                      <div className="flex gap-2 text-xl">
+                        누적 공부시간 :
                         <StopWatch concentrationLevel={concentrationLevel} />
                       </div>
-                    </div>
-                    <div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>
-                    <div className="text-center">
-                      <div className="flex gap-2 text-2xl ml-4 text-center font-bold text-blue-950">
-                        평균 집중도
-                      </div>
-                      <div className="flex">
-                        <div className="items-center ml-4 text-2xl font-bold">
-                          {typeof averageConcentration === "number"
-                            ? ` ${averageConcentration.toFixed(2)}%`
-                            : averageConcentration}
-                        </div>
-
-                        <div className="mb-4 text-red-700 font-bold">
-                          <ConcentrationMessage
-                            averageConcentration={averageConcentration}
-                          />
-                        </div>
+                      <div className="flex gap-2 text-xl">
+                        평균 집중도 :
+                        {typeof averageConcentration === "number"
+                          ? ` ${averageConcentration.toFixed(2)}%`
+                          : averageConcentration}
                       </div>
                     </div>
                   </div>
@@ -287,14 +238,24 @@ function Home() {
                     interval={50}
                     handleStart={handleStart}
                     handleStop={handleStop}
-                    onPredict={handlePredict}
+                    onPredict={(prediction) =>
+                      handlePredict(
+                        prediction,
+                        graphActive,
+                        setDataPoints,
+                        setTotalConcentration,
+                        setConcentrationCount,
+                        setAverageConcentration,
+                        LOCAL_STORAGE_KEY
+                      )
+                    }
                     model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
                     setGraphActive={setGraphActive}
                     setConcentrationLevel={setConcentrationLevel}
                   />
                 )}
               </div>
-              <div className="mt-6">
+              <div>
                 <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
               </div>
             </div>

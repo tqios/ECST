@@ -8,10 +8,8 @@ import {
   setupWebcam,
   loadModel,
   predict,
-  loop
+  loop,
 } from "./ImageUtil/route.ts";
-
-
 
 const Image = ({
   model_url,
@@ -22,7 +20,8 @@ const Image = ({
   interval = null,
   setGraphActive,
   handleStart,
-  handleStop, setConcentrationLevel,
+  handleStop,
+  setConcentrationLevel,
 }) => {
   const [model, setModel] = useState(null);
   const [prediction, setPrediction] = useState(null);
@@ -79,12 +78,45 @@ const Image = ({
 
     if (interval === null) {
       requestRef.current = window.requestAnimationFrame(() =>
-        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage, setConcentrationLevel), interval, requestRef, intervalRef)
+        loop(
+          setupWebcamInstance,
+          () =>
+            predict(
+              loadedModel,
+              setupWebcamInstance,
+              setPrediction,
+              setResult,
+              onPredict,
+              calculateAverage,
+              setConcentrationLevel
+            ),
+          interval,
+          requestRef,
+          intervalRef
+        )
       );
       setGraphActive(true);
     } else {
-      intervalRef.current = setTimeout(() =>
-        loop(setupWebcamInstance, () => predict(loadedModel, setupWebcamInstance, setPrediction, setResult, onPredict, calculateAverage, setConcentrationLevel), interval, requestRef, intervalRef), interval);
+      intervalRef.current = setTimeout(
+        () =>
+          loop(
+            setupWebcamInstance,
+            () =>
+              predict(
+                loadedModel,
+                setupWebcamInstance,
+                setPrediction,
+                setResult,
+                onPredict,
+                calculateAverage,
+                setConcentrationLevel
+              ),
+            interval,
+            requestRef,
+            intervalRef
+          ),
+        interval
+      );
     }
 
     if (preview) {
@@ -111,8 +143,6 @@ const Image = ({
       start();
     }
 
-
-
     return () => {
       stop(); // 컴포넌트가 언마운트될 때 웹캠 정지
       if (interval === null) {
@@ -124,23 +154,23 @@ const Image = ({
   }, [model_url, isStudy, setGraphActive]);
 
   return (
-      <div>
-
-        <div id="webcam-container" ref={previewRef} className="rounded-lg"/>
-        {result && (
-            <div>
-              현재 상태 : {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
-            </div>
-        )}
-        {info && (
-            <div>
-              {/*<p>Average Concentration: {averageConcentration.toFixed(2)}%</p>*/}
-              {/* 로컬 스토리지에 저장된 오늘 하루 평균 집중도 표시 */}
-            </div>
-        )}
-      </div>
+    <div>
+      <div id="webcam-container" ref={previewRef} className="rounded-lg" />
+      {result && (
+        <div
+          className="items-center mt-2 text-ml"
+          style={{ textAlign: "center" }}>
+          {result[0].className} {(result[0].probability * 100).toFixed(1) + "%"}
+        </div>
+      )}
+      {info && (
+        <div>
+          {/*<p>Average Concentration: {averageConcentration.toFixed(2)}%</p>*/}
+          {/* 로컬 스토리지에 저장된 오늘 하루 평균 집중도 표시 */}
+        </div>
+      )}
+    </div>
   );
-
 };
 
 export default Image;

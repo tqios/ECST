@@ -49,33 +49,36 @@ const Graph = ({ dataPoints, active }) => {
   };
 
   const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          min: 0, // Y축의 최소값
-          max: 100, // Y축의 최대값
-          stepSize: 50, // 각 눈금 사이의 간격
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    min: 0, // Y축의 최소값
+                    max: 100, // Y축의 최대값
+                    stepSize: 50, // 각 눈금 사이의 간격
+                },
+                title: {
+                    display: true,
+                    text: "Percentage (%)",
+                },
+            },
+            x: {
+                title: {
+                    display: true,
+
+                },
+                ticks: {
+                    display: false,
+                },
+            },
         },
-        title: {
-          display: true,
-          text: "Percentage (%)",
+        plugins: {
+            legend: {
+                display: false,
+                position: "top",
+            },
         },
-      },
-      x: {
-        title: {
-          display: true,
-          text: "Time (s)",
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
-    },
-  };
+    };
 
   // Conditionally render the graph based on the 'active' prop
   return <Line data={data} options={options} />;

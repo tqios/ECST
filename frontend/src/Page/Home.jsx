@@ -11,9 +11,15 @@ import { ImageModel, CategoryImageModel } from "../components/index.ts";
 import StopWatch from "../components/StopWatch.jsx";
 import { useSelector } from "react-redux";
 import { fetchData } from "./Utils/api";
-import { updateAverageConcentrationFromLocalStorage, handlePredict } from "./Utils/averageConcentration";
-import { loadFromLocalStorage, saveToLocalStorage, clearLocalStorage } from "./Utils/storage";
-
+import {
+  updateAverageConcentrationFromLocalStorage,
+  handlePredict,
+} from "./Utils/averageConcentration";
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+  clearLocalStorage,
+} from "./Utils/storage";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -37,14 +43,30 @@ function Home() {
   const LOCAL_STORAGE_KEY = "average_concentration_data";
   const LAST_SAVE_DATE_KEY = "last_save_date";
 
-
   useEffect(() => {
-    fetchData(location.state.email, setUser, setStudy, setisLoading, history, location);
-    updateAverageConcentrationFromLocalStorage(setAverageConcentration, LOCAL_STORAGE_KEY);
+    fetchData(
+      location.state.email,
+      setUser,
+      setStudy,
+      setisLoading,
+      history,
+      location
+    );
+    updateAverageConcentrationFromLocalStorage(
+      setAverageConcentration,
+      LOCAL_STORAGE_KEY
+    );
   }, [graphActive]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => updateAverageConcentrationFromLocalStorage(setAverageConcentration, LOCAL_STORAGE_KEY), 1000);
+    const intervalId = setInterval(
+      () =>
+        updateAverageConcentrationFromLocalStorage(
+          setAverageConcentration,
+          LOCAL_STORAGE_KEY
+        ),
+      1000
+    );
     return () => clearInterval(intervalId);
   }, []);
 
@@ -68,141 +90,137 @@ function Home() {
     }
   };
 
-
- const ConcentrationMessage = ({averageConcentration}) => {
-        if (averageConcentration >= 90) {
-            return (
-
-            <div className="text-2xl ml-2">👍</div>
-            );
-        } else if (averageConcentration >= 50) {
-            return <div className="text-2xl ml-2">👌</div>;
-        } else {
-            return <div className="text-2xl ml-2">👎</div>;
-        }
+  const ConcentrationMessage = ({ averageConcentration }) => {
+    if (averageConcentration >= 90) {
+      return <div className="text-2xl ml-2">👍</div>;
+    } else if (averageConcentration >= 50) {
+      return <div className="text-2xl ml-2">👌</div>;
+    } else {
+      return <div className="text-2xl ml-2">👎</div>;
     }
+  };
 
-    return (
-        <div>
-            {/* 머리 */}
-            <div className="flex justify-between items-center">
-                <div className="text-5xl font-bold ml-6">
-                    <h1>Learning Mate</h1>
-                </div>
-                <div style={{textAlign: "center", margin: "10px", marginTop: "30px"}}>
-                    <div
-                        className="items-center"
-                        style={{marginLeft: "auto", marginRight: "auto", width: "50%"}}>
-                        <CgProfile className="text-xl text-left"/>
-                    </div>
-                    <div onClick={handletologin}>{user}</div>
-                </div>
-            </div>
-            <hr/>
-            {/* 메뉴바 */}
-            <div className="p-2 bg-sky-300 text-white font-bold">
-                <MenuNav/>
-            </div>
-            <hr/>
-
-            {/* 박스들 */}
-
-            <div className="flex w-100">
-                <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
-
-
-                    <div className="flex w-100 gap-5" style={{color: "black"}}>
-                        <div className="bg-sky-100 min-h-screen rounded-lg w-full px-5">
-                            <nav className="pt-8">
-                                <div>
-                                    <div className="flex text-center ml-10">
-                                        <div
-                                            className="font-bold text-3xl ml-4"> {date.getMonth() + 1} 월 {date.getDate()} 일
-                                        </div>
-                                        <h1 className="font-bold text-3xl text-counter pb-8 ml-4">
-                                            To Do List{" "}
-                                        </h1>
-                                    </div>
-                                    {/*<div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>*/}
-
-
-                                    <div className="text-center flex mb-6 ml-6">
-                                        <div className="text-center">
-                                            <div className="flex gap-2 text-2xl ml-8 font-bold text-blue-950">누적
-                                                공부시간
-                                            </div>
-                                            <div className="ml-8 text-2xl font-bold">
-                                                <StopWatch concentrationLevel={concentrationLevel}/>
-                                            </div>
-                                        </div>
-                                        <div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>
-                                        <div className="text-center">
-                                            <div
-                                                className="flex gap-2 text-2xl ml-4 text-center font-bold text-blue-950">
-                                                평균 집중도
-                                            </div>
-                                            <div className="flex">
-                                            <div className="items-center ml-4 text-2xl font-bold">
-                                                {typeof averageConcentration === 'number'
-                                                    ? ` ${averageConcentration.toFixed(2)}%`
-                                                    : averageConcentration}
-                                            </div>
-
-                                            <div className="mb-4 text-red-700 font-bold">
-                                                <ConcentrationMessage
-                                                    averageConcentration={averageConcentration}/>
-                                            </div>
-                                                </div>
-
-                                        </div>
-
-
-                                    </div>
-
-
-                                </div>
-
-                            </nav>
-                            {/* Body */}
-                            <TodoForm user={user} setStudy={setStudy} fetchData={fetchData}/>
-                            <Todo study={study} isLoading={isLoading} setStudy={setStudy}/>
-                        </div>
-                        <div>
-                            <div
-                                className="rounded-lg mb-3"
-                                style={{
-                                    width: "400px",
-                                    height: "400px",
-                                    background: "black",
-                                }}>
-                                {isStudy && (
-                                    <ImageModel
-                                        className="rounded-full"
-                                        ref={imageModelRef}
-                                        preview={true}
-                                        size={400}
-                                        info={true}
-                                        interval={50}
-                                        handleStart={handleStart}
-                                        handleStop={handleStop}
-                                        onPredict={(prediction) => handlePredict(prediction, graphActive, setDataPoints, setTotalConcentration, setConcentrationCount, setAverageConcentration, LOCAL_STORAGE_KEY)}
-                                        model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
-                                        setGraphActive={setGraphActive}
-                                        setConcentrationLevel={setConcentrationLevel}
-                                    />
-                                )}
-                            </div>
-                            <div className="mt-10">
-                                <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div>
+      {/* 머리 */}
+      <div className="flex justify-between items-center">
+        <div className="text-5xl font-bold ml-6">
+          <h1>Learning Mate</h1>
         </div>
-    );
+        <div style={{ textAlign: "center", margin: "10px", marginTop: "30px" }}>
+          <div
+            className="items-center"
+            style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}>
+            <CgProfile className="text-xl text-left" />
+          </div>
+          <div onClick={handletologin}>{user}</div>
+        </div>
+      </div>
+      <hr />
+      {/* 메뉴바 */}
+      <div className="p-2 bg-sky-300 text-white font-bold">
+        <MenuNav />
+      </div>
+      <hr />
 
+      {/* 박스들 */}
+
+      <div className="flex w-100">
+        <div className="bg-white min-h-screen p-2 rounded-lg mt-4 w-100 m-auto">
+          <div className="flex w-100 gap-5" style={{ color: "black" }}>
+            <div className="bg-sky-100 min-h-screen rounded-lg w-full px-5">
+              <nav className="pt-8">
+                <div>
+                  <div className="flex text-center ml-10">
+                    <div className="font-bold text-3xl ml-4">
+                      {" "}
+                      {date.getMonth() + 1} 월 {date.getDate()} 일
+                    </div>
+                    <h1 className="font-bold text-3xl text-counter pb-8 ml-4">
+                      To Do List{" "}
+                    </h1>
+                  </div>
+                  {/*<div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>*/}
+
+                  <div className="text-center flex mb-6 ml-6">
+                    <div className="text-center">
+                      <div className="flex gap-2 text-2xl ml-8 font-bold text-blue-950">
+                        누적 공부시간
+                      </div>
+                      <div className="ml-8 text-2xl font-bold">
+                        <StopWatch concentrationLevel={concentrationLevel} />
+                      </div>
+                    </div>
+                    <div className="border-l-2 border-solid border-gray-500 ml-3 mb-2"></div>
+                    <div className="text-center">
+                      <div className="flex gap-2 text-2xl ml-4 text-center font-bold text-blue-950">
+                        평균 집중도
+                      </div>
+                      <div className="flex">
+                        <div className="items-center ml-4 text-2xl font-bold">
+                          {typeof averageConcentration === "number"
+                            ? ` ${averageConcentration.toFixed(2)}%`
+                            : averageConcentration}
+                        </div>
+
+                        <div className="mb-4 text-red-700 font-bold">
+                          <ConcentrationMessage
+                            averageConcentration={averageConcentration}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+              {/* Body */}
+              <TodoForm user={user} setStudy={setStudy} fetchData={fetchData} />
+              <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
+            </div>
+            <div>
+              <div
+                className="rounded-lg mb-3"
+                style={{
+                  width: "400px",
+                  height: "400px",
+                  background: "black",
+                }}>
+                {isStudy && (
+                  <ImageModel
+                    className="rounded-full"
+                    ref={imageModelRef}
+                    preview={true}
+                    size={400}
+                    info={true}
+                    interval={50}
+                    handleStart={handleStart}
+                    handleStop={handleStop}
+                    onPredict={(prediction) =>
+                      handlePredict(
+                        prediction,
+                        graphActive,
+                        setDataPoints,
+                        setTotalConcentration,
+                        setConcentrationCount,
+                        setAverageConcentration,
+                        LOCAL_STORAGE_KEY
+                      )
+                    }
+                    model_url="https://teachablemachine.withgoogle.com/models/nFlJjJXF5/"
+                    setGraphActive={setGraphActive}
+                    setConcentrationLevel={setConcentrationLevel}
+                  />
+                )}
+              </div>
+              <div className="mt-10">
+                <Graph dataPoints={dataPoints} active={setGraphActive}></Graph>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-
 
 export default Home;

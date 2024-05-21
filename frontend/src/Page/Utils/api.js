@@ -28,9 +28,16 @@ export const fetchData = async (email, setUser, setStudy, setisLoading, history,
 
 
 // 이거 수정해야됨
-export const saveDataToDatabase = async (data) => {
+export const saveRecordConcentrate = async (email, date, data) => {
   try {
-    await axios.post("http://127.0.0.1:8000/api/save_concentration_data/", data);
+    const result = await axios.post("http://127.0.0.1:8000/api/concentrate/record/", {
+      study_user_email: email,
+      concentrate_date: date,
+      concentrate_average_value: data.average.toFixed(2), // 두 자리 소수점
+      concentrate_time: data.count, // 이미 HH:MM:SS 형식으로 변환됨
+    });
+
+    console.log("response", result);
     console.log("Data saved successfully");
   } catch (error) {
     console.error("Error saving data to database", error);

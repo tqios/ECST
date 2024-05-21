@@ -10,16 +10,10 @@ import Graph from "../components/Graph.jsx";
 import { ImageModel, CategoryImageModel } from "../components/index.ts";
 import StopWatch from "../components/StopWatch.jsx";
 import { useSelector } from "react-redux";
-import { fetchData } from "./Utils/api";
-import {
-  updateAverageConcentrationFromLocalStorage,
-  handlePredict,
-} from "./Utils/averageConcentration.js";
-import {
-  loadFromLocalStorage,
-  saveToLocalStorage,
-  clearLocalStorage,
-} from "./Utils/storage";
+import { fetchData, saveRecordConcentrate } from "./Utils/api";
+import { updateAverageConcentrationFromLocalStorage, handlePredict } from "./Utils/averageConcentration";
+import { loadFromLocalStorage, saveToLocalStorage, clearLocalStorage } from "./Utils/storage";
+
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -58,17 +52,11 @@ function Home() {
     );
   }, [graphActive]);
 
-  useEffect(() => {
-    const intervalId = setInterval(
-      () =>
-        updateAverageConcentrationFromLocalStorage(
-          setAverageConcentration,
-          LOCAL_STORAGE_KEY
-        ),
-      1000
-    );
-    return () => clearInterval(intervalId);
-  }, []);
+
+
+   useEffect(() => {
+     checkAndSaveDataOnLoad();
+   }, []);
 
   const handletologin = () => {
     history.push("/login");
@@ -90,7 +78,25 @@ function Home() {
     }
   };
 
-  const ConcentrationMessage = ({ averageConcentration }) => {
+
+  const checkAndSaveDataOnLoad = () => {
+    const lastSaveDate = loadFromLocalStorage(LAST_SAVE_DATE_KEY);
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
+
+    if (lastSaveDate !== today) {
+      const data = loadFromLocalStorage(LOCAL_STORAGE_KEY);
+      if (data) {
+        const concentrateTime = new Date(data.count * 1000).toISOString().substr(11, 8); // seconds to HH:MM:SS 형식으로 변환
+        saveRecordConcentrate(user, lastSaveDate, { ...data, count: concentrateTime }).then(() => {
+          clearLocalStorage(LOCAL_STORAGE_KEY);
+          saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
+        });
+      } else {
+        saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
+      }
+    }
+  };
+ const ConcentrationMessage = ({ averageConcentration }) => {
     if (averageConcentration >= 90) {
       return <div className="text-2xl ml-2">👍</div>;
     } else if (averageConcentration >= 50) {
@@ -229,5 +235,6 @@ function Home() {
     </div>
   );
 }
+
 
 export default Home;

@@ -10,6 +10,7 @@ export const loadModel = async (model_url) => {
 export const predict = async (model, webcam, setPrediction, setResult, onPredict, calculateAverage) => {
   console.log("predict");
   const prediction = await model.predict(webcam.canvas);
+  prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
   setPrediction(prediction);
   setResult(prediction);
   console.log("category", prediction);

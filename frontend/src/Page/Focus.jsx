@@ -121,21 +121,21 @@ function Focus() {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr className="bg-white hover:bg-gray-100">
+                        <tr className="bg-white hover:bg-gray-100 text-center">
                             <td className="border border-gray-300 px-4 py-2">5월 20일
                             </td>
-                            <td className="border border-gray-300 px-4 py-2">Malcolm Lockyer</td>
-                            <td className="border border-gray-300 px-4 py-2">1961</td>
+                            <td className="border border-gray-300 px-4 py-2">0:46:12</td>
+                            <td className="border border-gray-300 px-4 py-2">97%</td>
                         </tr>
-                        <tr className="bg-gray-50 hover:bg-gray-100">
-                            <td className="border border-gray-300 px-4 py-2">Witchy Woman</td>
-                            <td className="border border-gray-300 px-4 py-2">The Eagles</td>
-                            <td className="border border-gray-300 px-4 py-2">1972</td>
+                        <tr className="bg-gray-50 hover:bg-gray-100 text-center">
+                            <td className="border border-gray-300 px-4 py-2">5월 21일</td>
+                            <td className="border border-gray-300 px-4 py-2">1:47:20</td>
+                            <td className="border border-gray-300 px-4 py-2">56.5%</td>
                         </tr>
-                        <tr className="bg-white hover:bg-gray-100">
-                            <td className="border border-gray-300 px-4 py-2">Shining Star</td>
-                            <td className="border border-gray-300 px-4 py-2">Earth, Wind, and Fire</td>
-                            <td className="border border-gray-300 px-4 py-2">1975</td>
+                        <tr className="bg-white hover:bg-gray-100 text-center">
+                            <td className="border border-gray-300 px-4 py-2">5월 22일</td>
+                            <td className="border border-gray-300 px-4 py-2">0:10:00</td>
+                            <td className="border border-gray-300 px-4 py-2">10.1%</td>
                         </tr>
                         </tbody>
                     </table>

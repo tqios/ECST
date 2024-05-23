@@ -17,6 +17,10 @@ backend/user/__pycache__/
 backend/user/migrations/
 backend/db.sqlite3
 
+backend/concentrate/migrations/
+backend/concentrate/__pycache__/
+
+
 ### Node ###
 # Logs
 logs

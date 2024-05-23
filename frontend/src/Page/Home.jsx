@@ -11,8 +11,15 @@ import { ImageModel, CategoryImageModel } from "../components/index.ts";
 import StopWatch from "../components/StopWatch.jsx";
 import { useSelector } from "react-redux";
 import { fetchData, saveRecordConcentrate } from "./Utils/api";
-import { updateAverageConcentrationFromLocalStorage, handlePredict } from "./Utils/averageConcentration";
-import { loadFromLocalStorage, saveToLocalStorage, clearLocalStorage } from "./Utils/storage";
+import {
+  updateAverageConcentrationFromLocalStorage,
+  handlePredict,
+} from "./Utils/averageConcentration";
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+  clearLocalStorage,
+} from "./Utils/storage";
 
 function Home() {
   const [user, setUser] = useState("로그인 필요");
@@ -38,6 +45,14 @@ function Home() {
   const TIMER_TIME = "timerTime";
 
   useEffect(() => {
+    // 이메일이 없으면 로그인 페이지로 리다이렉트
+    const userEmail = localStorage.getItem("user_email");
+    console.log("email: ", userEmail);
+    if (!location.state?.email && !userEmail) {
+      console.log("home인데 로그인 상태X");
+      history.push("/login");
+      return;
+    }
     fetchData(
       location.state.email,
       setUser,
@@ -55,14 +70,19 @@ function Home() {
 
   const checkAndSaveDataOnLoad = () => {
     const lastSaveDate = loadFromLocalStorage(LAST_SAVE_DATE_KEY);
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
 
     if (lastSaveDate !== today) {
       const data = loadFromLocalStorage(LOCAL_STORAGE_KEY);
       const timeInSeconds = parseInt(localStorage.getItem(TIMER_TIME)) || 0;
-      const timeFormatted = new Date(timeInSeconds * 1000).toISOString().substr(11, 8); // seconds to HH:MM:SS 형식으로 변환
+      const timeFormatted = new Date(timeInSeconds * 1000)
+        .toISOString()
+        .substr(11, 8); // seconds to HH:MM:SS 형식으로 변환
       if (data) {
-        saveRecordConcentrate(user, lastSaveDate, { ...data, count: timeFormatted }).then(() => {
+        saveRecordConcentrate(user, lastSaveDate, {
+          ...data,
+          count: timeFormatted,
+        }).then(() => {
           clearLocalStorage(LOCAL_STORAGE_KEY);
           clearLocalStorage(TIMER_TIME);
           saveToLocalStorage(LAST_SAVE_DATE_KEY, today);
@@ -103,13 +123,28 @@ function Home() {
     }
   };
 
+  const handleLogoClick = (event) => {
+    if (location.pathname === "/home") {
+      event.preventDefault(); // 기본 링크 동작을 막음
+      window.location.reload(); // 새로고침
+    }
+  };
+
   return (
     <div>
       {/* 머리 */}
       <div className="flex justify-between items-center">
-        <div className="text-5xl font-bold ml-6">
+        <Link
+          to={{
+            pathname: "/home",
+            state: {
+              email:
+                location.state?.email || localStorage.getItem("user_email"),
+            },
+          }}
+          className="text-5xl font-bold ml-6">
           <h1>Learning Mate</h1>
-        </div>
+        </Link>
         <div style={{ textAlign: "center", margin: "10px", marginTop: "30px" }}>
           <div
             className="items-center"
@@ -176,14 +211,20 @@ function Home() {
                 </div>
               </nav>
               {/* Body */}
-              <TodoForm user={user} setTodos={setStudy} fetchData={() => fetchData(
-                location.state.email,
-                setUser,
-                setStudy,
-                setisLoading,
-                history,
-                location
-              )} />
+              <TodoForm
+                user={user}
+                setTodos={setStudy}
+                fetchData={() =>
+                  fetchData(
+                    location.state.email,
+                    setUser,
+                    setStudy,
+                    setisLoading,
+                    history,
+                    location
+                  )
+                }
+              />
               <Todo study={study} isLoading={isLoading} setStudy={setStudy} />
             </div>
             <div>

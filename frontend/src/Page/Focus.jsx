@@ -42,10 +42,6 @@ function Focus() {
     }
   };
 
-  const handletologin = () => {
-    history.push("/login");
-  };
-
   const Calendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -81,7 +77,16 @@ function Focus() {
             style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}>
             <CgProfile className="text-xl text-left" />
           </div>
-          <div onClick={handletologin}>{user}</div>
+          <Link
+            to={{
+              pathname: "/my-page",
+              state: {
+                email:
+                  location.state?.email || localStorage.getItem("user_email"),
+              },
+            }}>
+            {user}
+          </Link>
         </div>
       </div>
       <hr />

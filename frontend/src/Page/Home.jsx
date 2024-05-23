@@ -46,10 +46,7 @@ function Home() {
 
   useEffect(() => {
     // 이메일이 없으면 로그인 페이지로 리다이렉트
-    const userEmail = localStorage.getItem("user_email");
-    console.log("email: ", userEmail);
-    if (!location.state?.email && !userEmail) {
-      console.log("home인데 로그인 상태X");
+    if (!location.state?.email) {
       history.push("/login");
       return;
     }
@@ -93,10 +90,6 @@ function Home() {
     }
   };
 
-  const handletologin = () => {
-    history.push("/login");
-  };
-
   const handleStart = () => {
     setDataPoints([]); // 그래프 데이터 리셋
     setGraphActive(true); // 그래프 활성화
@@ -123,13 +116,6 @@ function Home() {
     }
   };
 
-  const handleLogoClick = (event) => {
-    if (location.pathname === "/home") {
-      event.preventDefault(); // 기본 링크 동작을 막음
-      window.location.reload(); // 새로고침
-    }
-  };
-
   return (
     <div>
       {/* 머리 */}
@@ -151,7 +137,16 @@ function Home() {
             style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}>
             <CgProfile className="text-xl text-left" />
           </div>
-          <div onClick={handletologin}>{user}</div>
+          <Link
+            to={{
+              pathname: "/my-page",
+              state: {
+                email:
+                  location.state?.email || localStorage.getItem("user_email"),
+              },
+            }}>
+            {user}
+          </Link>
         </div>
       </div>
       <hr />

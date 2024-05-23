@@ -46,7 +46,10 @@ function Home() {
 
   useEffect(() => {
     // 이메일이 없으면 로그인 페이지로 리다이렉트
-    if (!location.state?.email) {
+    const userEmail = localStorage.getItem("user_email");
+    console.log("email: ", userEmail);
+    if (!location.state?.email && !userEmail) {
+      console.log("home인데 로그인 상태X");
       history.push("/login");
       return;
     }
@@ -120,13 +123,28 @@ function Home() {
     }
   };
 
+  const handleLogoClick = (event) => {
+    if (location.pathname === "/home") {
+      event.preventDefault(); // 기본 링크 동작을 막음
+      window.location.reload(); // 새로고침
+    }
+  };
+
   return (
     <div>
       {/* 머리 */}
       <div className="flex justify-between items-center">
-        <div className="text-5xl font-bold ml-6">
+        <Link
+          to={{
+            pathname: "/home",
+            state: {
+              email:
+                location.state?.email || localStorage.getItem("user_email"),
+            },
+          }}
+          className="text-5xl font-bold ml-6">
           <h1>Learning Mate</h1>
-        </div>
+        </Link>
         <div style={{ textAlign: "center", margin: "10px", marginTop: "30px" }}>
           <div
             className="items-center"

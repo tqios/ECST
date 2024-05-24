@@ -9,6 +9,7 @@ import Todo from "../components/Todo.jsx";
 import Graph from "../components/Graph.jsx";
 import { ImageModel, CategoryImageModel } from "../components/index.ts";
 import StopWatch from "../components/StopWatch.jsx";
+
 import { useSelector } from "react-redux";
 import { fetchData, saveRecordConcentrate } from "./Utils/api";
 import {
@@ -22,7 +23,7 @@ import {
 } from "./Utils/storage";
 
 function Home() {
-  const [user, setUser] = useState("로그인 필요");
+  const [user, setUser] = useState("-");
   const [study, setStudy] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const location = useLocation();
@@ -76,7 +77,7 @@ function Home() {
         .toISOString()
         .substr(11, 8); // seconds to HH:MM:SS 형식으로 변환
       if (data) {
-        saveRecordConcentrate(user, lastSaveDate, {
+        saveRecordConcentrate(location.state.email, lastSaveDate, {
           ...data,
           count: timeFormatted,
         }).then(() => {

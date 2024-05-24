@@ -7,7 +7,7 @@ import axios from "axios";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 function Mypage() {
-  const [user, setUser] = useState("로그인 필요");
+  const [user, setUser] = useState("-");
   const [isLoading, setisLoading] = useState(true);
   const [study, setStudy] = useState([]);
   const history = useHistory();

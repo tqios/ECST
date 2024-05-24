@@ -25,11 +25,12 @@ class RecordConcentrate(APIView):
 
     def get(self, request):
         print("집중도 데이터 get안이긴 해")
-        study_user_email = request.GET.get('email', None)
+        study_user_email = request.GET.get('study_user_email', None)
 
         print(study_user_email)
 
         if not study_user_email:
+            print("no.....")
             return Response(status=400, data={"message": "세션에 사용자 이메일이 없습니다."})
 
         # 사용자 이메일로 사용자 정보 가져오기

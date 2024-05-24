@@ -51,3 +51,25 @@ export const saveRecordConcentrate = async (email, date, data) => {
     console.error("Error saving data to database", error);
   }
 };
+
+export const getRecordConcentrate = async (email) => {
+  try {
+    const result = await axios.get(
+      "http://127.0.0.1:8000/api/concentrate/record/",
+        {
+          params: {
+            study_user_email: email,
+          },
+        }
+    );
+
+    console.log("response", result);
+    return result.data;
+    // console.log("Data saved successfully");
+  } catch (error) {
+    alert("사용자정보가 잘못되었습니다.");
+    console.error(error);
+
+
+  }
+};
